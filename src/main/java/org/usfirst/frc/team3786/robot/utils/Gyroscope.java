@@ -21,16 +21,13 @@ public class Gyroscope implements Runnable {
 	private double velX, velY, dispX, dispY;
 	private double last, now;
 	private double dT;
-	
+
 	public Gyroscope() {
 		if (imu == null)
 			imu = BNO055.getInstance(opmode_t.OPERATION_MODE_NDOF);
 
-		
-
 		velX = 0.0;
 		velY = 0.0;
-		
 
 		dispX = 0.0;
 		dispY = 0.0;
@@ -52,13 +49,13 @@ public class Gyroscope implements Runnable {
 
 	public double[] getAccel() {
 		double[] result = imu.getVectorLinAccel();
-		return result; 
+		return result;
 	}
 
 	public double[] getGravity() {
 		return imu.getVectorGrav();
-	} 
-	
+	}
+
 	public CalData getCalibration() {
 		return imu.getCalibration();
 	}
@@ -73,37 +70,36 @@ public class Gyroscope implements Runnable {
 		double[] accel = getAccel();
 		robotAccelX = accel[0];
 		robotAccelY = accel[1];
-		
 
 		robotHead = getHeading();
 		SmartDashboard.putNumber("Heading", robotHead);
-		
+
 		accelX = Math.cos(robotHead) * robotAccelX + Math.sin(robotHead) * robotAccelY;
 		accelY = -Math.sin(robotHead) * robotAccelX + Math.cos(robotHead) * robotAccelY;
 
 		velXNext = velX + accelX * dT;
 		velYNext = velY + accelY * dT;
-		
+
 		velX = velXNext;
 		velY = velYNext;
-		
+
 		SmartDashboard.putNumber("AccelX", accelX);
 		SmartDashboard.putNumber("AccelY", accelY);
 		SmartDashboard.putNumber("Time", dT);
-		
+
 		SmartDashboard.putNumber("VelX", velX);
 		SmartDashboard.putNumber("VelY", velY);
-		
+
 		dispXNext = dispX + velX * dT;
 
 		dispX = dispXNext;
 		dispYNext = dispY + velY * dT;
 		dispY = dispYNext;
-		
+
 		last = now;
 
 	}
-	
+
 	public double getVelX() {
 		return velX;
 	}

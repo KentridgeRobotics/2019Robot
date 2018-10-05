@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
 			camera.setExposureManual(50);
 		}
 		gyro = Gyroscope.getInstance();
-		LED.setRGB(60,0,0);
+		LED.setRGB(60, 0, 0);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		LED.setRGB(60,0,0);
+		LED.setRGB(60, 0, 0);
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		LED.setRGB(0,255,0);
+		LED.setRGB(0, 255, 0);
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testInit() {
-		LED.setRGB(60,0,70);
+		LED.setRGB(60, 0, 70);
 	}
 
 	@Override
