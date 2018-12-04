@@ -90,9 +90,9 @@ public class UARTLink implements Link {
 			// wait for byte, timeout after 2ms
 			// note for a baudrate of 19.2K, each byte takes about 500us
 			for (j = 0; true; j++) {
-				if (j == 200)
+				if (j == 200) // Why 200?
 					return -1;
-				c = serial.read(1)[0];
+				c = serial.read(1)[0]; // It might be more efficient to read more than 1 byte at a time. Maybe read(length), and let the caller decide?
 				if (c >= 0)
 					break;
 				try {
@@ -104,7 +104,9 @@ public class UARTLink implements Link {
 			if (cs != null) {
 				byte b = buffer[i];
 				int csb = b > 0 ? b : 256 + b;
-				cs[0] += csb;
+				cs[0] += csb; // Using an array to provide pointer semantics works, but it might be
+								// easier to understand if you created a Checksum class, and called
+								// a method like cs.updateChecksum(csb) at this point.
 			}
 		}
 		return length;
@@ -131,7 +133,7 @@ public class UARTLink implements Link {
 	 * @return Length of value sent
 	 */
 	public int send(byte[] buffer, int length) {
-		serial.write(buffer, length);
-		return length;
+		serial.write(buffer, length); // write can send less than length, so send() should return that number 
+		return length; 
 	}
 }

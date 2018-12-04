@@ -68,10 +68,10 @@ public class Pixy2 {
 	public final static int PIXY_RCS_CENTER_POS = ((PIXY_RCS_MAX_POS - PIXY_RCS_MIN_POS) / 2);
 
 	public enum LinkType {
-		SPI(), I2C(), UART();
+		SPI(), I2C(), UART(); // Parens are not needed for enums that have no properties.
 	}
 
-	private static Pixy2 instance = null;
+	private static Pixy2 instance = null; // We might have more than 1 Pixy2 cameras on the robot, so maybe we don't need this.
 	private Link link = null;
 
 	private byte[] buffer = null;
@@ -158,7 +158,7 @@ public class Pixy2 {
 	 * 
 	 * @return Pixy2 instance
 	 */
-	public static Pixy2 getInstance(LinkType type) {
+	public static Pixy2 getInstance(LinkType type) { // This is more of a "createInstance" method, if you remove the check for instance == null.
 		if (instance == null) {
 			Link link = null;
 			switch (type) {
@@ -313,7 +313,8 @@ public class Pixy2 {
 			type = PIXY_TYPE_REQUEST_CHANGE_PROG;
 			sendPacket();
 			if (receivePacket() == 0) {
-				// TODO res = *(uint32_t *)m_buf;
+				// TODO res = *(uint32_t *)m_buf; // What this means in C++: consider m_buf to be a pointer to (or array of) uint32_t. Get the first uint32_t value from it, and assign it to res.
+					// Equivalent to: res = ((uint32_t*)m_buf)[0]
 				res = buffer[0];
 				if (res > 0) {
 					getResolution(); // get resolution so we have it
@@ -357,7 +358,7 @@ public class Pixy2 {
 		sendPacket();
 		if (receivePacket() == 0) {
 			if (type == PIXY_TYPE_RESPONSE_RESOLUTION) {
-				// TODO frameWidth = *(uint16_t *)m_buf;
+				// TODO frameWidth = *(uint16_t *)m_buf; // Similarly, treat first 2 bytes of m_buf as one uint16_t.
 				frameWidth = buffer[0];
 				// TODO frameHeight = *(uint16_t *)(m_buf+sizeof(uint16_t));
 				frameHeight = buffer[2];

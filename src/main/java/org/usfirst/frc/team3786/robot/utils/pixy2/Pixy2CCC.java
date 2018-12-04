@@ -40,7 +40,8 @@ public class Pixy2CCC {
 	// For example if you're only interested in receiving blocks
 	// with signatures 1 and 5, you could use a sigmap of
 	// PIXY_SIG1 | PIXY_SIG5
-	public final static int CCC_SIG1 = 1;
+	public final static int CCC_SIG1 = 1; // I always like to specify flags as hexadecimal constants,
+											// like 0x0001, 0x0002, 0x0004, 0x0008, 0x0010, etc.
 	public final static int CCC_SIG2 = 2;
 	public final static int CCC_SIG3 = 4;
 	public final static int CCC_SIG4 = 8;
@@ -50,5 +51,6 @@ public class Pixy2CCC {
 	public final static int CCC_COLOR_CODES = 128;
 
 	public final static int CCC_SIG_ALL = 0xff; // all bits or'ed together
+				// I *think* that 0xff gets sign-extended so it's really 0xFFFFFFFF. But I could be wrong.
 
 }

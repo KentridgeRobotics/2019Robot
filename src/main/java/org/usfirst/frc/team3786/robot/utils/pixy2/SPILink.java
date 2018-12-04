@@ -87,7 +87,7 @@ public class SPILink implements Link {
 	public int receive(byte[] buffer, int length, int[] cs) {
 		if (cs != null)
 			cs[0] = 0;
-		spi.read(true, buffer, length);
+		spi.read(true, buffer, length); // I think this returns number of bytes read, so save that and return it.
 		if (cs != null)
 			for (byte b : buffer) {
 				int csb = b > 0 ? b : 256 + b;
