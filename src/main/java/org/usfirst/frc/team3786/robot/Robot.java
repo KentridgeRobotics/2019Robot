@@ -11,7 +11,7 @@ import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.LED;
 
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 
@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		camera = CameraServer.getInstance().startAutomaticCapture();
+		
 		if (camera != null) {
 			camera.setResolution(320, 240);
 			camera.setFPS(30);

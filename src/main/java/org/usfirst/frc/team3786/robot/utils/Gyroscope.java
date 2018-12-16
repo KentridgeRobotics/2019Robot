@@ -72,6 +72,7 @@ public class Gyroscope implements Runnable {
 		robotAccelY = accel[1];
 
 		robotHead = getHeading();
+		SmartDashboard.putNumberArray("Gyroscope", getVector());
 		SmartDashboard.putNumber("Heading", robotHead);
 
 		accelX = Math.cos(robotHead) * robotAccelX + Math.sin(robotHead) * robotAccelY;
