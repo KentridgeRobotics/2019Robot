@@ -11,9 +11,12 @@ import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.LED;
 
 import edu.wpi.cscore.UsbCamera;
-//import edu.wpi.first.cameraserver.CameraServer; -- Error with this import
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
+
+import org.usfirst.frc.team3786.robot.DriveSystem.TwoWheelDriveSystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,14 +27,22 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public class Robot extends TimedRobot {
 
+	private SwitchSide[] switchSides = new SwitchSide[3];
+
 	public static Robot instance;
 
 	private UsbCamera camera;
 	public Gyroscope gyro;
 
+	private TwoWheelDriveSystem driveSystem;
+
+	private int driverStationNumber;
+	private String gameSpecificMessage;
+	
 	@Override
 	public void robotInit() {
-		//camera = CameraServer.getInstance().startAutomaticCapture();
+		driverStationNumber = DriverStation.getInstance().getLocation();
+		camera = CameraServer.getInstance().startAutomaticCapture();
 		
 		if (camera != null) {
 			camera.setResolution(320, 240);
@@ -53,11 +64,32 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		RobotMap.controllerMappings();
 		LED.setRGB(60, 0, 0);
+		gameSpecificMessage = null;
 	}
 
 	@Override
 	public void disabledPeriodic() {
+		// Set the LED RGB
+		gameSpecificMessage = DriverStation.getInstance().getGameSpecificMessage();
+		if(gameSpecificMessage != null) {
+			if(gameSpecificMessage.length() == 3) {
+				char[] splitMessage = gameSpecificMessage.toCharArray();
+				if(splitMessage.length == 3) {
+					for(int i = 0; i < 3; i++) {
+						if(splitMessage[i] == 'L') {
+							switchSides[i] = SwitchSide.LEFT;
+						} else if(splitMessage[i] == 'R') {
+							switchSides[i] = SwitchSide.RIGHT;
+						} else {
+							switchSides[i] = null;
+							break;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -80,6 +112,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		LED.setRGB(0, 255, 0);
+		String gameSpecificMessage = DriverStation.getInstance().getGameSpecificMessage();
 	}
 
 	@Override
@@ -98,6 +131,17 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 	}
 
+	public String getGameSpecificMessage() {
+		return gameSpecificMessage;
+	}
+
+	public SwitchSide[] getSwitchSides() {
+		return this.switchSides;
+	}
+
+	public enum SwitchSide {
+		LEFT(), RIGHT();
+	}
 	/**
 	 * DO NOT MODIFY
 	 */
