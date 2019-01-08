@@ -2,7 +2,7 @@ package org.usfirst.frc.team3786.robot.commands.debug;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import org.usfirst.frc.team3786.robot.IO;
+import org.usfirst.frc.team3786.robot.OI;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,7 +35,7 @@ public class DebugMotorController extends Command {
 			motorId = 1;
 		}
 		SmartDashboard.putNumber("DEBUG_MOTOR_ID", motorId);
-		motor.set(IO.getPrimaryController().getRightStickY());
+		motor.set(OI.getPrimaryController().getRightStickY());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

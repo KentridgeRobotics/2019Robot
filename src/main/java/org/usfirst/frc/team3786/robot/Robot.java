@@ -72,11 +72,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopInit() {
-		DebugMotorController.getInstance().execute();
 	}
 
 	@Override
 	public void teleopPeriodic() {
+		DebugMotorController.getInstance().execute();
 	}
 
 	/**
