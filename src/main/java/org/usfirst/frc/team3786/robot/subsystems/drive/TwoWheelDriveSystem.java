@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3786.robot.subsystems;
+package org.usfirst.frc.team3786.robot.subsystems.drive;
 
 import org.usfirst.frc.team3786.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class TwoWheelDriveSystem extends Subsystem implements ChargersDriveSubsystem {
+public class TwoWheelDriveSystem extends Subsystem implements DriveSubsystem {
 
 	private WPI_TalonSRX left;
 	private WPI_TalonSRX right;
