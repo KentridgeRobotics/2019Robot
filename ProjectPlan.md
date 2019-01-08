@@ -18,6 +18,17 @@
 ## Schedule
 
 1. Driving, gear shifts, turbo, brakes
+
+Should have standard controls (throttle, steering) on driver's controller, plus
+a brake button and a turbo button. (Maybe also a "gear shift" that lets us switch between high-speed and
+low-speed mode.)
+
+Gunner's controller should have buttons for raising arm to preset levels and for lining up precisely with a hatch.
+Picking up a ball?
+Picking up a port cover?
+
+Driving onto the high platform
+
 2. Create diagnostic dashboard
 3. Visual sensing, image recognition
 
