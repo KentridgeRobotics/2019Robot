@@ -8,8 +8,8 @@
 package org.usfirst.frc.team3786.robot;
 
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
+import org.usfirst.frc.team3786.robot.subsystems.drive.DriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
-import org.usfirst.frc.team3786.robot.utils.LED;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -34,7 +34,6 @@ public class Robot extends TimedRobot {
 	private DriveSubsystem driveSubsystem;
 
 	private int driverStationNumber;
-	private String gameSpecificMessage;
 	
 	@Override
 	public void robotInit() {
@@ -61,13 +60,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		RobotMap.controllerMappings();
-		gameSpecificMessage = null;
+		Mappings.setupTestMappings();
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		getGameData();
 	}
 
 	/**
@@ -87,7 +84,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		getGameData();
 	}
 
 	@Override
@@ -103,14 +99,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
-	}
-
-	public void getGameData() {
-		gameSpecificMessage = DriverStation.getInstance().getGameSpecificMessage();
-	}
-
-	public String getGameSpecificMessage() {
-		return gameSpecificMessage;
 	}
 
 	/**
