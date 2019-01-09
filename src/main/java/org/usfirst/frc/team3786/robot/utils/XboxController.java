@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3786.robot.utils;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class XboxController {
@@ -16,6 +17,8 @@ public class XboxController {
 	public JoystickButton buttonMenu;
 	public JoystickButton buttonStickLeft;
 	public JoystickButton buttonStickRight;
+
+	private static final double deadzone = 0.13;
 
 	public XboxController() {
 		this(0);
@@ -39,8 +42,52 @@ public class XboxController {
 		buttonStickRight = new JoystickButton(controller, XboxControllerButton.STICK_RIGHT.getId());
 	}
 
-	public void getButton(XboxControllerButton button) {
-		JoystickButton button = new JoystickButton(controller, 1);
+	public double getLeftStickX() {
+		double n = controller.getX(Hand.kLeft);
+		if (Math.abs(n) <= deadzone)
+			return 0.0;
+		else {
+			double c = (Math.abs(n) - deadzone) / (1.0 - deadzone);
+			return (n > 0) ?  c: -c;
+		}
+	}
+
+	public double getLeftStickY() {
+		double n = controller.getY(Hand.kLeft);
+		if (Math.abs(n) <= deadzone)
+			return 0.0;
+		else {
+			double c = (Math.abs(n) - deadzone) / (1.0 - deadzone);
+			return (n > 0) ?  c: -c;
+		}
+	}
+
+	public double getRightStickX() {
+		double n = controller.getX(Hand.kRight);
+		if (Math.abs(n) <= deadzone)
+			return 0.0;
+		else {
+			double c = (Math.abs(n) - deadzone) / (1.0 - deadzone);
+			return (n > 0) ?  c: -c;
+		}
+	}
+
+	public double getRightStickY() {
+		double n = controller.getY(Hand.kRight);
+		if (Math.abs(n) <= deadzone)
+			return 0.0;
+		else {
+			double c = (Math.abs(n) - deadzone) / (1.0 - deadzone);
+			return (n > 0) ?  c: -c;
+		}
+	}
+
+	public double getLeftTrigger() {
+		return controller.getTriggerAxis(Hand.kLeft);
+	}
+
+	public double getRightTrigger() {
+		return controller.getTriggerAxis(Hand.kRight);
 	}
 
 	public enum XboxControllerButton {
