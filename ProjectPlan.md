@@ -27,10 +27,21 @@ Gunner's controller should have buttons for raising arm to preset levels and for
 Picking up a ball?
 Picking up a port cover?
 
-Driving onto the high platform
+Driving onto the high platform?
 
-2. Create diagnostic dashboard
+2. Create diagnostic vs. competition dashboard
+
+Competition mode: only the important stuff is displayed: camera, autonomous settings (are there any?), current auto action that is running, current target, current speed settings
+
+Diagnostic mode: lots of extra stuff: distance to target, direction to target
+
 3. Visual sensing, image recognition
+
+First idea for how to line up: first, drive to the outside end of the nearest piece of tape on the ground, and then turn
+to face the vision targets. That should put us in the correct alignment.
+
+Direction and distance to the end of the nearest tape line. 
+Direction and distance to the vision targets.
 
 ## Components
 
