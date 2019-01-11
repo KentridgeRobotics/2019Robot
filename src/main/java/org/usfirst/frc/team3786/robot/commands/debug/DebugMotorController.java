@@ -34,8 +34,10 @@ public class DebugMotorController extends Command {
 			motor = new WPI_TalonSRX(1);
 			motorId = 1;
 		}
-		SmartDashboard.putNumber("DEBUG_MOTOR_ID", motorId);
-		motor.set(IO.getPrimaryController().getRightStickY());
+		double power = IO.getPrimaryController().getLeftStickY();
+		SmartDashboard.putNumber("DEBUG.MOTOR_ID", motorId);
+		SmartDashboard.putNumber("DEBUG.MOTOR_POWER", power);
+		motor.set(power);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

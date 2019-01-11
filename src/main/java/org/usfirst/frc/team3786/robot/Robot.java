@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void robotInit() {
-		Mappings.setupDefaultMappings();
+		Mappings.setupTestMappings();
 		driverStationNumber = DriverStation.getInstance().getLocation();
 
 		camera = CameraServer.getInstance().startAutomaticCapture();
@@ -60,7 +60,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		Mappings.setupTestMappings();
 	}
 
 	@Override
@@ -72,11 +71,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopInit() {
-		DebugMotorController.getInstance().execute();
 	}
 
 	@Override
 	public void teleopPeriodic() {
+		DebugMotorController.getInstance().execute();
 	}
 
 	/**
