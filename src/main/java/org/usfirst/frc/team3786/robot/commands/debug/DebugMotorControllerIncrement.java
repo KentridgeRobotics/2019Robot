@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DebugMotorControllerIncrement extends Command {
 
-	private boolean run = false;
-
 	public DebugMotorControllerIncrement() {
 	}
 
@@ -16,16 +14,11 @@ public class DebugMotorControllerIncrement extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		DebugMotorController.getInstance().increment();
-		run = true;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (run) {
-			run = false;
-			return true;
-		}
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true

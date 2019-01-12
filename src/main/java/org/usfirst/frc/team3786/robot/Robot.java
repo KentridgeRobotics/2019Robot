@@ -7,14 +7,16 @@
 
 package org.usfirst.frc.team3786.robot;
 
-import org.usfirst.frc.team3786.robot.camerasystem.CameraSetUp;
+import org.usfirst.frc.team3786.robot.commands.TankDriveCommand;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
-import org.usfirst.frc.team3786.robot.drive.DriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.drive.TankDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,26 +27,37 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public class Robot extends TimedRobot {
 
+	/**
+	 * DO NOT MODIFY
+	 */
 	public static Robot instance;
 
-	public Gyroscope gyro;
+	public static final RobotMode mode = RobotMode.DEBUG;
 
-	private DriveSubsystem driveSubsystem;
+	public Gyroscope gyro = null;
 
-	private CameraSetUp cameraSetup;
+	private TankDriveSubsystem tankDriveSubsystem = null;
 
-	private int driverStationNumber;
+	private int driverStationNumber = 0;
 	
 	@Override
 	public void robotInit() {
-		Mappings.setupTestMappings();
+		if (mode == RobotMode.TANK) {
+			System.out.println("USING TANK DRIVE");
+			Mappings.setupDefaultMappings();
+		} else if (mode == RobotMode.DEBUG) {
+			System.out.println("USING DEBUG DRIVE");
+			Mappings.setupTestMappings();
+		}
 		driverStationNumber = DriverStation.getInstance().getLocation();
-		cameraSetup.driveCamInit();
+		Cameras.setup();
 		gyro = Gyroscope.getInstance();
 	}
 
 	@Override
 	public void robotPeriodic() {
+		Scheduler.getInstance().run();
+		Cameras.run();
 	}
 
 	/**
@@ -52,6 +65,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		if (mode == RobotMode.TANK)
+			TankDriveCommand.getInstance().cancel();
+		else if (mode == RobotMode.DEBUG)
+			DebugMotorController.getInstance().cancel();
 	}
 
 	@Override
@@ -63,11 +80,14 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopInit() {
+		if (mode == RobotMode.TANK)
+			TankDriveCommand.getInstance().start();
+		else if (mode == RobotMode.DEBUG)
+			DebugMotorController.getInstance().start();
 	}
 
 	@Override
 	public void teleopPeriodic() {
-		DebugMotorController.getInstance().execute();
 	}
 
 	/**
@@ -75,6 +95,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		if (mode == RobotMode.TANK)
+			TankDriveCommand.getInstance().cancel();
+		else if (mode == RobotMode.DEBUG)
+			DebugMotorController.getInstance().cancel();
 	}
 
 	@Override
@@ -86,10 +110,27 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testInit() {
+		if (mode == RobotMode.TANK)
+			TankDriveCommand.getInstance().cancel();
+		else if (mode == RobotMode.DEBUG)
+			DebugMotorController.getInstance().cancel();
 	}
 
 	@Override
 	public void testPeriodic() {
+	}
+
+	public TankDriveSubsystem getDriveSubsystem() {
+		return tankDriveSubsystem;
+	}
+
+	public int getDriveStationNumber() {
+		return driverStationNumber;
+	}
+
+	public enum RobotMode {
+		TANK,
+		DEBUG;
 	}
 
 	/**
