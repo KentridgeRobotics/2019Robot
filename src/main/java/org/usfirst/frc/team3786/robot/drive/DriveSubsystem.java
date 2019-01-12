@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3786.robot.subsystems.drive;
+package org.usfirst.frc.team3786.robot.drive;
 
 public interface DriveSubsystem {
 

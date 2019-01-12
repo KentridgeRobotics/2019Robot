@@ -9,7 +9,7 @@ package org.usfirst.frc.team3786.robot;
 
 import org.usfirst.frc.team3786.robot.camerasystem.CameraSetUp;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
-import org.usfirst.frc.team3786.robot.subsystems.drive.DriveSubsystem;
+import org.usfirst.frc.team3786.robot.drive.DriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 
 import edu.wpi.first.wpilibj.DriverStation;

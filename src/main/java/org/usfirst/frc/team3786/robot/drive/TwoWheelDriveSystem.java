@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3786.robot.subsystems.drive;
+package org.usfirst.frc.team3786.robot.drive;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -8,6 +8,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class TwoWheelDriveSystem extends Subsystem implements DriveSubsystem {
+
+	private static TwoWheelDriveSystem instance;
+
+	public static TwoWheelDriveSystem getInstance() {
+		if(instance == null)
+			instance = new TwoWheelDriveSystem();
+		return instance;
+	}
 
 	private WPI_TalonSRX left;
 	private WPI_TalonSRX right;
