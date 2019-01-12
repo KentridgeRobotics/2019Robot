@@ -2,6 +2,7 @@ package org.usfirst.frc.team3786.robot;
 
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
+import org.usfirst.frc.team3786.robot.drive.BrakeCommand;
 import org.usfirst.frc.team3786.robot.grabbersystem.OpenGrabberCommand;
 import org.usfirst.frc.team3786.robot.grabbersystem.CloseGrabberCommand;
 import org.usfirst.frc.team3786.robot.grabbersystem.GrabberStopCommand;
@@ -31,6 +32,8 @@ public class Mappings {
 		primary.buttonA.whenReleased(stopGrabber);
 		primary.buttonB.whenPressed(new CloseGrabberCommand());
 		primary.buttonB.whenReleased(stopGrabber);
+		primary.buttonX.whenPressed(new BrakeCommand(true));
+		primary.buttonX.whenReleased(new BrakeCommand(false));
 	}
 
 }
