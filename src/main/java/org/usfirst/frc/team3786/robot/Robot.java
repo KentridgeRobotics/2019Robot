@@ -7,12 +7,11 @@
 
 package org.usfirst.frc.team3786.robot;
 
+import org.usfirst.frc.team3786.robot.camerasystem.CameraSetUp;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
 import org.usfirst.frc.team3786.robot.subsystems.drive.DriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -28,10 +27,11 @@ public class Robot extends TimedRobot {
 
 	public static Robot instance;
 
-	private UsbCamera camera;
 	public Gyroscope gyro;
 
 	private DriveSubsystem driveSubsystem;
+
+	private CameraSetUp cameraSetup;
 
 	private int driverStationNumber;
 	
@@ -39,15 +39,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		Mappings.setupTestMappings();
 		driverStationNumber = DriverStation.getInstance().getLocation();
-
-		camera = CameraServer.getInstance().startAutomaticCapture();
-		if (camera != null) {
-			camera.setResolution(320, 240);
-			camera.setFPS(30);
-			camera.setWhiteBalanceManual(5000);
-			camera.setBrightness(50);
-			camera.setExposureManual(50);
-		}
+		cameraSetup.driveCamInit();
 		gyro = Gyroscope.getInstance();
 	}
 

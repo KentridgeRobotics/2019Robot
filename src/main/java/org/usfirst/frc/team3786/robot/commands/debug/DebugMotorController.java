@@ -2,7 +2,7 @@ package org.usfirst.frc.team3786.robot.commands.debug;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import org.usfirst.frc.team3786.robot.IO;
+import org.usfirst.frc.team3786.robot.OI;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,7 +34,7 @@ public class DebugMotorController extends Command {
 			motor = new WPI_TalonSRX(1);
 			motorId = 1;
 		}
-		double power = IO.getPrimaryController().getLeftStickY();
+		double power = OI.getPrimaryController().getLeftStickY();
 		SmartDashboard.putNumber("DEBUG.MOTOR_ID", motorId);
 		SmartDashboard.putNumber("DEBUG.MOTOR_POWER", power);
 		motor.set(power);

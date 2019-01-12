@@ -2,7 +2,7 @@ package org.usfirst.frc.team3786.robot;
 
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
-public class IO {
+public class OI {
 
 	private static XboxController primaryController = null;
 	private static XboxController secondaryController = null;

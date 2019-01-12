@@ -13,11 +13,11 @@ public class Mappings {
 	public final static int rightMotor = 2;
 
 	public static void setupDefaultMappings() {
-		IO.getPrimaryController();
+		OI.getPrimaryController();
 	}
 
 	public static void setupTestMappings() {
-		XboxController primary = IO.getPrimaryController();
+		XboxController primary = OI.getPrimaryController();
 		primary.buttonBumperRight.whenPressed(new DebugMotorControllerIncrement());
 		primary.buttonBumperLeft.whenPressed(new DebugMotorControllerDecrement());
 	}
