@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3786.robot.subsystems.vision;
+package org.usfirst.frc.team3786.robot.vision;
 
 import java.util.ArrayList;
 
