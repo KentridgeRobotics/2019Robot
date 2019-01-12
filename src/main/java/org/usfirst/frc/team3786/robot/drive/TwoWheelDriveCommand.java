@@ -35,7 +35,7 @@ public class TwoWheelDriveCommand {
         double y = OI.getPrimaryController().getLeftStickY();
         // The turning controls
         double turn = OI.getPrimaryController().getRightStickX();
-        if(OI.getPrimaryController().getLeftTrigger() > 0) {
+        if(OI.getPrimaryController().getRightTrigger() > 0) {
             x *= 0.7;
 			y *= 0.7;
 			turn *= 0.7;
