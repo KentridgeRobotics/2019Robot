@@ -2,6 +2,9 @@ package org.usfirst.frc.team3786.robot;
 
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
+import org.usfirst.frc.team3786.robot.grabbersystem.OpenGrabberCommand;
+import org.usfirst.frc.team3786.robot.grabbersystem.CloseGrabberCommand;
+import org.usfirst.frc.team3786.robot.grabbersystem.GrabberStopCommand;
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {
@@ -21,8 +24,13 @@ public class Mappings {
 
 	public static void setupTestMappings() {
 		XboxController primary = OI.getPrimaryController();
+		GrabberStopCommand stopGrabber = new GrabberStopCommand();
 		primary.buttonBumperRight.whenPressed(new DebugMotorControllerIncrement());
 		primary.buttonBumperLeft.whenPressed(new DebugMotorControllerDecrement());
+		primary.buttonA.whenPressed(new OpenGrabberCommand());
+		primary.buttonA.whenReleased(stopGrabber);
+		primary.buttonB.whenPressed(new CloseGrabberCommand());
+		primary.buttonB.whenReleased(stopGrabber);
 	}
 
 }
