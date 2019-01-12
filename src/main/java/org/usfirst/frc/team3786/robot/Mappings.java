@@ -11,6 +11,7 @@ public class Mappings {
 
 	public final static int leftMotor = 1;
 	public final static int rightMotor = 2;
+	public final static int grabber = 3;
 
 	public static void setupDefaultMappings() {
 		OI.getPrimaryController();

@@ -16,11 +16,13 @@ public class CloseGrabberCommand extends Command {//TODO: Fill methods when hard
   public CloseGrabberCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(GrabberSystem.getInstance());
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    isDone = false;
 
   }
 
