@@ -15,9 +15,12 @@ public class Mappings {
 
 	public final static int leftMotor = 1;
 	public final static int rightMotor = 2;
-	public final static int grabber = 3;
-	public final static int flinger = 4;
+	
+	public final static int grabber = 1;
+	public final static int flinger = 2;
+	
 	public final static int tilter = 5;
+	public final static int elevatorMotor = 6;
 
 	public static void setupDefaultMappings() {
 		OI.getPrimaryController();
