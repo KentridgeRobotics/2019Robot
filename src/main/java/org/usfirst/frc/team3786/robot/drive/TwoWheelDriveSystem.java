@@ -9,6 +9,14 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class TwoWheelDriveSystem extends Subsystem implements DriveSubsystem {
 
+	private static TwoWheelDriveSystem instance;
+
+	public static TwoWheelDriveSystem getInstance() {
+		if(instance == null)
+			instance = new TwoWheelDriveSystem();
+		return instance;
+	}
+
 	private WPI_TalonSRX left;
 	private WPI_TalonSRX right;
 
