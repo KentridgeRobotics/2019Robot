@@ -9,6 +9,7 @@
 package org.usfirst.frc.team3786.robot.elevatorsystem;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import org.usfirst.frc.team3786.robot.Mappings;
 
@@ -35,6 +36,7 @@ public class ElevatorSystem extends Subsystem {
   public ElevatorSystem()
   {
     elevatorMotor = new WPI_TalonSRX(Mappings.elevatorMotor);
+    elevatorMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   @Override
