@@ -6,13 +6,21 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ThrottleCommand extends Command {
 
-    public ThrottleCommand() {
+    private boolean isThrottle;
+
+    public ThrottleCommand(boolean isThrottle) {
         requires(TwoWheelDriveSystem.getInstance());
+        this.isThrottle = isThrottle;
     }
 
     @Override
     protected void initialize() {
-        TwoWheelDriveSystem.getInstance().setMotorSpeeds(1.0, 1.0);
+        if(isThrottle == true) {
+            TwoWheelDriveSystem.getInstance().setMotorSpeeds(1.0, 1.0);
+        }
+        if(isThrottle == false) {
+
+        }
     }
     
     @Override
