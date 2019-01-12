@@ -16,12 +16,14 @@ public class OpenGrabberCommand extends Command { //TODO: Fill methods when hard
   public OpenGrabberCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(GrabberSystem.getInstance());
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize(){
-    
+    isDone = false;
+
   }
 
   // Called repeatedly when this Command is scheduled to run

@@ -15,11 +15,13 @@ public class TiltGrabberDownCommand extends Command {//TODO: Fill methods when h
   public TiltGrabberDownCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(GrabberTiltSystem.getInstance());
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    isDone = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
