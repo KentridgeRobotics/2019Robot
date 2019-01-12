@@ -35,6 +35,7 @@ public class GrabberFlingerSystem extends Subsystem {
   public GrabberFlingerSystem()
   {
     flinger = new WPI_TalonSRX(Mappings.flinger);
+    flinger.setSafetyEnabled(false);
   }
 
   @Override

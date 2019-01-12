@@ -32,6 +32,7 @@ public class GrabberTiltSystem extends Subsystem {
   public GrabberTiltSystem()
   {
     tilter = new WPI_TalonSRX(Mappings.tilter);
+    tilter.setSafetyEnabled(false);
   }
 
   @Override

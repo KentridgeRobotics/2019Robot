@@ -32,6 +32,7 @@ public class GrabberSystem extends Subsystem { //TODO: Fill in methods when more
   public GrabberSystem()
   {
     grabber = new WPI_TalonSRX(Mappings.grabber);
+    grabber.setSafetyEnabled(false);
   }
 
   public void initDefaultCommand() {
