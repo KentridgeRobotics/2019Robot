@@ -3,19 +3,19 @@
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
-/* Nicholas Leung, created 1/11/19                                            */
+/* Nicholas Leung, created 1/12/19                                            */
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc.team3786.robot.grabbersystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TiltGrabberDownCommand extends Command {//TODO: Fill methods when hardware's ready
+public class GrabberReelInCommand extends Command {//TODO: Fill methods when hardware's ready
   private boolean isDone;
-  public TiltGrabberDownCommand() {
+  public GrabberReelInCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(GrabberTiltSystem.getInstance());
+    requires(GrabberFlingerSystem.getInstance());
   }
 
   // Called just before this Command runs the first time
