@@ -7,14 +7,14 @@ import org.usfirst.frc.team3786.robot.Mappings;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class TwoWheelDriveSystem extends Subsystem implements DriveSubsystem {
+public class TankDriveSubsystem extends Subsystem {
 
 	private WPI_TalonSRX left;
 	private WPI_TalonSRX right;
 
 	private DifferentialDrive differentialDrive;
 	
-	public TwoWheelDriveSystem() {
+	public TankDriveSubsystem() {
 		left = new WPI_TalonSRX(Mappings.leftMotor);
 		right = new WPI_TalonSRX(Mappings.rightMotor);
 
