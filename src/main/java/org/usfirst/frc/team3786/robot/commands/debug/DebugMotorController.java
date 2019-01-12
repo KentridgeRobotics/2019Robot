@@ -25,6 +25,8 @@ public class DebugMotorController extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		SmartDashboard.putNumber("DEBUG.MOTOR_ID", motorId);
+		SmartDashboard.putNumber("DEBUG.MOTOR_POWER", 0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
