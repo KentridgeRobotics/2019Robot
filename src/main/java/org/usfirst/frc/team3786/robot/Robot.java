@@ -7,14 +7,17 @@
 
 package org.usfirst.frc.team3786.robot;
 
-import org.usfirst.frc.team3786.robot.camerasystem.CameraSetUp;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
+import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
+import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.subsystems.drive.DriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,13 +28,14 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public class Robot extends TimedRobot {
 
+	/**
+	 * DO NOT MODIFY
+	 */
 	public static Robot instance;
 
-	public Gyroscope gyro;
+	public Gyroscope gyro = null;
 
-	private DriveSubsystem driveSubsystem;
-
-	private CameraSetUp cameraSetup;
+	private DriveSubsystem driveSubsystem = null;
 
 	private int driverStationNumber;
 	
@@ -39,12 +43,14 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		Mappings.setupTestMappings();
 		driverStationNumber = DriverStation.getInstance().getLocation();
-		cameraSetup.driveCamInit();
+		Cameras.setup();
 		gyro = Gyroscope.getInstance();
 	}
 
 	@Override
 	public void robotPeriodic() {
+		Scheduler.getInstance().run();
+		Cameras.run();
 	}
 
 	/**
