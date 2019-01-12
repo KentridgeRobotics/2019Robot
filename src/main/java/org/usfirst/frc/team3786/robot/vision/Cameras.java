@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3786.robot.subsystems.vision;
+package org.usfirst.frc.team3786.robot.vision;
 
 import org.usfirst.frc.team3786.robot.utils.pixy2.links.SPILink;
 
