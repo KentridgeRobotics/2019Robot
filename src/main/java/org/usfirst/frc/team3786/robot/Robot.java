@@ -9,8 +9,8 @@ package org.usfirst.frc.team3786.robot;
 
 import org.usfirst.frc.team3786.robot.commands.TankDriveCommand;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
-import org.usfirst.frc.team3786.robot.drive.TankDriveSubsystem;
-import org.usfirst.frc.team3786.robot.vision.Cameras;
+import org.usfirst.frc.team3786.robot.subsystems.TankDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 
 import edu.wpi.first.wpilibj.DriverStation;
