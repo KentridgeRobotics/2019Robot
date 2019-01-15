@@ -26,6 +26,9 @@ public class TwoWheelDriveSystem extends Subsystem implements DriveSubsystem {
 		left = new WPI_TalonSRX(Mappings.leftMotor);
 		right = new WPI_TalonSRX(Mappings.rightMotor);
 
+		left.setSafetyEnabled(false);
+		right.setSafetyEnabled(false);
+
 		left.configOpenloopRamp(0.3, 0);
 		right.configOpenloopRamp(0.3, 0);
 		
