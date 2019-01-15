@@ -36,10 +36,7 @@ public class TankDriveCommand extends Command {
 		double rightTrigger = OI.getPrimaryController().getRightTrigger();
 		double leftTrigger = OI.getPrimaryController().getLeftTrigger();
 		double limit;
-		if (boost)
-			limit = 1;
-		else
-			limit = 0.5;
+		limit = boost ? 1 : 0.5;
 		double speed = (rightTrigger - leftTrigger) * limit;
 		TankDriveSubsystem.getInstance().arcadeDrive(speed, leftStickX * limit);
 	}
