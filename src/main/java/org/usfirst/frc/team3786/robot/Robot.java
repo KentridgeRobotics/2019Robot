@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team3786.robot;
 
-import org.usfirst.frc.team3786.robot.commands.TankDriveCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.TankDriveCommand;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
 import org.usfirst.frc.team3786.robot.subsystems.TankDriveSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
@@ -32,11 +32,9 @@ public class Robot extends TimedRobot {
 	 */
 	public static Robot instance;
 
-	public static final RobotMode mode = RobotMode.DEBUG;
+	public static final RobotMode mode = RobotMode.TANK;
 
 	public Gyroscope gyro = null;
-
-	private TankDriveSubsystem tankDriveSubsystem = null;
 
 	private int driverStationNumber = 0;
 	
@@ -118,10 +116,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
-	}
-
-	public TankDriveSubsystem getDriveSubsystem() {
-		return tankDriveSubsystem;
 	}
 
 	public int getDriveStationNumber() {

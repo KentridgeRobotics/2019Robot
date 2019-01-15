@@ -1,12 +1,12 @@
-package org.usfirst.frc.team3786.robot.commands;
+package org.usfirst.frc.team3786.robot.commands.elevator;
 
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ElevatorDownCommand extends Command {
+public class ElevatorTiltUpCommand extends Command {
 
-	public ElevatorDownCommand() {
+	public ElevatorTiltUpCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(ElevatorSubsystem.getInstance());
@@ -15,7 +15,7 @@ public class ElevatorDownCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		ElevatorSubsystem.getInstance().setElevatorSpeed(-0.5);
+		ElevatorSubsystem.getInstance().setTiltSpeed(0.5);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -32,7 +32,6 @@ public class ElevatorDownCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		ElevatorSubsystem.getInstance().setElevatorSpeed(0);
 	}
 
 	// Called when another command which requires one or more of the same

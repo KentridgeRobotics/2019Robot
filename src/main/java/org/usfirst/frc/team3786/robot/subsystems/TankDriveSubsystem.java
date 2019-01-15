@@ -9,10 +9,18 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class TankDriveSubsystem extends Subsystem {
 
+	private static TankDriveSubsystem instance;
+
 	private WPI_TalonSRX left;
 	private WPI_TalonSRX right;
 
 	private DifferentialDrive differentialDrive;
+
+	public static TankDriveSubsystem getInstance() {
+		if (instance == null)
+			instance = new TankDriveSubsystem();
+		return instance;
+	}
 
 	public TankDriveSubsystem() {
 		left = new WPI_TalonSRX(Mappings.leftMotor);
@@ -34,7 +42,7 @@ public class TankDriveSubsystem extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 	}
 
-	public void gyroAssistedDrive(double x, double y, double turnRate) {
-		differentialDrive.arcadeDrive(y, turnRate * 0.75);
+	public void arcadeDrive(double speed, double turnRate) {
+		differentialDrive.arcadeDrive(speed, turnRate);
 	}
 }

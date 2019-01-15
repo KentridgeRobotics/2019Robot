@@ -1,12 +1,12 @@
-package org.usfirst.frc.team3786.robot.commands;
+package org.usfirst.frc.team3786.robot.commands.grabber;
 
 import org.usfirst.frc.team3786.robot.subsystems.GrabberSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GrabberCloseCommand extends Command {
+public class GrabberInCommand extends Command {
 
-	public GrabberCloseCommand() {
+	public GrabberInCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(GrabberSubsystem.getInstance());
@@ -32,7 +32,6 @@ public class GrabberCloseCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		GrabberSubsystem.getInstance().setGrabberSpeed(0);
 	}
 
 	// Called when another command which requires one or more of the same

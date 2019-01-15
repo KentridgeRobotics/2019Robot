@@ -1,21 +1,18 @@
-package org.usfirst.frc.team3786.robot.commands;
-
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
+package org.usfirst.frc.team3786.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ElevatorUpCommand extends Command {
+public class BoostOnCommand extends Command {
 
-	public ElevatorUpCommand() {
+	public BoostOnCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(ElevatorSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		ElevatorSubsystem.getInstance().setElevatorSpeed(0.5);
+		TankDriveCommand.getInstance().setBoost(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -32,7 +29,6 @@ public class ElevatorUpCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		ElevatorSubsystem.getInstance().setElevatorSpeed(0);
 	}
 
 	// Called when another command which requires one or more of the same
