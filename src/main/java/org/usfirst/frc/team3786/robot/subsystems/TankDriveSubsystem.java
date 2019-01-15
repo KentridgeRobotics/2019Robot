@@ -17,14 +17,17 @@ public class TankDriveSubsystem extends Subsystem {
 	private DifferentialDrive differentialDrive;
 
 	public static TankDriveSubsystem getInstance() {
-		if (instance == null)
+		if(instance == null)
 			instance = new TankDriveSubsystem();
 		return instance;
 	}
-
+	
 	public TankDriveSubsystem() {
 		left = new WPI_TalonSRX(Mappings.leftMotor);
 		right = new WPI_TalonSRX(Mappings.rightMotor);
+
+		left.setSafetyEnabled(false);
+		right.setSafetyEnabled(false);
 
 		left.configOpenloopRamp(0.3, 0);
 		right.configOpenloopRamp(0.3, 0);
