@@ -24,6 +24,7 @@ public class ElevatorSubsystem extends Subsystem {
 		elevatorMotor = new WPI_TalonSRX(Mappings.elevatorMotor);
 		elevatorMotor.setNeutralMode(NeutralMode.Brake);
 		tiltMotor = new WPI_TalonSRX(Mappings.tiltMotor);
+		tiltMotor.setSafetyEnabled(false);
 	}
 
 	@Override
