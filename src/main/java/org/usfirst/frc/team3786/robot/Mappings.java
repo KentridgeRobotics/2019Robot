@@ -1,9 +1,12 @@
 package org.usfirst.frc.team3786.robot;
 
-import org.usfirst.frc.team3786.robot.commands.GrabberCloseCommand;
-import org.usfirst.frc.team3786.robot.commands.GrabberOpenCommand;
+import org.usfirst.frc.team3786.robot.commands.grabber.GrabberCloseCommand;
+import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
+import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopCommand;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
+import org.usfirst.frc.team3786.robot.commands.drive.BoostOffCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.BoostOnCommand;
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {
@@ -22,9 +25,14 @@ public class Mappings {
 
 	public static void setupDefaultMappings() {
 		XboxController primary = OI.getPrimaryController();
-		primary.buttonA.whileHeld(new GrabberOpenCommand());
-		primary.buttonB.whileHeld(new GrabberCloseCommand());
+		primary.buttonA.whenPressed(new BoostOnCommand());
+		primary.buttonA.whenReleased(new BoostOffCommand());
 		XboxController secondary = OI.getSecondaryController();
+		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
+		secondary.buttonA.whenPressed(new GrabberOpenCommand());
+		secondary.buttonA.whenReleased(grabberStopCommand);
+		secondary.buttonB.whenPressed(new GrabberCloseCommand());
+		secondary.buttonB.whenReleased(grabberStopCommand);
 	}
 
 	public static void setupTestMappings() {

@@ -1,14 +1,16 @@
-package org.usfirst.frc.team3786.robot.commands;
+package org.usfirst.frc.team3786.robot.commands.drive;
 
 import org.usfirst.frc.team3786.robot.OI;
 import org.usfirst.frc.team3786.robot.Robot;
+import org.usfirst.frc.team3786.robot.subsystems.TankDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TankDriveCommand extends Command {
 
-
 	public static TankDriveCommand instance;
+
+	private boolean boost = false;
 
 	public static TankDriveCommand getInstance() {
 		if (instance == null)
@@ -19,7 +21,7 @@ public class TankDriveCommand extends Command {
 	public TankDriveCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.instance.getDriveSubsystem());
+		requires(TankDriveSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -30,14 +32,16 @@ public class TankDriveCommand extends Command {
 	protected void execute() {
 		// When the number is negative, the wheels go forwards.
 		// When the number is positive, the wheels go backwards.
-		double leftStickY = OI.getPrimaryController().getLeftStickY();
-		double rightStickY = OI.getPrimaryController().getRightStickY();
-		double limit = OI.getPrimaryController().getLeftTrigger();
-		leftStickY = leftStickY / (limit * 1.2);
-		rightStickY = rightStickY / (limit * 1.2);
-		leftStickY = Math.pow(leftStickY, 5);
-		rightStickY = Math.pow(rightStickY, 5);
-		Robot.instance.getDriveSubsystem().setMotorSpeeds(-leftStickY, rightStickY);
+		double leftStickX = OI.getPrimaryController().getLeftStickX();
+		double rightTrigger = OI.getPrimaryController().getRightTrigger();
+		double leftTrigger = OI.getPrimaryController().getLeftTrigger();
+		double limit;
+		if (boost)
+			limit = 1;
+		else
+			limit = 0.5;
+		double speed = (rightTrigger - leftTrigger) * limit;
+		TankDriveSubsystem.getInstance().arcadeDrive(speed, leftStickX * limit);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -52,6 +56,10 @@ public class TankDriveCommand extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+	}
+
+	public void setBoost(boolean boost) {
+		this.boost = boost;
 	}
 
 }

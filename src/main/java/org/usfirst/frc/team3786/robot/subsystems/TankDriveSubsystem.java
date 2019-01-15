@@ -45,7 +45,7 @@ public class TankDriveSubsystem extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 	}
 
-	public void gyroAssistedDrive(double x, double y, double turnRate) {
-		differentialDrive.arcadeDrive(y, turnRate * 0.75);
+	public void arcadeDrive(double speed, double turnRate) {
+		differentialDrive.arcadeDrive(speed, turnRate);
 	}
 }
