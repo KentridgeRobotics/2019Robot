@@ -9,14 +9,25 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class TankDriveSubsystem extends Subsystem {
 
+	private static TankDriveSubsystem instance;
+
 	private WPI_TalonSRX left;
 	private WPI_TalonSRX right;
 
 	private DifferentialDrive differentialDrive;
 
+	public static TankDriveSubsystem getInstance() {
+		if(instance == null)
+			instance = new TankDriveSubsystem();
+		return instance;
+	}
+	
 	public TankDriveSubsystem() {
 		left = new WPI_TalonSRX(Mappings.leftMotor);
 		right = new WPI_TalonSRX(Mappings.rightMotor);
+
+		left.setSafetyEnabled(false);
+		right.setSafetyEnabled(false);
 
 		left.configOpenloopRamp(0.3, 0);
 		right.configOpenloopRamp(0.3, 0);
