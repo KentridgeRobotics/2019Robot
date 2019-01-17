@@ -1,7 +1,8 @@
 package org.usfirst.frc.team3786.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import org.usfirst.frc.team3786.robot.Mappings;
 
@@ -11,8 +12,8 @@ public class ElevatorSubsystem extends Subsystem {
 
 	private static ElevatorSubsystem instance;
 
-	private WPI_TalonSRX elevatorMotor;
-	private WPI_TalonSRX tiltMotor;
+	private CANSparkMax elevatorMotor;
+	private CANSparkMax tiltMotor;
 
 	public static ElevatorSubsystem getInstance() {
 		if (instance == null)
@@ -21,10 +22,10 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public ElevatorSubsystem() {
-		elevatorMotor = new WPI_TalonSRX(Mappings.elevatorMotor);
-		elevatorMotor.setNeutralMode(NeutralMode.Brake);
-		tiltMotor = new WPI_TalonSRX(Mappings.tiltMotor);
-		tiltMotor.setSafetyEnabled(false);
+		elevatorMotor = new CANSparkMax(Mappings.elevatorMotor, MotorType.kBrushless);
+		elevatorMotor.setIdleMode(IdleMode.kBrake);
+		//tiltMotor = new CANSparkMax(Mappings.tiltMotor, MotorType.kBrushless);
+	
 	}
 
 	@Override
@@ -33,6 +34,7 @@ public class ElevatorSubsystem extends Subsystem {
 
 	public void setElevatorSpeed(double speed) {
 		elevatorMotor.set(speed);
+		System.err.println("[X} HERE'S THE SPEED: " + speed);
 	}
 
 	public void setTiltSpeed(double speed) {
