@@ -15,7 +15,7 @@ public class ElevatorDownCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		ElevatorSubsystem.getInstance().setElevatorSpeed(-0.2);
+		ElevatorSubsystem.getInstance().setElevatorSpeed(-0.5);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

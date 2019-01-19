@@ -1,3 +1,4 @@
+
 package org.usfirst.frc.team3786.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
@@ -25,7 +26,7 @@ public class ElevatorSubsystem extends Subsystem {
 		elevatorMotor = new CANSparkMax(Mappings.elevatorMotor, MotorType.kBrushless);
 		elevatorMotor.setIdleMode(IdleMode.kBrake);
 		//tiltMotor = new CANSparkMax(Mappings.tiltMotor, MotorType.kBrushless);
-	
+		
 	}
 
 	@Override
@@ -34,10 +35,24 @@ public class ElevatorSubsystem extends Subsystem {
 
 	public void setElevatorSpeed(double speed) {
 		elevatorMotor.set(speed);
-		System.err.println("[X} HERE'S THE SPEED: " + speed);
+		System.err.println("[!] HERE'S THE SPEED: " + speed);
 	}
 
 	public void setTiltSpeed(double speed) {
 		tiltMotor.set(speed);
+	}
+
+	public double getRotation() {
+		return elevatorMotor.getEncoder().getPosition();
+	}
+
+	public double getHeight() {
+		return getRotation();
+	}
+	
+	public enum Levels {
+		ONE,
+		TWO,
+		THREE;
 	}
 }

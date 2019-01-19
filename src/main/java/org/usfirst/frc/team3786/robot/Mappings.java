@@ -10,6 +10,7 @@ import org.usfirst.frc.team3786.robot.commands.drive.BoostOnCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand;
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {
@@ -24,13 +25,14 @@ public class Mappings {
 	public final static int flingerMotor = 4;
 
 	public final static int tiltMotor = 5;
-	public final static int elevatorMotor = 14;
+	public final static int elevatorMotor = 8;
 
 	public static void setupDefaultMappings() {
 		XboxController primary = OI.getPrimaryController();
 		primary.buttonA.whenPressed(new BoostOnCommand());
 		primary.buttonA.whenReleased(new BoostOffCommand());
 		primary.buttonX.whenPressed(new ElevatorUpCommand());
+		primary.buttonB.whenPressed(new ElevatorSendCommand());
 		primary.buttonX.whenReleased(new ElevatorStopCommand());
 		primary.buttonY.whenPressed(new ElevatorDownCommand());
 		primary.buttonY.whenReleased(new ElevatorStopCommand());
