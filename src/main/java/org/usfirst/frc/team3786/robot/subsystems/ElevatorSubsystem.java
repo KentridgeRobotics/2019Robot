@@ -52,9 +52,37 @@ public class ElevatorSubsystem extends Subsystem {
 		return getRotation();
 	}
 	
+	public enum VerticalDirection {
+		UP,
+		DOWN,
+		STOP;
+	}
+
 	public enum Levels {
-		ONE,
-		TWO,
-		THREE;
+		ZERO(0.0),
+		ONE(1.0),
+		TWO(2.0),
+		THREE(3.0);
+
+		private double rotations;
+
+		Levels(double rotations) {
+			this.rotations = rotations;
+		}
+		public double getRotations() {
+			return rotations;
+		}
+
+		public Levels up() {
+			return values()[ordinal() + 1];
+		}
+
+		public Levels down() {
+			return values()[ordinal() - 1];
+		}
+
+		public Levels stop() {
+			return values()[ordinal() + 0];
+		}
 	}
 }

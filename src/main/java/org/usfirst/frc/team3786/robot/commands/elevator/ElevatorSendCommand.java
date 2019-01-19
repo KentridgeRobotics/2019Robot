@@ -13,15 +13,16 @@ public class ElevatorSendCommand extends Command {
     private double rotations, currentRotations;
     private boolean done;
 
-    public ElevatorSendCommand() {
+    public ElevatorSendCommand(ElevatorSubsystem.Levels gotoLevel) {
         requires(ElevatorSubsystem.getInstance());
-        levels = levels.ONE;
+        levels = gotoLevel;
     }
 
     @Override
     protected void initialize() {
         rotations = ElevatorSubsystem.getInstance().getRotation();
         done = false;
+        System.out.println("[!] CURRENT LEVEL IS: " + levels);
     }
 
     @Override
@@ -33,21 +34,6 @@ public class ElevatorSendCommand extends Command {
             ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
             done = true;
         }
-        switch (levels) {
-            case ONE:
-                System.out.println("[!] LEVEL 1 SELECTED.");
-                break;
-            case TWO:
-                System.out.println("[!] LEVEL 2 SELECTED.");
-                break;
-            case THREE:
-                System.out.println("[!] LEVEL 3 SELECTED.");
-                break;
-            default:
-                System.out.println("[!] NO LEVEL SELECTED.");
-                break;
-        }
-
     }
 
     @Override
