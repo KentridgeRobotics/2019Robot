@@ -38,8 +38,8 @@ public class TankDriveSubsystem extends Subsystem {
 	public void setMotorSpeeds(double leftSpeed, double rightSpeed) {
 		left.set(leftSpeed);
 		right.set(rightSpeed);
-		Dashboard.getInstance().putString("Left Motor Speed", "speed" + leftSpeed);
-		Dashboard.getInstance().putString("Right Motor Speed", "speed" + rightSpeed);
+		Dashboard.getInstance().putNumber("Left Motor Speed", leftSpeed);
+		Dashboard.getInstance().putNumber("Right Motor Speed", rightSpeed);
 	}
 
 	public void initDefaultCommand() {
