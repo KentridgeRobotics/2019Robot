@@ -1,10 +1,9 @@
 package org.usfirst.frc.team3786.robot.subsystems.vision;
 
-import org.usfirst.frc.team3786.robot.utils.pixy2.links.SPILink;
-
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
+import io.github.pseudoresonance.pixy2api.links.SPILink;
 
 public class Cameras {
 
