@@ -52,7 +52,8 @@ public class ElevatorSubsystem extends Subsystem {
 	
 	public enum VerticalDirection {
 		UP,
-		DOWN;
+		DOWN,
+		STOP;
 	}
 
 	public enum Levels {
@@ -76,6 +77,10 @@ public class ElevatorSubsystem extends Subsystem {
 
 		public Levels down() {
 			return values()[ordinal() - 1];
+		}
+
+		public Levels stop() {
+			return values()[ordinal() + 0];
 		}
 	}
 }

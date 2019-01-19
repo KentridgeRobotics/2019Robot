@@ -32,6 +32,9 @@ public class ElevatorChangeCommand extends Command {
                     currentLevel = levels.ZERO;
                 }
             }
+            if(verticalDirection == verticalDirection.STOP) {
+                currentLevel = levels.stop();
+            }
         }
         done = false;
     }
@@ -60,5 +63,9 @@ public class ElevatorChangeCommand extends Command {
 
     public void down() {
         verticalDirection = verticalDirection.DOWN;
+    }
+
+    public void stop() {
+        verticalDirection = verticalDirection.STOP;
     }
 }
