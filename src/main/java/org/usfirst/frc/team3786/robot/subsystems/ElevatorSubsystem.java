@@ -34,10 +34,24 @@ public class ElevatorSubsystem extends Subsystem {
 
 	public void setElevatorSpeed(double speed) {
 		elevatorMotor.set(speed);
-		System.err.println("[X} HERE'S THE SPEED: " + speed);
+		System.err.println("[!] HERE'S THE SPEED: " + speed);
 	}
 
 	public void setTiltSpeed(double speed) {
 		tiltMotor.set(speed);
+	}
+
+	public int getRotation() {
+		return (int)(elevatorMotor.getEncoder().getPosition());
+	}
+
+	public double getHeight() {
+		return getRotation();
+	}
+	
+	public enum Levels {
+		ONE,
+		TWO,
+		THREE;
 	}
 }
