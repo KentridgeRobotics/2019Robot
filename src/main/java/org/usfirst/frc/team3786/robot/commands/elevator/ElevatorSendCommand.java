@@ -22,23 +22,7 @@ public class ElevatorSendCommand extends Command {
     protected void initialize() {
         rotations = ElevatorSubsystem.getInstance().getRotation();
         done = false;
-        switch (levels) {
-            case ZERO:
-                System.out.println("[!] LEVEL 0 SELECTED.");
-                break;
-            case ONE:
-                System.out.println("[!] LEVEL 1 SELECTED.");
-                break;
-            case TWO:
-                System.out.println("[!] LEVEL 2 SELECTED.");
-                break;
-            case THREE:
-                System.out.println("[!] LEVEL 3 SELECTED.");
-                break;
-            default:
-                System.out.println("[!] NO LEVEL SELECTED.");
-                break;
-        }
+        System.out.println("[!] CURRENT LEVEL IS: " + levels);
     }
 
     @Override

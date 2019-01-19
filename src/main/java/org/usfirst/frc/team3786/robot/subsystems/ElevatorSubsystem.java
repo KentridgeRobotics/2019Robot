@@ -50,6 +50,12 @@ public class ElevatorSubsystem extends Subsystem {
 		return getRotation();
 	}
 	
+	public enum VerticalDirection {
+		UP,
+		DOWN,
+		STOP;
+	}
+
 	public enum Levels {
 		ZERO(0.0),
 		ONE(1.0),
@@ -63,6 +69,18 @@ public class ElevatorSubsystem extends Subsystem {
 		}
 		public double getRotations() {
 			return rotations;
+		}
+
+		public Levels up() {
+			return values()[ordinal() + 1];
+		}
+
+		public Levels down() {
+			return values()[ordinal() - 1];
+		}
+
+		public Levels stop() {
+			return values()[ordinal() + 0];
 		}
 	}
 }
