@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3786.robot.subsystems;
 
+import org.usfirst.frc.team3786.robot.Dashboard;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;

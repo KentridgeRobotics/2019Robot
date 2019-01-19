@@ -5,6 +5,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import org.usfirst.frc.team3786.robot.Mappings;
 
+import org.usfirst.frc.team3786.robot.Dashboard;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -36,6 +38,8 @@ public class TankDriveSubsystem extends Subsystem {
 	public void setMotorSpeeds(double leftSpeed, double rightSpeed) {
 		left.set(leftSpeed);
 		right.set(rightSpeed);
+		Dashboard.getInstance().putString("Left Motor Speed", "speed" + leftSpeed);
+		Dashboard.getInstance().putString("Right Motor Speed", "speed" + rightSpeed);
 	}
 
 	public void initDefaultCommand() {

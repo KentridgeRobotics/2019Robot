@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.Mappings;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -35,6 +36,7 @@ public class ElevatorSubsystem extends Subsystem {
 
 	public void setElevatorSpeed(double speed) {
 		elevatorMotor.set(speed);
+		Dashboard.getInstance().putString("Elevator Speed", "speed" + speed);
 		System.err.println("[!] HERE'S THE SPEED: " + speed);
 	}
 
