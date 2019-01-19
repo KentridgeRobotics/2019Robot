@@ -1,16 +1,17 @@
 package org.usfirst.frc.team3786.robot.commands.elevator;
 
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.Levels;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ElevatorChangeCommand extends Command {
     
-    ElevatorSubsystem.Levels levels;
-    ElevatorSubsystem.Levels currentLevel = levels.ZERO;
     private boolean done;
-    private double desiredRotations = levels.getRotations();
+    private double desiredRotations = 0;
 
     private ElevatorSubsystem.VerticalDirection verticalDirection;
+    private ElevatorSubsystem.Levels currentLevel = Levels.ZERO;
 
     public ElevatorChangeCommand(ElevatorSubsystem.VerticalDirection changeLevel) {
         requires(ElevatorSubsystem.getInstance());
