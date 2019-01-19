@@ -3,6 +3,7 @@ package org.usfirst.frc.team3786.robot;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberCloseCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopCommand;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.Levels;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.BoostOffCommand;
@@ -32,7 +33,7 @@ public class Mappings {
 		primary.buttonA.whenPressed(new BoostOnCommand());
 		primary.buttonA.whenReleased(new BoostOffCommand());
 		primary.buttonX.whenPressed(new ElevatorUpCommand());
-		primary.buttonB.whenPressed(new ElevatorSendCommand());
+		primary.buttonB.whenPressed(new ElevatorSendCommand(Levels.ZERO));
 		primary.buttonX.whenReleased(new ElevatorStopCommand());
 		primary.buttonY.whenPressed(new ElevatorDownCommand());
 		primary.buttonY.whenReleased(new ElevatorStopCommand());

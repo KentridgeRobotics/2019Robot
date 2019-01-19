@@ -51,6 +51,7 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 	
 	public enum Levels {
+		ZERO,
 		ONE,
 		TWO,
 		THREE;
