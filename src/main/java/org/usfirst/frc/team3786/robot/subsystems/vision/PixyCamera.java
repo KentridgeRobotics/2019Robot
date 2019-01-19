@@ -2,10 +2,10 @@ package org.usfirst.frc.team3786.robot.subsystems.vision;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team3786.robot.utils.pixy2.Pixy2;
-import org.usfirst.frc.team3786.robot.utils.pixy2.Pixy2CCC;
-import org.usfirst.frc.team3786.robot.utils.pixy2.Pixy2CCC.Block;
-import org.usfirst.frc.team3786.robot.utils.pixy2.links.Link;
+import io.github.pseudoresonance.pixy2api.Pixy2;
+import io.github.pseudoresonance.pixy2api.Pixy2CCC;
+import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
+import io.github.pseudoresonance.pixy2api.links.Link;
 
 public class PixyCamera {
 
