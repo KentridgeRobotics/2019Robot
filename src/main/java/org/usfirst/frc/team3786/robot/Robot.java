@@ -7,13 +7,16 @@
 
 package org.usfirst.frc.team3786.robot;
 
+import org.usfirst.frc.team3786.robot.commands.drive.TankDriveCommand;
+import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
+import org.usfirst.frc.team3786.robot.subsystems.TankDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
-import org.usfirst.frc.team3786.robot.utils.LED;
 
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,29 +27,35 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public class Robot extends TimedRobot {
 
+	/**
+	 * DO NOT MODIFY
+	 */
 	public static Robot instance;
 
-	private UsbCamera camera;
-	public Gyroscope gyro;
-	private Dashboard Dash = new Dashboard();
+	public static final RobotMode mode = RobotMode.TANK;
 
+	public Gyroscope gyro = null;
+
+	private int driverStationNumber = 0;
+	
 	@Override
 	public void robotInit() {
-		camera = CameraServer.getInstance().startAutomaticCapture();
-		
-		if (camera != null) {
-			camera.setResolution(320, 240);
-			camera.setFPS(30);
-			camera.setWhiteBalanceManual(5000);
-			camera.setBrightness(50);
-			camera.setExposureManual(50);
+		if (mode == RobotMode.TANK) {
+			System.out.println("USING TANK DRIVE");
+			Mappings.setupDefaultMappings();
+		} else if (mode == RobotMode.DEBUG) {
+			System.out.println("USING DEBUG DRIVE");
+			Mappings.setupTestMappings();
 		}
+		driverStationNumber = DriverStation.getInstance().getLocation();
+		Cameras.setup();
 		gyro = Gyroscope.getInstance();
-		LED.setRGB(60, 0, 0);
 	}
 
 	@Override
 	public void robotPeriodic() {
+		Scheduler.getInstance().run();
+		Cameras.run();
 	}
 
 	/**
@@ -54,7 +63,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		LED.setRGB(60, 0, 0);
+		if (mode == RobotMode.TANK)
+			TankDriveCommand.getInstance().cancel();
+		else if (mode == RobotMode.DEBUG)
+			DebugMotorController.getInstance().cancel();
 	}
 
 	@Override
@@ -66,13 +78,14 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopInit() {
-		LED.setBrightness(0.25f);
-		LED.setHue(0);
+		if (mode == RobotMode.TANK)
+			TankDriveCommand.getInstance().start();
+		else if (mode == RobotMode.DEBUG)
+			DebugMotorController.getInstance().start();
 	}
 
 	@Override
 	public void teleopPeriodic() {
-		LED.colorCyclePeriodic();
 	}
 
 	/**
@@ -80,7 +93,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		LED.setRGB(0, 255, 0);
+		if (mode == RobotMode.TANK)
+			TankDriveCommand.getInstance().cancel();
+		else if (mode == RobotMode.DEBUG)
+			DebugMotorController.getInstance().cancel();
 	}
 
 	@Override
@@ -92,11 +108,23 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testInit() {
-		LED.setRGB(60, 0, 70);
+		if (mode == RobotMode.TANK)
+			TankDriveCommand.getInstance().cancel();
+		else if (mode == RobotMode.DEBUG)
+			DebugMotorController.getInstance().cancel();
 	}
 
 	@Override
 	public void testPeriodic() {
+	}
+
+	public int getDriveStationNumber() {
+		return driverStationNumber;
+	}
+
+	public enum RobotMode {
+		TANK,
+		DEBUG;
 	}
 
 	/**
