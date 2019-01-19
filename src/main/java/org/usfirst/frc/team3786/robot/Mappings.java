@@ -42,7 +42,7 @@ public class Mappings {
 		primary.buttonBumperLeft.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
 		primary.buttonBumperLeft.whenReleased(new ElevatorChangeCommand(VerticalDirection.STOP));
 		primary.buttonBumperRight.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
-		primary.buttonBumperRight.whenPressed(new ElevatorChangeCommand(VerticalDirection.STOP));
+		primary.buttonBumperRight.whenReleased(new ElevatorChangeCommand(VerticalDirection.STOP));
 		XboxController secondary = OI.getSecondaryController();
 		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
 		secondary.buttonA.whenPressed(new GrabberOpenCommand());
