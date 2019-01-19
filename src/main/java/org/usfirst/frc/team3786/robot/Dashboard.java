@@ -11,19 +11,21 @@ public class Dashboard
 
     private static Dashboard instance;
 
-    public void init(boolean showDiagonistics) 
+    private boolean shouldDisplayField(String key)
     {
-        SmartDashboard.putString("init called", "true");
+        return true;
     }
 
-    public void periodic() 
+    private boolean showDiagnostics;
+
+    public void init(boolean showDiagonistics) 
     {
-        SmartDashboard.putBoolean("periodic.called", true);
+        this.showDiagnostics = showDiagonistics;
     }
 
     public void putString(String key, String value) 
     {
-        if (key.equals("Dashboard Mode")) 
+        if (shouldDisplayField(key)) 
             {
                 SmartDashboard.putString(key, value);
             }
@@ -31,7 +33,27 @@ public class Dashboard
 
     public void putNumber(String key, double value)
     {
+        if(shouldDisplayField(key))
+
+        {
         SmartDashboard.putNumber(key, value);
+        }
+    }
+    
+    public void putBoolean(String key, boolean value)
+    {
+        if(shouldDisplayField(key))
+        {
+            SmartDashboard.putBoolean(key, value);
+        }
+    }
+    
+    public void putData(String key, Sendable value)
+    {
+        if(shouldDisplayField(key))
+        {
+            SmartDashboard.putData(key, value);
+        }
     }
 
         public static Dashboard getInstance() 
