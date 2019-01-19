@@ -20,20 +20,19 @@ public class ElevatorSendCommand extends Command {
 
     @Override
     protected void initialize() {
-        rotations = ElevatorSubsystem.getInstance().getRotation();
+        currentRotations = ElevatorSubsystem.getInstance().getRotation();
         done = false;
         System.out.println("[!] CURRENT LEVEL IS: " + levels);
     }
 
     @Override
     protected void execute() {
-        currentRotations = ElevatorSubsystem.getInstance().getRotation();
-        System.out.println("[!] NUMBER OF ROTATIONS: " + rotations);
-        if(rotations >= currentRotations + 1) {
-            levels = levels.ONE;
-            ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+        rotations = ElevatorSubsystem.getInstance().getRotation();
+        //System.out.println("[!] NUMBER OF ROTATIONS: " + rotations);
+        if(rotations - currentRotations >= 1.0) {
             done = true;
         }
+
     }
 
     @Override
@@ -43,7 +42,7 @@ public class ElevatorSendCommand extends Command {
 
     @Override
     protected void end() {
-        
+        ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);        
     }
 
     @Override

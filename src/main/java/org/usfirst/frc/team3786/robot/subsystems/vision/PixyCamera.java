@@ -24,7 +24,7 @@ public class PixyCamera {
     public void run() {
         pixy.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25);
         ArrayList<Block> blocks = pixy.getCCC().getBlocks();
-        System.out.println("Blocks Found: " + blocks.size());
+        //System.out.println("Blocks Found: " + blocks.size());
         for (Block b : blocks) {
             System.out.println(b.toString());
         }

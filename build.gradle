@@ -46,12 +46,12 @@ repositories {
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
 dependencies {
-	implementation 'pw.otake.pseudoresonance:pixy2-java-api:1.0'
-    implementation wpi.deps.wpilib()
-    implementation wpi.deps.vendor.java()
+	compile 'pw.otake.pseudoresonance:pixy2-java-api:1.0'
+    compile wpi.deps.wpilib()
+    compile wpi.deps.vendor.java()
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
-    testImplementation 'junit:junit:4.12'
+    testCompile 'junit:junit:4.12'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
