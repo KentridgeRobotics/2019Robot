@@ -13,27 +13,19 @@ public class ElevatorSendCommand extends Command {
     private double rotations, currentRotations;
     private boolean done;
 
-    public ElevatorSendCommand() {
+    public ElevatorSendCommand(ElevatorSubsystem.Levels gotoLevel) {
         requires(ElevatorSubsystem.getInstance());
-        levels = levels.ONE;
+        levels = gotoLevel;
     }
 
     @Override
     protected void initialize() {
         rotations = ElevatorSubsystem.getInstance().getRotation();
         done = false;
-    }
-
-    @Override
-    protected void execute() {
-        currentRotations = ElevatorSubsystem.getInstance().getRotation();
-        System.out.println("[!] NUMBER OF ROTATIONS: " + rotations);
-        if(rotations >= currentRotations + 1) {
-            levels = levels.ONE;
-            ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
-            done = true;
-        }
         switch (levels) {
+            case ZERO:
+                System.out.println("[!] LEVEL 0 SELECTED.");
+                break;
             case ONE:
                 System.out.println("[!] LEVEL 1 SELECTED.");
                 break;
@@ -47,7 +39,17 @@ public class ElevatorSendCommand extends Command {
                 System.out.println("[!] NO LEVEL SELECTED.");
                 break;
         }
+    }
 
+    @Override
+    protected void execute() {
+        currentRotations = ElevatorSubsystem.getInstance().getRotation();
+        System.out.println("[!] NUMBER OF ROTATIONS: " + rotations);
+        if(rotations >= currentRotations + 1) {
+            levels = levels.ONE;
+            ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+            done = true;
+        }
     }
 
     @Override
