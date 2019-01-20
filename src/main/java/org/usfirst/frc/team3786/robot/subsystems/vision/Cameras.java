@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3786.robot.subsystems.vision;
 
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
 import io.github.pseudoresonance.pixy2api.links.SPILink;
 
@@ -22,7 +21,7 @@ public class Cameras {
     public static void initDrive() {
         drive = CameraServer.getInstance().startAutomaticCapture();
         if (drive != null) {
-			drive.setVideoMode(PixelFormat.kBGR, 320, 240, 30);
+			//drive.setVideoMode(PixelFormat.kBGR, 320, 240, 30);
 			drive.setResolution(320, 240);
             drive.setFPS(30);
             drive.setWhiteBalanceManual(5000);
