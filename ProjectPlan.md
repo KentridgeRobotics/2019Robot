@@ -43,5 +43,15 @@ to face the vision targets. That should put us in the correct alignment.
 Direction and distance to the end of the nearest tape line. 
 Direction and distance to the vision targets.
 
-## Components
+4. Climbing
 
+- Turn all motors to brake mode
+- Lift front grabber
+- drive forward until close enough
+- throttle to zero
+- (PARALLEL) Push down on back and front lifters at the same speed. Use gyroscope to keep the bot level.
+- Stop lifting when we're high enough
+- Drive forward using the rear rollers and the drive wheels on very low speed
+- Stop when lifter is close enough
+- Pull up the lifter and raise the grabber
+- drive forward a bit more and stop
