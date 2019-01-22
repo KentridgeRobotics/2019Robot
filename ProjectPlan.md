@@ -55,3 +55,7 @@ Direction and distance to the vision targets.
 - Stop when lifter is close enough
 - Pull up the lifter and raise the grabber
 - drive forward a bit more and stop
+
+5. Grabber
+
+- In the grabber close command, we can use getOutputCurrent() (Talon method) to determine when the motor stalls (current will go up), and back off on the throttle for the motor. If the motor is holding jaws closed, it should be fine to leave it engaged at low-ish power until released (maybe).
