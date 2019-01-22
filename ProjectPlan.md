@@ -29,6 +29,8 @@ Picking up a port cover?
 
 Driving onto the high platform?
 
+Brushless motor controllers MUST use the setSmartCurrentLimit() method of CANSparkMax, to avoid burning out the NEOs.
+
 2. Create diagnostic vs. competition dashboard
 
 Competition mode: only the important stuff is displayed: camera, autonomous settings (are there any?), current auto action that is running, current target, current speed settings
