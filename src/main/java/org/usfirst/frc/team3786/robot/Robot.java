@@ -8,15 +8,20 @@
 package org.usfirst.frc.team3786.robot;
 
 import org.usfirst.frc.team3786.robot.commands.drive.TankDriveCommand;
+
+import java.awt.Color;
+
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
 import org.usfirst.frc.team3786.robot.subsystems.TankDriveSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
+import org.usfirst.frc.team3786.robot.utils.LED;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,7 +42,11 @@ public class Robot extends TimedRobot {
 	public Gyroscope gyro = null;
 
 	private int driverStationNumber = 0;
-	
+
+	private static final Color visionColor = new Color(0, 255, 0);
+	private static final Color idleColor = new Color(0, 0, 0);
+	private static byte brightness = (byte) 255;
+
 	@Override
 	public void robotInit() {
 		if (mode == RobotMode.TANK) {
@@ -50,12 +59,20 @@ public class Robot extends TimedRobot {
 		driverStationNumber = DriverStation.getInstance().getLocation();
 		Cameras.setup();
 		gyro = Gyroscope.getInstance();
+		LED.setup();
+		LED.setRGB(idleColor);
+		SmartDashboard.putNumber("LED.BRIGHTNESS", 255);
 	}
 
 	@Override
 	public void robotPeriodic() {
 		Scheduler.getInstance().run();
 		Cameras.run();
+		byte bright = (byte) SmartDashboard.getNumber("LED.BRIGHTNESS", 0);
+		if (brightness != bright) {
+			brightness = bright;
+			LED.setBrightness(bright);
+		}
 	}
 
 	/**
@@ -67,6 +84,7 @@ public class Robot extends TimedRobot {
 			TankDriveCommand.getInstance().cancel();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
+		LED.setRGB(idleColor);
 	}
 
 	@Override
@@ -82,6 +100,7 @@ public class Robot extends TimedRobot {
 			TankDriveCommand.getInstance().start();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().start();
+		LED.setRGB(visionColor);
 	}
 
 	@Override
@@ -97,6 +116,7 @@ public class Robot extends TimedRobot {
 			TankDriveCommand.getInstance().cancel();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
+		LED.setRGB(visionColor);
 	}
 
 	@Override
@@ -112,6 +132,7 @@ public class Robot extends TimedRobot {
 			TankDriveCommand.getInstance().cancel();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
+		LED.setRGB(visionColor);
 	}
 
 	@Override
@@ -123,8 +144,7 @@ public class Robot extends TimedRobot {
 	}
 
 	public enum RobotMode {
-		TANK,
-		DEBUG;
+		TANK, DEBUG;
 	}
 
 	/**
