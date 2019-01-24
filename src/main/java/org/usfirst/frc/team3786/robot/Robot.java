@@ -12,7 +12,6 @@ import org.usfirst.frc.team3786.robot.commands.drive.TankDriveCommand;
 import java.awt.Color;
 
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
-import org.usfirst.frc.team3786.robot.subsystems.TankDriveSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.LED;
@@ -84,7 +83,7 @@ public class Robot extends TimedRobot {
 			TankDriveCommand.getInstance().cancel();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
-			LED.setColor(idleColor);
+		LED.setColor(idleColor);
 	}
 
 	@Override
@@ -100,7 +99,7 @@ public class Robot extends TimedRobot {
 			TankDriveCommand.getInstance().start();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().start();
-			LED.setColor(visionColor);
+		LED.setColor(visionColor);
 	}
 
 	@Override
@@ -116,7 +115,7 @@ public class Robot extends TimedRobot {
 			TankDriveCommand.getInstance().cancel();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
-			LED.setColor(visionColor);
+		LED.setColor(visionColor);
 	}
 
 	@Override
@@ -132,7 +131,7 @@ public class Robot extends TimedRobot {
 			TankDriveCommand.getInstance().cancel();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
-			LED.setColor(visionColor);
+		LED.setColor(visionColor);
 	}
 
 	@Override
