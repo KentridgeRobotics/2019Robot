@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
 		Cameras.setup();
 		gyro = Gyroscope.getInstance();
 		LED.setup();
-		LED.setRGB(idleColor);
+		LED.setColor(idleColor);
 		SmartDashboard.putNumber("LED.BRIGHTNESS", 255);
 	}
 
@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
 			TankDriveCommand.getInstance().cancel();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
-		LED.setRGB(idleColor);
+			LED.setColor(idleColor);
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class Robot extends TimedRobot {
 			TankDriveCommand.getInstance().start();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().start();
-		LED.setRGB(visionColor);
+			LED.setColor(visionColor);
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class Robot extends TimedRobot {
 			TankDriveCommand.getInstance().cancel();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
-		LED.setRGB(visionColor);
+			LED.setColor(visionColor);
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class Robot extends TimedRobot {
 			TankDriveCommand.getInstance().cancel();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
-		LED.setRGB(visionColor);
+			LED.setColor(visionColor);
 	}
 
 	@Override
