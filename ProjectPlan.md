@@ -29,6 +29,8 @@ Picking up a port cover?
 
 Driving onto the high platform?
 
+Brushless motor controllers MUST use the setSmartCurrentLimit() method of CANSparkMax, to avoid burning out the NEOs.
+
 2. Create diagnostic vs. competition dashboard
 
 Competition mode: only the important stuff is displayed: camera, autonomous settings (are there any?), current auto action that is running, current target, current speed settings
@@ -55,3 +57,7 @@ Direction and distance to the vision targets.
 - Stop when lifter is close enough
 - Pull up the lifter and raise the grabber
 - drive forward a bit more and stop
+
+5. Grabber
+
+- In the grabber close command, we can use getOutputCurrent() (Talon method) to determine when the motor stalls (current will go up), and back off on the throttle for the motor. If the motor is holding jaws closed, it should be fine to leave it engaged at low-ish power until released (maybe).
