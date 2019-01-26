@@ -51,6 +51,8 @@ public class TankDriveSubsystem extends Subsystem {
 	}
 
 	public void arcadeDrive(double speed, double turnRate) {
+		Dashboard.getInstance().putNumber("Driving Speed", speed);
+		Dashboard.getInstance().putNumber("TurnRate", turnRate);
 		if(this.brake) {
 			speed *= 0.0;
 			turnRate *= 0.0;

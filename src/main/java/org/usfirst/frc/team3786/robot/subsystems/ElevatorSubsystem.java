@@ -42,6 +42,7 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void setTiltSpeed(double speed) {
+		Dashboard.getInstance().putNumber("Tilt Speed", speed);
 		tiltMotor.set(speed);
 	}
 
