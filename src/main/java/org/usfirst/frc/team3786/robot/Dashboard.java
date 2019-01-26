@@ -23,7 +23,7 @@ public class Dashboard
         this.showDiagnostics = showDiagonistics;
     }
 
-    public void putString(String key, String value) 
+    public void putString(boolean isCompetition, String key, String value) 
     {
         if (shouldDisplayField(key)) 
             {
@@ -31,7 +31,7 @@ public class Dashboard
             }
     }
 
-    public void putNumber(String key, double value)
+    public void putNumber(boolean isCompetition, String key, double value)
     {
         if(shouldDisplayField(key))
 
@@ -40,7 +40,7 @@ public class Dashboard
         }
     }
     
-    public void putBoolean(String key, boolean value)
+    public void putBoolean(boolean isCompetition, String key, boolean value)
     {
         if(shouldDisplayField(key))
         {
@@ -48,7 +48,7 @@ public class Dashboard
         }
     }
     
-    public void putData(String key, Sendable value)
+    public void putData(boolean isCompetition,String key, Sendable value)
     {
         if(shouldDisplayField(key))
         {
@@ -62,5 +62,7 @@ public class Dashboard
                 instance = new Dashboard();
             return instance;
         }
+
+
 }
 
