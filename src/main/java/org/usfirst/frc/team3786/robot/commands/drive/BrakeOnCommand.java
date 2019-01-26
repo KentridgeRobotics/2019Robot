@@ -4,27 +4,28 @@ import org.usfirst.frc.team3786.robot.subsystems.TankDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BrakeCommand extends Command {
+public class BrakeOnCommand extends Command {
 
-    private boolean isBrake;
-
-    public BrakeCommand(boolean isBrake) {
+    public BrakeOnCommand() {
         requires(TankDriveSubsystem.getInstance());
-        this.isBrake = isBrake;
     }
-    
+
     @Override
     protected void initialize() {
-        if(isBrake == true) {
-            TankDriveSubsystem.getInstance().setMotorSpeeds(0.0, 0.0);
-        }
-        if(isBrake == false) {
-
-        }
     }
 
+    @Override
+    protected void execute() {
+        TankDriveSubsystem.getInstance().setBrake(true);
+    }
+
+    @Override
     protected boolean isFinished() {
-        return false;
+        return true;
+    }
+
+    @Override
+    protected void end() {
     }
 
 }
