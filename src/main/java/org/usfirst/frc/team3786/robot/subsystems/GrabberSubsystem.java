@@ -24,8 +24,14 @@ public class GrabberSubsystem extends Subsystem {
 	public GrabberSubsystem() {
 		grabber = new WPI_TalonSRX(Mappings.grabberMotor);
 		grabber.setSafetyEnabled(false);
+		grabber.configPeakCurrentLimit(20);
 		flinger = new WPI_TalonSRX(Mappings.flingerMotor);
 		flinger.setSafetyEnabled(false);
+	}
+
+	public double getGrabberCurrent()
+	{
+		return grabber.getOutputCurrent();
 	}
 
 	public void initDefaultCommand() {
