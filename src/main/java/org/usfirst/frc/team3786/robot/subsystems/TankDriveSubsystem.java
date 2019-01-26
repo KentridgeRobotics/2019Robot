@@ -19,6 +19,9 @@ public class TankDriveSubsystem extends Subsystem {
 
 	private DifferentialDrive differentialDrive;
 
+	private boolean boost = false;
+	private boolean brake = false;
+
 	public static TankDriveSubsystem getInstance() {
 		if (instance == null)
 			instance = new TankDriveSubsystem();
@@ -38,8 +41,8 @@ public class TankDriveSubsystem extends Subsystem {
 	public void setMotorSpeeds(double leftSpeed, double rightSpeed) {
 		left.set(leftSpeed);
 		right.set(rightSpeed);
-		Dashboard.getInstance().putNumber("Left Motor Speed", leftSpeed);
-		Dashboard.getInstance().putNumber("Right Motor Speed", rightSpeed);
+		Dashboard.getInstance().putNumber(false, "Left Motor Speed", leftSpeed);
+		Dashboard.getInstance().putNumber(false, "Right Motor Speed", rightSpeed);
 	}
 
 	public void initDefaultCommand() {
@@ -48,16 +51,39 @@ public class TankDriveSubsystem extends Subsystem {
 	}
 
 	public void arcadeDrive(double speed, double turnRate) {
+		Dashboard.getInstance().putBoolean(true, "Boost", boost);
+		Dashboard.getInstance().putBoolean(true, "Break", brake);
+		Dashboard.getInstance().putNumber(false, "Driving Speed", speed);
+		Dashboard.getInstance().putNumber(false, "TurnRate", turnRate);
+		if(this.brake) {
+			speed *= 0.0;
+			turnRate *= 0.0;
+		}
+
+		if(this.boost) {
+			speed *= 2.0;
+			turnRate *= 2.0;
+		}
+
 		differentialDrive.arcadeDrive(speed, turnRate);
 	}
 
 	public void setBrake(boolean brake) {
-		if (brake) {
+		this.brake = brake;
+		if (this.brake) {
 			left.setNeutralMode(NeutralMode.Brake);
 			right.setNeutralMode(NeutralMode.Brake);
 		} else {
 			left.setNeutralMode(NeutralMode.Coast);
 			right.setNeutralMode(NeutralMode.Coast);
 		}
+	}
+
+	public void setBoost(boolean boost) {
+		this.boost = boost;
+	}
+
+	public boolean getBoost() {
+		return this.boost;
 	}
 }

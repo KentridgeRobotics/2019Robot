@@ -41,12 +41,12 @@ public class GrabberSubsystem extends Subsystem {
 
 	public void setGrabberSpeed(double speed) {
 		grabber.set(speed);
-		Dashboard.getInstance().putNumber("Grabber Speed", speed);
+		Dashboard.getInstance().putNumber(false, "Grabber Speed", speed);
 	}
 
 	public void setFlingerSpeed(double speed) {
 		flinger.set(speed);
-		Dashboard.getInstance().putNumber("Flinger Speed", speed);
+		Dashboard.getInstance().putNumber(true, "Flinger Speed", speed);
 	}
 
 }
