@@ -4,7 +4,6 @@ import java.util.HashMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public class Dashboard 
 {
@@ -36,7 +35,7 @@ public class Dashboard
         if(shouldDisplayField(key))
 
         {
-        SmartDashboard.putNumber(key, value);
+            SmartDashboard.putNumber(key, value);
         }
     }
     
