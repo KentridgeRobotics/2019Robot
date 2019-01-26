@@ -9,7 +9,8 @@ import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecreme
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.BoostOffCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.BoostOnCommand;
-import org.usfirst.frc.team3786.robot.commands.drive.BrakeCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.BrakeOnCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.BrakeOffCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
@@ -33,8 +34,8 @@ public class Mappings {
 
 	public static void setupDefaultMappings() {
 		XboxController primary = OI.getPrimaryController();
-		primary.buttonA.whenPressed(new BrakeCommand(true));
-		primary.buttonA.whenReleased(new BrakeCommand(false));
+		primary.buttonA.whenPressed(new BrakeOnCommand());
+		primary.buttonA.whenReleased(new BrakeOffCommand());
 		primary.buttonX.whenPressed(new ElevatorUpCommand());
 		primary.buttonB.whenPressed(new BoostOnCommand());
 		primary.buttonB.whenPressed(new BoostOffCommand());
