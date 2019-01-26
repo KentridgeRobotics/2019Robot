@@ -16,6 +16,7 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.ClimbWhileLevelCommand;
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {
@@ -53,6 +54,7 @@ public class Mappings {
 		secondary.buttonB.whenPressed(new GrabberCloseCommand());
 		secondary.buttonB.whenReleased(grabberStopCommand);
 		secondary.buttonBumperRight.whenPressed(new ElevatorSendCommand(Levels.ZERO));
+		secondary.buttonY.whenPressed(new ClimbWhileLevelCommand());
 	}
 
 	public static void setupTestMappings() {
