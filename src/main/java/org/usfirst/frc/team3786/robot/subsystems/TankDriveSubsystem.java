@@ -51,6 +51,16 @@ public class TankDriveSubsystem extends Subsystem {
 	}
 
 	public void arcadeDrive(double speed, double turnRate) {
+		if(this.brake == true) {
+			speed *= 0.0;
+			turnRate *= 0.0;
+		}
+
+		if(this.boost == true) {
+			speed *= 2.0;
+			turnRate *= 2.0;
+		}
+
 		differentialDrive.arcadeDrive(speed, turnRate);
 	}
 
