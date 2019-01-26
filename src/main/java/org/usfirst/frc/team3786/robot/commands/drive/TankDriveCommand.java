@@ -10,7 +10,7 @@ public class TankDriveCommand extends Command {
 
 	public static TankDriveCommand instance;
 
-	private boolean boost = false;
+	private boolean boost = TankDriveSubsystem.getInstance().getBoost();
 
 	public static TankDriveCommand getInstance() {
 		if (instance == null)
@@ -34,9 +34,7 @@ public class TankDriveCommand extends Command {
 		// When the number is positive, the wheels go backwards.
 		double leftStickY = OI.getPrimaryController().getLeftStickY();
 		double leftStickX = OI.getPrimaryController().getLeftStickX();
-		double limit;
-		limit = boost ? 1 : 0.5;
-		TankDriveSubsystem.getInstance().arcadeDrive(leftStickY * limit, leftStickX * limit);
+		TankDriveSubsystem.getInstance().arcadeDrive(leftStickY, leftStickX);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -52,9 +50,4 @@ public class TankDriveCommand extends Command {
 	// subsystems is scheduled to run
 	protected void interrupted() {
 	}
-
-	public void setBoost(boolean boost) {
-		this.boost = boost;
-	}
-
 }

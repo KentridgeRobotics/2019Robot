@@ -19,6 +19,9 @@ public class TankDriveSubsystem extends Subsystem {
 
 	private DifferentialDrive differentialDrive;
 
+	private boolean boost = false;
+	private boolean brake = false;
+
 	public static TankDriveSubsystem getInstance() {
 		if (instance == null)
 			instance = new TankDriveSubsystem();
@@ -52,12 +55,21 @@ public class TankDriveSubsystem extends Subsystem {
 	}
 
 	public void setBrake(boolean brake) {
-		if (brake) {
+		this.brake = brake;
+		if (this.brake) {
 			left.setNeutralMode(NeutralMode.Brake);
 			right.setNeutralMode(NeutralMode.Brake);
 		} else {
 			left.setNeutralMode(NeutralMode.Coast);
 			right.setNeutralMode(NeutralMode.Coast);
 		}
+	}
+
+	public void setBoost(boolean boost) {
+		this.boost = boost;
+	}
+
+	public boolean getBoost() {
+		return this.boost;
 	}
 }
