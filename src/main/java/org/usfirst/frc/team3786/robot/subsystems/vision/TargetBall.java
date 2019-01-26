@@ -2,6 +2,7 @@ package org.usfirst.frc.team3786.robot.subsystems.vision;
 
 import java.util.ArrayList;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3786.robot.Dashboard;
 
 import io.github.pseudoresonance.pixy2api.Pixy2;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC;
@@ -34,8 +35,8 @@ public class TargetBall extends Command {
                 largestBlock = block;
             }
         }
-        System.out.println("[!] BALL X: " + largestBlock.getX());
-        System.out.println("[!] BALL Y: " + largestBlock.getY());
+        Dashboard.getInstance().putNumber(false, "Ball X", largestBlock.getX());
+        Dashboard.getInstance().putNumber(false, "Ball Y", largestBlock.getY());
     }
 
     @Override
