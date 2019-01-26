@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
 
 	public static final RobotMode mode = RobotMode.TANK;
 
-	public Gyroscope gyro = null;
+	public Gyroscope gyro = new Gyroscope();
 
 	private int driverStationNumber = 0;
 
@@ -66,6 +66,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		Scheduler.getInstance().run();
+		gyro.getInstance().run();
 		Cameras.run();
 		byte bright = (byte) SmartDashboard.getNumber("LED.BRIGHTNESS", 0);
 		if (brightness != bright) {
