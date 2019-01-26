@@ -9,6 +9,7 @@ import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecreme
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.BoostOffCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.BoostOnCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.BrakeCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
@@ -32,10 +33,11 @@ public class Mappings {
 
 	public static void setupDefaultMappings() {
 		XboxController primary = OI.getPrimaryController();
-		primary.buttonA.whenPressed(new BoostOnCommand());
-		primary.buttonA.whenReleased(new BoostOffCommand());
+		primary.buttonA.whenPressed(new BrakeCommand(true));
+		primary.buttonA.whenReleased(new BrakeCommand(false));
 		primary.buttonX.whenPressed(new ElevatorUpCommand());
-		primary.buttonB.whenPressed(new ElevatorSendCommand(Levels.ZERO));
+		primary.buttonB.whenPressed(new BoostOnCommand());
+		primary.buttonB.whenPressed(new BoostOffCommand());
 		primary.buttonX.whenReleased(new ElevatorStopCommand());
 		primary.buttonY.whenPressed(new ElevatorDownCommand());
 		primary.buttonY.whenReleased(new ElevatorStopCommand());
@@ -49,6 +51,7 @@ public class Mappings {
 		secondary.buttonA.whenReleased(grabberStopCommand);
 		secondary.buttonB.whenPressed(new GrabberCloseCommand());
 		secondary.buttonB.whenReleased(grabberStopCommand);
+		secondary.buttonBumperRight.whenPressed(new ElevatorSendCommand(Levels.ZERO));
 	}
 
 	public static void setupTestMappings() {
