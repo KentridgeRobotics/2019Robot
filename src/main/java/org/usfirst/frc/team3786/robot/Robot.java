@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		Scheduler.getInstance().run();
-		gyro.getInstance().run();
+		gyro.run();
 		Cameras.run();
 		byte bright = (byte) SmartDashboard.getNumber("LED.BRIGHTNESS", 0);
 		if (brightness != bright) {
