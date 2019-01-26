@@ -33,8 +33,8 @@ public class TankDriveCommand extends Command {
 		double leftStickY = OI.getPrimaryController().getLeftStickY();
 		double leftStickX = OI.getPrimaryController().getLeftStickX();
 		double leftTrigger = OI.getPrimaryController().getLeftTrigger();
-		TankDriveSubsystem.getInstance().arcadeDrive(leftStickY * leftTrigger / 2.0, leftStickX * leftTrigger / 2.0);
-	}
+		TankDriveSubsystem.getInstance().arcadeDrive(leftStickY * leftTrigger - 1 / 2.0, leftStickX * leftTrigger - 1 / 2.0);
+	}-
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
