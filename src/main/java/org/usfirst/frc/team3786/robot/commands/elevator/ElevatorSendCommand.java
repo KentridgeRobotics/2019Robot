@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ElevatorSendCommand extends Command {
     
     ElevatorSubsystem.Levels levels;
-    private double rotations, currentRotations;
+    private double rotations;
     private boolean done;
 
     public ElevatorSendCommand(ElevatorSubsystem.Levels gotoLevel) {
@@ -20,7 +20,6 @@ public class ElevatorSendCommand extends Command {
 
     @Override
     protected void initialize() {
-        currentRotations = ElevatorSubsystem.getInstance().getRotation();
         done = false;
         System.out.println("[!] CURRENT LEVEL IS: " + levels);
     }
@@ -29,7 +28,7 @@ public class ElevatorSendCommand extends Command {
     protected void execute() {
         rotations = ElevatorSubsystem.getInstance().getRotation();
         //System.out.println("[!] NUMBER OF ROTATIONS: " + rotations);
-        if(rotations - currentRotations >= 1.0) {
+        if(rotations >= 1.0) {
             done = true;
         }
 
