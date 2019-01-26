@@ -7,16 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 public class BrakeOffCommand extends Command {
 
     public BrakeOffCommand() {
-        requires(TankDriveSubsystem.getInstance());
     }
 
     @Override
     protected void initialize() {
+        TankDriveSubsystem.getInstance().setBrake(false);
     }
 
     @Override
     protected void execute() {
-        TankDriveSubsystem.getInstance().setBrake(false);
     }
 
     @Override
