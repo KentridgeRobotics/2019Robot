@@ -4,18 +4,16 @@ import java.util.ArrayList;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3786.robot.Dashboard;
 
-import io.github.pseudoresonance.pixy2api.Pixy2;
+import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
-import io.github.pseudoresonance.pixy2api.links.Link;
 
 public class TargetBall extends Command {
 
-    private static Pixy2 pixy;
+    private Cameras pixy;
 
-    public TargetBall(Link link) {
-        pixy = Pixy2.createInstance(link);
-        pixy.init();
+
+    public TargetBall() {
     }
 
     @Override
@@ -24,9 +22,10 @@ public class TargetBall extends Command {
 
     @Override
     protected void execute() {
+
         Block largestBlock = null;
-        pixy.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 1);
-        ArrayList<Block> blocks = pixy.getCCC().getBlocks();
+        pixy.getPixyCamera().getPixy().getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 1);
+        ArrayList<Block> blocks = pixy.getPixyCamera().getPixy().getCCC().getBlocks();
         
         for(Block block : blocks) {
             if(largestBlock == null) {
