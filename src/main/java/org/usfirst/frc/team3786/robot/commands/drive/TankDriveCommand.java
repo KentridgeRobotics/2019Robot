@@ -34,7 +34,7 @@ public class TankDriveCommand extends Command {
 		// When the number is positive, the wheels go backwards.
 		double leftStickY = OI.getPrimaryController().getLeftStickY();
 		double leftStickX = OI.getPrimaryController().getLeftStickX();
-		TankDriveSubsystem.getInstance().arcadeDrive(leftStickY, leftStickX);
+		TankDriveSubsystem.getInstance().arcadeDrive(leftStickY / 2.0, leftStickX / 2.0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
