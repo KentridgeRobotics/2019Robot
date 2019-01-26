@@ -10,8 +10,6 @@ public class TankDriveCommand extends Command {
 
 	public static TankDriveCommand instance;
 
-	private boolean boost = TankDriveSubsystem.getInstance().getBoost();
-
 	public static TankDriveCommand getInstance() {
 		if (instance == null)
 			instance = new TankDriveCommand();
