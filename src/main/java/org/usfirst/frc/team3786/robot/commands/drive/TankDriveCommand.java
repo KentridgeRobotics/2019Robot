@@ -32,13 +32,11 @@ public class TankDriveCommand extends Command {
 	protected void execute() {
 		// When the number is negative, the wheels go forwards.
 		// When the number is positive, the wheels go backwards.
+		double leftStickY = OI.getPrimaryController().getLeftStickY();
 		double leftStickX = OI.getPrimaryController().getLeftStickX();
-		double rightTrigger = OI.getPrimaryController().getRightTrigger();
-		double leftTrigger = OI.getPrimaryController().getLeftTrigger();
 		double limit;
 		limit = boost ? 1 : 0.5;
-		double speed = (rightTrigger - leftTrigger) * limit;
-		TankDriveSubsystem.getInstance().arcadeDrive(speed, leftStickX * limit);
+		TankDriveSubsystem.getInstance().arcadeDrive(leftStickY * limit, leftStickX * limit);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
