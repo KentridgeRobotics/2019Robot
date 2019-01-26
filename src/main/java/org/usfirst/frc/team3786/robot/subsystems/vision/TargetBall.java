@@ -10,9 +10,6 @@ import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 
 public class TargetBall extends Command {
 
-    private Cameras pixy;
-
-
     public TargetBall() {
     }
 
@@ -24,8 +21,7 @@ public class TargetBall extends Command {
     protected void execute() {
 
         Block largestBlock = null;
-        pixy.getPixyCamera().getPixy().getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 1);
-        ArrayList<Block> blocks = pixy.getPixyCamera().getPixy().getCCC().getBlocks();
+        ArrayList<Block> blocks = Cameras.getPixyCamera().getPixy().getCCC().getBlocks();
         
         for(Block block : blocks) {
             if(largestBlock == null) {

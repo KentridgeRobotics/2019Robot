@@ -18,7 +18,7 @@ public class Cameras {
         pixy.run();
     }
 
-    public PixyCamera getPixyCamera() {
+    public static PixyCamera getPixyCamera() {
         return pixy;
     }
 
