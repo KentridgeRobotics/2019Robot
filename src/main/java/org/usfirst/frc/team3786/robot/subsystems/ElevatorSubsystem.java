@@ -27,6 +27,7 @@ public class ElevatorSubsystem extends Subsystem {
 		elevatorMotor = new CANSparkMax(Mappings.elevatorMotor, MotorType.kBrushless);
 		elevatorMotor.setIdleMode(IdleMode.kBrake);
 		elevatorMotor.setSmartCurrentLimit(10);
+		elevatorMotor.setRampRate(0.5);
 		//tiltMotor = new CANSparkMax(Mappings.tiltMotor, MotorType.kBrushless);
 		
 	}
