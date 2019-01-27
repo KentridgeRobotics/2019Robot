@@ -38,9 +38,9 @@ public class Mappings {
 		primary.buttonA.whenPressed(new BrakeOnCommand());
 		primary.buttonA.whenReleased(new BrakeOffCommand());
 		primary.buttonX.whenPressed(new ElevatorUpCommand());
+		primary.buttonX.whenReleased(new ElevatorStopCommand());
 		primary.buttonB.whenPressed(new BoostOnCommand());
 		primary.buttonB.whenReleased(new BoostOffCommand());
-		primary.buttonX.whenReleased(new ElevatorStopCommand());
 		primary.buttonY.whenPressed(new ElevatorDownCommand());
 		primary.buttonY.whenReleased(new ElevatorStopCommand());
 		primary.buttonBumperLeft.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
