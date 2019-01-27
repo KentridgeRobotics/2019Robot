@@ -31,7 +31,7 @@ public class Mappings {
 	public final static int flingerMotor = 4;
 
 	public final static int tiltMotor = 5;
-	public final static int elevatorMotor = 8;
+	public final static int elevatorMotor = 13;
 
 	public static void setupDefaultMappings() {
 		XboxController primary = OI.getPrimaryController();
