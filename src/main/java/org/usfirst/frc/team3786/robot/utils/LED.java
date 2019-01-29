@@ -40,7 +40,7 @@ public class LED {
 	}
 
 	public static void setHSV(int hue, float saturation, float brightness) {
-		int rgb = Color.HSBtoRGB(hue / 360, saturation / 100, brightness / 100);
+		int rgb = Color.HSBtoRGB(((float) hue) / 360, saturation / 100, brightness / 100);
 		setRGB((rgb >> 16) & 0xff, (rgb >> 8) & 0xff, rgb & 0xff);
 	}
 
