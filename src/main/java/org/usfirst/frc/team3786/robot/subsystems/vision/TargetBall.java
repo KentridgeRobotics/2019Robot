@@ -5,10 +5,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3786.robot.Dashboard;
 
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
-import io.github.pseudoresonance.pixy2api.Pixy2CCC;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 
 public class TargetBall extends Command {
+    
+    ArrayList<Block> blocks = Cameras.getPixyCamera().getPixy().getCCC().getBlocks();
 
     public TargetBall() {
     }
@@ -16,12 +17,11 @@ public class TargetBall extends Command {
     @Override
     protected void initialize() {
     }
-
+    
     @Override
     protected void execute() {
-
+        
         Block largestBlock = null;
-        ArrayList<Block> blocks = Cameras.getPixyCamera().getPixy().getCCC().getBlocks();
         
         for(Block block : blocks) {
             if(largestBlock == null) {
