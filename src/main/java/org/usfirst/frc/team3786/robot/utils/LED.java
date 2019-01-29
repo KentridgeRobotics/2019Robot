@@ -16,26 +16,18 @@ public class LED {
 		i2c = new I2C(I2C.Port.kOnboard, address);
 	}
 
-	public void close() {
+	public static void close() {
 		i2c.close();
 	}
 
-	private static boolean send() {
-		int i = 0;
-		while (true) {
-			boolean abort = i2c.transaction(buffer, buffer.length, new byte[0], 0);
-			if (!abort)
-				return true;
-			else if (i >= 4)
-				return false;
-			i++;
-		}
+	private static void send() {
+		i2c.transaction(buffer, buffer.length, new byte[0], 0);
 	}
 
 	public static void setRGB(int r, int g, int b) {
-		buffer[1] = (byte) r;
-		buffer[2] = (byte) g;
-		buffer[3] = (byte) b;
+		buffer[0] = (byte) r;
+		buffer[1] = (byte) g;
+		buffer[2] = (byte) b;
 		send();
 	}
 
@@ -53,7 +45,7 @@ public class LED {
 	}
 
 	public static void setBrightness(byte brightness) {
-		buffer[0] = brightness;
+		buffer[3] = brightness;
 		send();
 	}
 
