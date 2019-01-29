@@ -68,7 +68,11 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		gyro.run();
 		Cameras.run();
-		byte bright = (byte) SmartDashboard.getNumber("LED.BRIGHTNESS", 255);
+		byte bright = (byte) SmartDashboard.getNumber("LED.BRIGHTNESS", -1);
+		if (bright == -1) {
+			SmartDashboard.putNumber("LED.BRIGHTNESS", 255);
+			bright = (byte) 255;
+		}
 		if (brightness != bright) {
 			brightness = bright;
 			LED.setBrightness(bright);
