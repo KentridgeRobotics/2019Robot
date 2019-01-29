@@ -11,6 +11,10 @@ public class TargetBall extends Command {
     
     ArrayList<Block> blocks = Cameras.getPixyCamera().getPixy().getCCC().getBlocks();
 
+    private static ArrayList<Block> blocks = Cameras.getPixyCamera().getPixy().getCCC().getBlocks();
+
+    private static final int blockSignature = 2;
+
     public TargetBall() {
     }
 
@@ -20,14 +24,15 @@ public class TargetBall extends Command {
     
     @Override
     protected void execute() {
-        
         Block largestBlock = null;
-        
-        for(Block block : blocks) {
-            if(largestBlock == null) {
-                largestBlock = block;
-            } else if(block.getWidth() > largestBlock.getWidth()) {
-                largestBlock = block;
+
+        for (Block block : blocks) {
+            if (block.getSignature() == blockSignature) {
+                if (largestBlock == null) {
+                    largestBlock = block;
+                } else if (block.getWidth() > largestBlock.getWidth()) {
+                    largestBlock = block;
+                }
             }
         }
         Dashboard.getInstance().putNumber(false, "Ball X", largestBlock.getX());
@@ -41,7 +46,7 @@ public class TargetBall extends Command {
 
     @Override
     protected void end() {
-        
+
     }
 
 }
