@@ -9,8 +9,6 @@ import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 
 public class TargetBall extends Command {
     
-    ArrayList<Block> blocks = Cameras.getPixyCamera().getPixy().getCCC().getBlocks();
-
     private static ArrayList<Block> blocks = Cameras.getPixyCamera().getPixy().getCCC().getBlocks();
 
     private static final int blockSignature = 2;
