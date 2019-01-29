@@ -14,6 +14,7 @@ public class LED {
 
 	public static void setup() {
 		i2c = new I2C(I2C.Port.kOnboard, address);
+		buffer[3] = (byte) 255;
 	}
 
 	public static void close() {

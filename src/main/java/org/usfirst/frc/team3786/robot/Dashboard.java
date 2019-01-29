@@ -1,9 +1,7 @@
 package org.usfirst.frc.team3786.robot;
 
-import java.util.HashMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Sendable;
-import edu.wpi.first.wpilibj.command.Command;
 
 public class Dashboard 
 {
@@ -15,7 +13,7 @@ public class Dashboard
         return true;
     }
 
-    private boolean showDiagnostics;
+    private boolean showDiagnostics = false;
 
     public void init(boolean showDiagonistics) 
     {
