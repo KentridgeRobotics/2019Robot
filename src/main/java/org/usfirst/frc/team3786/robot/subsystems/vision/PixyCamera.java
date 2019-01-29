@@ -1,10 +1,7 @@
 package org.usfirst.frc.team3786.robot.subsystems.vision;
 
-import java.util.ArrayList;
-
 import io.github.pseudoresonance.pixy2api.Pixy2;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC;
-import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 import io.github.pseudoresonance.pixy2api.links.Link;
 
 public class PixyCamera {
@@ -22,8 +19,7 @@ public class PixyCamera {
 	}
 
 	public void run() {
-		pixy.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25);
-		ArrayList<Block> blocks = pixy.getCCC().getBlocks();
+		pixy.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1 | Pixy2CCC.CCC_SIG2, 25);
 	}
 
 	public Pixy2 getPixy() {
