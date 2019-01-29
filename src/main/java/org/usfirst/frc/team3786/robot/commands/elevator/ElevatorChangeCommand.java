@@ -19,7 +19,11 @@ public class ElevatorChangeCommand extends Command {
 
     @Override
     protected void initialize() {
-        double currentRotations = ElevatorSubsystem.getInstance().getRotation();
+    }
+
+    @Override
+    protected void execute() {        
+        System.out.println("[!] DESIRED ROTATIONS: " + desiredRotations);
         for(ElevatorSubsystem.Levels levels : ElevatorSubsystem.Levels.values()) {
             if(verticalDirection == verticalDirection.UP) {
                 currentLevel = levels.up();
@@ -38,11 +42,6 @@ public class ElevatorChangeCommand extends Command {
             }
         }
         done = false;
-    }
-
-    @Override
-    protected void execute() {        
-        System.out.println("[!] DESIRED ROTATIONS: " + desiredRotations);
     }
 
     @Override
