@@ -24,14 +24,14 @@ public class Mappings {
 	public final static int primaryControllerId = 0;
 	public final static int secondaryControllerId = 1;
 
-	public final static int leftMotor = 1;
-	public final static int rightMotor = 2;
+	public final static int leftMotor = 8;
+	public final static int rightMotor = 9;
 
-	public final static int grabberMotor = 3;
+	public final static int grabberMotor = 2;
 	public final static int flingerMotor = 4;
 
 	public final static int tiltMotor = 5;
-	public final static int elevatorMotor = 13;
+	public final static int elevatorMotor = 12;
 
 	public static void setupDefaultMappings() {
 		XboxController primary = OI.getPrimaryController();
