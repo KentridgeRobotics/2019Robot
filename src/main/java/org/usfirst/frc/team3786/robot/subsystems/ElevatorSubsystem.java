@@ -76,6 +76,10 @@ public class ElevatorSubsystem extends Subsystem {
 			return rotations;
 		}
 
+		public Levels getLevels() {
+			return values()[ordinal()];
+		}
+
 		public Levels up() {
 			return values()[ordinal() + 1];
 		}

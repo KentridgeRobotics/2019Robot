@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ElevatorChangeCommand extends Command {
 
 	private boolean done;
-	private double desiredRotations = 0;
 
 	private ElevatorSubsystem.VerticalDirection verticalDirection;
 	private ElevatorSubsystem.Levels currentLevel = Levels.ZERO;
@@ -23,22 +22,24 @@ public class ElevatorChangeCommand extends Command {
 
 	@Override
 	protected void execute() {
-		System.out.println("[!] DESIRED ROTATIONS: " + desiredRotations);
 		for (ElevatorSubsystem.Levels levels : ElevatorSubsystem.Levels.values()) {
 			switch (verticalDirection) {
-			case UP:
-				currentLevel = levels.up();
-				if (currentLevel == ElevatorSubsystem.Levels.THREE)
-					currentLevel = ElevatorSubsystem.Levels.THREE;
-				break;
-			case DOWN:
-				currentLevel = levels.down();
-				if (currentLevel == ElevatorSubsystem.Levels.ZERO)
-					currentLevel = ElevatorSubsystem.Levels.ZERO;
-				break;
-			case STOP:
-				currentLevel = levels.stop();
-				break;
+				case UP:
+					currentLevel = levels.up();
+					if (currentLevel == ElevatorSubsystem.Levels.THREE)
+						currentLevel = ElevatorSubsystem.Levels.THREE;
+					break;
+				case DOWN:
+					currentLevel = levels.down();
+					if (currentLevel == ElevatorSubsystem.Levels.ZERO)
+						currentLevel = ElevatorSubsystem.Levels.ZERO;
+					break;
+				case STOP:
+					currentLevel = levels.stop();
+					break;
+				default:
+					currentLevel = levels.stop();
+					break;
 			}
 		}
 		done = false;
