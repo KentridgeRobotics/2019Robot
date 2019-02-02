@@ -7,13 +7,18 @@
 
 package org.usfirst.frc.team3786.robot.commands.climber;
 
+import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.GrabberSubsystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class AllMtrsBrakeCommand extends Command {
   public AllMtrsBrakeCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    //might require drive, grabber, butt-lifter subsystems
+    requires(ChargerDriveSubsystem.getInstance());
+    requires(GrabberSubsystem.getInstance());
   }
 
   // Called just before this Command runs the first time
@@ -24,12 +29,14 @@ public class AllMtrsBrakeCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    ChargerDriveSubsystem.getInstance().setBrake(true);
+    GrabberSubsystem.getInstance().setBrake(true);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

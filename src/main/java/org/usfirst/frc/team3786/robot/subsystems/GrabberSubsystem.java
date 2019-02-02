@@ -4,6 +4,7 @@ import org.usfirst.frc.team3786.robot.Dashboard;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import org.usfirst.frc.team3786.robot.Mappings;
@@ -47,6 +48,14 @@ public class GrabberSubsystem extends Subsystem {
 	public void setFlingerSpeed(double speed) {
 		flinger.set(speed);
 		Dashboard.getInstance().putNumber(true, "Flinger Speed", speed);
+	}
+
+	public void setBrake(boolean brake) {
+		if(brake)
+		{
+			grabber.setNeutralMode(NeutralMode.Brake);
+			flinger.setNeutralMode(NeutralMode.Brake);
+		}
 	}
 
 }
