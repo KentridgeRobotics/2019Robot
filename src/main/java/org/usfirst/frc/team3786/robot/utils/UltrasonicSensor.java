@@ -19,7 +19,7 @@ public class UltrasonicSensor implements DistanceSensorInterface {
     @Override
     public double getDistanceCm() {
         double calcDist;
-        calcDist = (300 * (distSensor.getAverageVoltage() / 293)) / 10; 
+        calcDist = (300.0 * (distSensor.getAverageVoltage() / 293.0)) / 10.0; 
         return calcDist;
     }
 }
