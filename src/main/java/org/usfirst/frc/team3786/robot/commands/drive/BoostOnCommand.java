@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3786.robot.commands.drive;
 
-import org.usfirst.frc.team3786.robot.subsystems.TankDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -14,7 +14,7 @@ public class BoostOnCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		TankDriveSubsystem.getInstance().setBoost(true);
+		ChargerDriveSubsystem.getInstance().setBoost(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

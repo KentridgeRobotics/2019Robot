@@ -10,9 +10,9 @@ import org.usfirst.frc.team3786.robot.Dashboard;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class TankDriveSubsystem extends Subsystem {
+public class ChargerDriveSubsystem extends Subsystem {
 
-	private static TankDriveSubsystem instance;
+	private static ChargerDriveSubsystem instance;
 
 	private WPI_TalonSRX left;
 	private WPI_TalonSRX right;
@@ -22,13 +22,13 @@ public class TankDriveSubsystem extends Subsystem {
 	private boolean boost = false;
 	private boolean brake = false;
 
-	public static TankDriveSubsystem getInstance() {
+	public static ChargerDriveSubsystem getInstance() {
 		if (instance == null)
-			instance = new TankDriveSubsystem();
+			instance = new ChargerDriveSubsystem();
 		return instance;
 	}
 
-	public TankDriveSubsystem() {
+	public ChargerDriveSubsystem() {
 		left = new WPI_TalonSRX(Mappings.leftMotor);
 		right = new WPI_TalonSRX(Mappings.rightMotor);
 
