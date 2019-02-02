@@ -42,22 +42,17 @@ public class Mappings {
 		primary.buttonA.whenReleased(new BrakeOffCommand());
 		primary.buttonB.whenPressed(new BoostOnCommand());
 		primary.buttonB.whenReleased(new BoostOffCommand());
-		primary.buttonX.whenPressed(new ElevatorDownCommand());
-		primary.buttonX.whenReleased(new ElevatorStopCommand());
-		primary.buttonY.whenPressed(new ElevatorUpCommand());
-		primary.buttonY.whenReleased(new ElevatorStopCommand());
-		primary.buttonBumperLeft.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
-		primary.buttonBumperLeft.whenReleased(new ElevatorChangeCommand(VerticalDirection.STOP));
-		primary.buttonBumperRight.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
-		primary.buttonBumperRight.whenReleased(new ElevatorChangeCommand(VerticalDirection.STOP));
-		
+
 		XboxController secondary = OI.getSecondaryController();
 		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
 		secondary.buttonA.whenPressed(new GrabberInCommand());
 		secondary.buttonA.whenReleased(grabberStopCommand);
 		secondary.buttonB.whenPressed(new GrabberOutCommand());
 		secondary.buttonB.whenReleased(grabberStopCommand);
-		secondary.buttonY.whenPressed(new ClimbWhileLevelCommand());
+		secondary.buttonX.whenPressed(new ElevatorDownCommand());
+		secondary.buttonX.whenReleased(new ElevatorStopCommand());
+		secondary.buttonY.whenPressed(new ElevatorUpCommand());
+		secondary.buttonY.whenReleased(new ElevatorStopCommand());
 		secondary.buttonBumperLeft.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
 		secondary.buttonBumperLeft.whenReleased(new ElevatorChangeCommand(VerticalDirection.STOP));
 		secondary.buttonBumperRight.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
