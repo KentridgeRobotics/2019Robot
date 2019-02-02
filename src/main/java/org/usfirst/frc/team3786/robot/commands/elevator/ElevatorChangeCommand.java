@@ -1,19 +1,14 @@
 package org.usfirst.frc.team3786.robot.commands.elevator;
 
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.Levels;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ElevatorChangeCommand extends Command {
-
-	private boolean done;
 	
-	private double currentLevelRotations;
 	private double currentMotorRotations;
 	private ElevatorSubsystem.Levels nextLevel;
 	private ElevatorSubsystem elevatorRotations;
-	private ElevatorSubsystem.Levels levelRotations;
 	private ElevatorSubsystem.VerticalDirection verticalDirection;
 
 	public ElevatorChangeCommand(ElevatorSubsystem.VerticalDirection changeLevel) {
@@ -23,15 +18,7 @@ public class ElevatorChangeCommand extends Command {
 	@Override
 	protected void initialize() {
 		currentMotorRotations = elevatorRotations.getRotation();
-		currentLevelRotations = levelRotations.getRotations();
-
-		if(Math.abs(currentLevelRotations - currentMotorRotations) <= 0.0) {
-			nextLevel = Levels.ZERO;
-		}
-	}
-
-	@Override
-	protected void execute() {
+		
 		for (ElevatorSubsystem.Levels levels : ElevatorSubsystem.Levels.values()) {
 			switch (verticalDirection) {
 				case UP:
@@ -52,6 +39,10 @@ public class ElevatorChangeCommand extends Command {
 					break;
 			}
 		}
+	}
+
+	@Override
+	protected void execute() {
 	}
 
 	@Override
