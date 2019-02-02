@@ -55,9 +55,13 @@ public class ElevatorChangeCommand extends Command {
 		switch (verticalDirection) {
 			case UP:
 				ElevatorSubsystem.getInstance().setElevatorSpeed(0.25);
+				if(currentMotorRotations == desiredRotations)
+					ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
 				break;
 			case DOWN:
 				ElevatorSubsystem.getInstance().setElevatorSpeed(-0.25);
+				if(currentMotorRotations == desiredRotations)
+					ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
 				break;
 			case STOP:
 				ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
