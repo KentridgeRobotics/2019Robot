@@ -5,7 +5,6 @@ import org.usfirst.frc.team3786.robot.commands.grabber.GrabberInCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOutCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopCommand;
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.Levels;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.VerticalDirection;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
@@ -17,7 +16,6 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.ClimbWhileLevelCommand;
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
@@ -63,7 +61,7 @@ public class Mappings {
 		secondary.buttonBumperRight.whenReleased(new ElevatorChangeCommand(VerticalDirection.STOP));
 		secondary.buttonTriggerLeft.whenPressed(new GrabberOpenCommand());
 		secondary.buttonTriggerLeft.whenReleased(grabberStopCommand);
-		secondary.buttonTriggerRight.whenPressed(new GrabberOpenCommand());
+		secondary.buttonTriggerRight.whenPressed(new GrabberCloseCommand());
 		secondary.buttonTriggerRight.whenReleased(grabberStopCommand);
 	}
 
