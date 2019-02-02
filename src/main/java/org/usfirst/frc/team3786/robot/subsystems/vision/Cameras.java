@@ -18,6 +18,10 @@ public class Cameras {
         pixy.run();
     }
 
+    public static PixyCamera getPixyCamera() {
+        return pixy;
+    }
+
     public static void initDrive() {
         drive = CameraServer.getInstance().startAutomaticCapture();
         if (drive != null) {

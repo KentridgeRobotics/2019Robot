@@ -17,6 +17,8 @@ public class XboxController {
 	public JoystickButton buttonMenu;
 	public JoystickButton buttonStickLeft;
 	public JoystickButton buttonStickRight;
+	public JoystickButton buttonTriggerLeft;
+	public JoystickButton buttonTriggerRight;
 
 	private static final double deadzone = 0.13;
 
@@ -40,6 +42,8 @@ public class XboxController {
 		buttonMenu = new JoystickButton(controller, XboxControllerButton.MENU.getId());
 		buttonStickLeft = new JoystickButton(controller, XboxControllerButton.STICK_LEFT.getId());
 		buttonStickRight = new JoystickButton(controller, XboxControllerButton.STICK_RIGHT.getId());
+		buttonTriggerLeft = new JoystickButton(controller, XboxControllerButton.TRIGGER_LEFT.getId());
+		buttonTriggerRight = new JoystickButton(controller, XboxControllerButton.TRIGGER_RIGHT.getId());
 	}
 
 	public double getLeftStickX() {
@@ -100,7 +104,9 @@ public class XboxController {
 		VIEW(7),
 		MENU(8),
 		STICK_LEFT(9),
-		STICK_RIGHT(10);
+		STICK_RIGHT(10),
+		TRIGGER_LEFT(11),
+		TRIGGER_RIGHT(12);
 
 		private final int id;
 
