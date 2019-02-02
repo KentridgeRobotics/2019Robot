@@ -32,7 +32,7 @@ public class TankDriveCommand extends Command {
 		double throttle = OI.getRobotThrottle();
 		double turn = OI.getRobotTurn();
 		double leftTrigger = OI.getPrimaryController().getLeftTrigger();
-		ChargerDriveSubsystem.getInstance().arcadeDrive(throttle * (leftTrigger - 1) / 2.0, turn * (leftTrigger - 1) / 2.0);
+		ChargerDriveSubsystem.getInstance().arcadeDrive(throttle * (leftTrigger - 1) / 2.0, -turn * (leftTrigger - 1) / 2.0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
