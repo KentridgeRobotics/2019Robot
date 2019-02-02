@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team3786.robot.commands.climber;
 
+import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class ClimbCommandGroup extends CommandGroup {
@@ -15,13 +17,11 @@ public class ClimbCommandGroup extends CommandGroup {
    */
   public ClimbCommandGroup() {
     //requires chassis, climber, grabber?
-
+    requires(ChargerDriveSubsystem.getInstance());
 
     // Add Commands here:
-    // addParallel(new lowerButtLifter);
-    //addParallel(new lowerGrabber); //Maybe?
-    // addSequential(new Command2());
-    // these will run in order.
+    addSequential(new AllMtrsBrakeCommand());
+    addSequential(new DriveToWallCommand());
 
     // To run multiple commands at the same time,
     // use addParallel()
