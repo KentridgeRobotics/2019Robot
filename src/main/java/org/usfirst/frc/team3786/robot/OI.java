@@ -19,4 +19,12 @@ public class OI {
 		return secondaryController;
 	}
 
+	public static double getRobotTurn() {
+		return getPrimaryController().getRightStickX();
+	}
+
+	public static double getRobotThrottle() {
+		return getPrimaryController().getLeftStickY();
+	}
+
 }
