@@ -32,7 +32,7 @@ public class DriveToWallCommand extends Command {
   @Override
   protected void execute() {
     if(UltrasonicSensor.getInstance().getDistanceCm() > targetDist) {
-      ChargerDriveSubsystem.getInstance().setMotorSpeeds(0.5, 0.5);
+      ChargerDriveSubsystem.getInstance().arcadeDrive(0.5, 0.0);
     }
     else {
       isDone = true;
