@@ -8,8 +8,8 @@ public class ElevatorChangeCommand extends Command {
 	
 	private double desiredRotations;
 	private double currentMotorRotations;
-	private ElevatorSubsystem.Levels nextLevel;
 	private ElevatorSubsystem elevatorRotations;
+	private ElevatorSubsystem.Levels nextLevel;
 	private ElevatorSubsystem.VerticalDirection verticalDirection;
 
 	public ElevatorChangeCommand(ElevatorSubsystem.VerticalDirection changeLevel) {
@@ -52,6 +52,20 @@ public class ElevatorChangeCommand extends Command {
 
 	@Override
 	protected void execute() {
+		switch (verticalDirection) {
+			case UP:
+				ElevatorSubsystem.getInstance().setElevatorSpeed(0.25);
+				break;
+			case DOWN:
+				ElevatorSubsystem.getInstance().setElevatorSpeed(-0.25);
+				break;
+			case STOP:
+				ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+				break;
+			default:
+				ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+				break;
+		}
 	}
 
 	@Override
