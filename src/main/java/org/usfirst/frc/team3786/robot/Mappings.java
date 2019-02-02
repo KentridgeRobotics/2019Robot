@@ -25,8 +25,8 @@ public class Mappings {
 	public final static int secondaryControllerId = 1;
 
 	//CAN Controllers
-	public final static int leftMotor = 8; // Drive left 1, SPARK Max controller
-	public final static int rightMotor = 9; // Drive right 1, SPARK MAX controller
+	public final static int leftMotor = 1; // Drive left 1, SPARK Max controller
+	public final static int rightMotor = 2; // Drive right 1, SPARK MAX controller
 
 	public final static int grabberMotor = 2; // Open/Close gripper, Talon SRX
 	public final static int flingerMotor = 4;
