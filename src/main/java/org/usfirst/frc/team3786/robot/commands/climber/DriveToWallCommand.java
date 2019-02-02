@@ -17,7 +17,6 @@ public class DriveToWallCommand extends Command {
   private boolean isDone;
   private double targetDist = 15.0;
 
-  private UltrasonicSensor ultrasonicSensor;// = new UltrasonicSensor();
   public DriveToWallCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(ChargerDriveSubsystem.getInstance());
@@ -32,7 +31,7 @@ public class DriveToWallCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(ultrasonicSensor.getDistanceCm() > targetDist) {
+    if(UltrasonicSensor.getInstance().getDistanceCm() > targetDist) {
       ChargerDriveSubsystem.getInstance().setMotorSpeeds(0.5, 0.5);
     }
     else {
