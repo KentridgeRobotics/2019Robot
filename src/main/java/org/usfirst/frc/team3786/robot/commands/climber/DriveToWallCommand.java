@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveToWallCommand extends Command {
 
   private boolean isDone;
-  private double targetDist = 15.0;
+  private double targetDist = 30.0;
 
   public DriveToWallCommand() {
     // Use requires() here to declare subsystem dependencies
