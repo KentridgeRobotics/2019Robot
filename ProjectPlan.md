@@ -62,16 +62,23 @@ Direction and distance to the vision targets.
 
 - In the grabber close command, we can use getOutputCurrent() (Talon method) to determine when the motor stalls (current will go up), and back off on the throttle for the motor. If the motor is holding jaws closed, it should be fine to leave it engaged at low-ish power until released (maybe).
 
-6. "Game" Mechanics
-- buttonA = 
-- buttonB = Boost
-- buttonX = Open all the way
-- buttonY = 2 modes to close. Press the Y button once, it closes midwayy so theres a space for the ball to get through or you can use it to hold a hatch. Press the y button again, it closes all the way to hold the ball.
-- buttonBumperLeft = Moves the left grabber separately.
-- buttonBumperRight = Moves the right grabber seperately.
-- buttonView = 2 modes for dashboard. One mode is displaying a smaller camera screen with all the data surrounding the screen. Second mode is a full screen camera mode with minimal data on the side.
-- buttonMenu = 
-- buttonStickLeft = 
-- buttonStickRight = 
-- LeftTrigger = Brake
-- RightTrigger = N/A
+6. Primary Controller controls
+
+- Left Stick = Throttle
+- Right Stick = Steer
+- Button A = N/A
+- Button B = Turbo
+- Start button = Butt lift
+- Left Trigger = Brake/Slow down
+- Right Trigger = N/A
+
+7. Secondary Controller controls
+
+- Button A = Grabber in (intake)
+- Button B = Grabber out
+- Button X = Elevator up
+- Button Y = Elevator down
+- Left bumper = Elevator level += 1
+- Right bumper = Elevator level -= 1
+- Left trigger = Grabber open
+- Right trigger = Grabber close
