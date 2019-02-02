@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3786.robot.utils;
 
-import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.Mappings;
 
 import edu.wpi.first.wpilibj.AnalogInput;
