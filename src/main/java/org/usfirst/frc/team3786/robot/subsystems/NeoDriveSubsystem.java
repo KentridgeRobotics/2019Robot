@@ -5,7 +5,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import org.usfirst.frc.team3786.robot.Mappings;
-
 import org.usfirst.frc.team3786.robot.Dashboard;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -32,7 +31,8 @@ public class NeoDriveSubsystem extends Subsystem {
 	public NeoDriveSubsystem() {
 		left = new CANSparkMax(Mappings.leftMotor, MotorType.kBrushless);
 		right = new CANSparkMax(Mappings.rightMotor, MotorType.kBrushless);
-
+		left.setSmartCurrentLimit(35);
+		right.setSmartCurrentLimit(35);	
 		left.setRampRate(0.1);
 		right.setRampRate(0.1);
 
