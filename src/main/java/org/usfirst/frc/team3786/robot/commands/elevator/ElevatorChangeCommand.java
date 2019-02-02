@@ -52,12 +52,11 @@ public class ElevatorChangeCommand extends Command {
 					break;
 			}
 		}
-		done = false;
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return done;
+		return false;
 	}
 
 	@Override
