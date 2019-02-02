@@ -15,6 +15,7 @@ import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.LED;
+import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -77,6 +78,7 @@ public class Robot extends TimedRobot {
 			brightness = bright;
 			LED.setBrightness(bright);
 		}
+		SmartDashboard.putNumber("Ultrasonic Distance", UltrasonicSensor.getInstance().getDistanceCm());
 	}
 
 	/**
