@@ -8,9 +8,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ElevatorChangeCommand extends Command {
 
 	private boolean done;
-
+	
+	private double currentLevelRotations;
+	private double currentMotorRotations;
+	private ElevatorSubsystem.Levels nextLevel;
+	private ElevatorSubsystem elevatorRotations;
+	private ElevatorSubsystem.Levels levelRotations;
 	private ElevatorSubsystem.VerticalDirection verticalDirection;
-	private ElevatorSubsystem.Levels currentLevel = Levels.ZERO;
 
 	public ElevatorChangeCommand(ElevatorSubsystem.VerticalDirection changeLevel) {
 		requires(ElevatorSubsystem.getInstance());
@@ -18,6 +22,12 @@ public class ElevatorChangeCommand extends Command {
 
 	@Override
 	protected void initialize() {
+		currentMotorRotations = elevatorRotations.getRotation();
+		currentLevelRotations = levelRotations.getRotations();
+
+		if(Math.abs(currentLevelRotations - currentMotorRotations) <= 0.0) {
+			nextLevel = Levels.ZERO;
+		}
 	}
 
 	@Override
@@ -25,20 +35,20 @@ public class ElevatorChangeCommand extends Command {
 		for (ElevatorSubsystem.Levels levels : ElevatorSubsystem.Levels.values()) {
 			switch (verticalDirection) {
 				case UP:
-					currentLevel = levels.up();
-					if (currentLevel == ElevatorSubsystem.Levels.THREE)
-						currentLevel = ElevatorSubsystem.Levels.THREE;
+					nextLevel = levels.up();
+					if (nextLevel == ElevatorSubsystem.Levels.THREE)
+						nextLevel = ElevatorSubsystem.Levels.THREE;
 					break;
 				case DOWN:
-					currentLevel = levels.down();
-					if (currentLevel == ElevatorSubsystem.Levels.ZERO)
-						currentLevel = ElevatorSubsystem.Levels.ZERO;
+					nextLevel = levels.down();
+					if (nextLevel == ElevatorSubsystem.Levels.ZERO)
+						nextLevel = ElevatorSubsystem.Levels.ZERO;
 					break;
 				case STOP:
-					currentLevel = levels.stop();
+					nextLevel = levels.stop();
 					break;
 				default:
-					currentLevel = levels.stop();
+					nextLevel = levels.stop();
 					break;
 			}
 		}
