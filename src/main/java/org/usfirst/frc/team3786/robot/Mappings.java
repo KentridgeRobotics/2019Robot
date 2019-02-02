@@ -17,6 +17,7 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.ClimbWhileLevelCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.DriveToWallCommand;
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {
@@ -44,6 +45,7 @@ public class Mappings {
 		primary.buttonA.whenReleased(new BrakeOffCommand());
 		primary.buttonB.whenPressed(new BoostOnCommand());
 		primary.buttonB.whenReleased(new BoostOffCommand());
+		primary.buttonX.whenPressed(new DriveToWallCommand());
 
 		XboxController secondary = OI.getSecondaryController();
 		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
