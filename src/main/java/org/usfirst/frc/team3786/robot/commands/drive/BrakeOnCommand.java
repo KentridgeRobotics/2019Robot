@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3786.robot.commands.drive;
 
-import org.usfirst.frc.team3786.robot.subsystems.TankDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,7 +11,7 @@ public class BrakeOnCommand extends Command {
 
     @Override
     protected void initialize() {
-        TankDriveSubsystem.getInstance().setBrake(true);
+        ChargerDriveSubsystem.getInstance().setBrake(true);
     }
 
     @Override
