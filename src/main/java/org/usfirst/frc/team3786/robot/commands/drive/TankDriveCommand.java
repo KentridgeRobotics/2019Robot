@@ -2,7 +2,7 @@ package org.usfirst.frc.team3786.robot.commands.drive;
 
 import org.usfirst.frc.team3786.robot.OI;
 import org.usfirst.frc.team3786.robot.Robot;
-import org.usfirst.frc.team3786.robot.subsystems.TankDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -19,7 +19,7 @@ public class TankDriveCommand extends Command {
 	public TankDriveCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(TankDriveSubsystem.getInstance());
+		requires(ChargerDriveSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -32,7 +32,7 @@ public class TankDriveCommand extends Command {
 		// When the number is positive, the wheels go backwards.
 		double leftStickY = OI.getPrimaryController().getLeftStickY();
 		double leftStickX = OI.getPrimaryController().getLeftStickX();
-		TankDriveSubsystem.getInstance().arcadeDrive(leftStickY / 2.0, leftStickX / 2.0);
+		ChargerDriveSubsystem.getInstance().arcadeDrive(leftStickY / 2.0, leftStickX / 2.0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
