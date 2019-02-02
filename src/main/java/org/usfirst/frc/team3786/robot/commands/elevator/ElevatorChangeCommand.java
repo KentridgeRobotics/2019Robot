@@ -6,39 +6,48 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ElevatorChangeCommand extends Command {
 	
+	private double desiredRotations;
 	private double currentMotorRotations;
 	private ElevatorSubsystem.Levels nextLevel;
 	private ElevatorSubsystem elevatorRotations;
 	private ElevatorSubsystem.VerticalDirection verticalDirection;
 
 	public ElevatorChangeCommand(ElevatorSubsystem.VerticalDirection changeLevel) {
+		verticalDirection = changeLevel;
 		requires(ElevatorSubsystem.getInstance());
 	}
 
 	@Override
 	protected void initialize() {
 		currentMotorRotations = elevatorRotations.getRotation();
-		
-		for (ElevatorSubsystem.Levels levels : ElevatorSubsystem.Levels.values()) {
+		double possibleLowerRotation = 0.0;
+		// Smallest one that is bigger than my current OR Biggest one that is smaller than my current
+		findLevel : for (ElevatorSubsystem.Levels levels : ElevatorSubsystem.Levels.values()) {
 			switch (verticalDirection) {
 				case UP:
-					nextLevel = levels.up();
-					if (nextLevel == ElevatorSubsystem.Levels.THREE)
-						nextLevel = ElevatorSubsystem.Levels.THREE;
+					if(currentMotorRotations < levels.getRotations()) {
+						desiredRotations = levels.getRotations();
+						break findLevel;
+					} 
 					break;
+				
 				case DOWN:
-					nextLevel = levels.down();
-					if (nextLevel == ElevatorSubsystem.Levels.ZERO)
-						nextLevel = ElevatorSubsystem.Levels.ZERO;
+					if(currentMotorRotations > levels.getRotations() && levels.getRotations() > possibleLowerRotation) {
+						possibleLowerRotation = levels.getRotations();
+					}
 					break;
+			
 				case STOP:
-					nextLevel = levels.stop();
+					desiredRotations = currentMotorRotations;
 					break;
+			
 				default:
-					nextLevel = levels.stop();
+					desiredRotations = currentMotorRotations;
 					break;
 			}
 		}
+
+		desiredRotations = possibleLowerRotation;
 	}
 
 	@Override
