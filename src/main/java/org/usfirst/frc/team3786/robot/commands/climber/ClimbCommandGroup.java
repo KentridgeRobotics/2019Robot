@@ -7,7 +7,9 @@
 
 package org.usfirst.frc.team3786.robot.commands.climber;
 
+import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.GrabberSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -18,6 +20,8 @@ public class ClimbCommandGroup extends CommandGroup {
   public ClimbCommandGroup() {
     //requires chassis, climber, grabber?
     requires(ChargerDriveSubsystem.getInstance());
+    requires(GrabberSubsystem.getInstance());
+    requires(ButtLifterTalonSubsystem.getInstance()); //practice chassis has talons
 
     // Add Commands here:
     addSequential(new AllMtrsBrakeCommand());

@@ -56,6 +56,11 @@ public class GrabberSubsystem extends Subsystem {
 			grabber.setNeutralMode(NeutralMode.Brake);
 			flinger.setNeutralMode(NeutralMode.Brake);
 		}
+		else
+		{
+			grabber.setNeutralMode(NeutralMode.Coast);
+			flinger.setNeutralMode(NeutralMode.Coast);
+		}
 	}
 
 }

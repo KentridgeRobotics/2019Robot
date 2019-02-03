@@ -7,8 +7,9 @@
 
 package org.usfirst.frc.team3786.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import org.usfirst.frc.team3786.robot.Dashboard;
 
@@ -17,48 +18,45 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * Add your docs here.
  */
-public class ButtLifterTalonSubsystem extends Subsystem {
-  private static ButtLifterTalonSubsystem instance;
+public class ButtLifterCANSparkSubsystem extends Subsystem {
+  private static ButtLifterCANSparkSubsystem instance;
+ 
+  private CANSparkMax buttLifter;
+  private CANSparkMax rollers;
 
-  private WPI_TalonSRX buttLifter;
-  private WPI_TalonSRX rollers;
-
-
-  public static ButtLifterTalonSubsystem getInstance() {
+  public static ButtLifterCANSparkSubsystem getInstance() {
     if(instance == null)
-      instance = new ButtLifterTalonSubsystem();
+      instance = new ButtLifterCANSparkSubsystem();
     return instance;
   }
 
-  public ButtLifterTalonSubsystem() {
-    buttLifter = new WPI_TalonSRX(999); //change 999 later. It's just a placeholder for now
-    rollers = new WPI_TalonSRX(888); //change 888 later. It's just a placeholder for now
+  public ButtLifterCANSparkSubsystem() {
+    buttLifter = new CANSparkMax(222, MotorType.kBrushless); //222 is placeholder will change later
+    rollers = new CANSparkMax(555, MotorType.kBrushless); //555 is placeholder will change later
   }
 
   public void setButtLifterSpeed(double speed) {
     buttLifter.set(speed);
-    Dashboard.getInstance().putNumber(false, "Butt Lifter Speed Talon", speed);
+    Dashboard.getInstance().putNumber(false, "Butt Lifter Speed CANSpark", speed);
   }
 
   public void setRollerSpeed(double speed) {
     rollers.set(speed);
-    Dashboard.getInstance().putNumber(false, "Roller Speed Talon", speed);
+    Dashboard.getInstance().putNumber(false, "Roller Speed CANSpark", speed);
   }
 
-  public void setBrake(boolean brake)
-  {
+  public void setBrake(boolean brake) {
     if(brake)
     {
-      buttLifter.setNeutralMode(NeutralMode.Brake);
-      rollers.setNeutralMode(NeutralMode.Brake);
+      buttLifter.setIdleMode(IdleMode.kBrake);
+      rollers.setIdleMode(IdleMode.kBrake);
     }
     else
     {
-      buttLifter.setNeutralMode(NeutralMode.Coast);
-      rollers.setNeutralMode(NeutralMode.Coast);
+      buttLifter.setIdleMode(IdleMode.kCoast);
+      rollers.setIdleMode(IdleMode.kCoast);
     }
   }
-
 
   @Override
   public void initDefaultCommand() {
