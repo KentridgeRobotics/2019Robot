@@ -8,6 +8,7 @@
 package org.usfirst.frc.team3786.robot.commands.climber;
 
 import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
+import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -16,6 +17,11 @@ public class DriveToWallCommand extends Command {
 
   private boolean isDone;
   private double targetDist = 60.0;
+
+  private double targetHeading;
+  private double error;
+  private double currentHeading;
+  private double correction;
 
   public DriveToWallCommand() {
     // Use requires() here to declare subsystem dependencies
@@ -26,15 +32,19 @@ public class DriveToWallCommand extends Command {
   @Override
   protected void initialize() {
     isDone = false;
+    targetHeading = Gyroscope.getInstance().getHeading();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(UltrasonicSensor.getInstance().getDistanceCm() > targetDist) {
-      ChargerDriveSubsystem.getInstance().arcadeDrive(0.5, 0.0);
+    if (UltrasonicSensor.getInstance().getDistanceCm() > targetDist) {
+      currentHeading = Gyroscope.getInstance().getHeading();
+      error = targetHeading - currentHeading; //negative means too far right, positive means too far left
+      correction = error/90;
+      ChargerDriveSubsystem.getInstance().arcadeDrive(0.5, correction);
     }
-    else {
+    else{
       isDone = true;
     }
   }
