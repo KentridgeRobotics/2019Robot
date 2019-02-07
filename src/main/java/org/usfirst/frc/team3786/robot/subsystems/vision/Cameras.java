@@ -7,31 +7,32 @@ import io.github.pseudoresonance.pixy2api.links.SPILink;
 public class Cameras {
 
     private static UsbCamera drive = null;
-    private static PixyCamera pixy = null;
+    private static PixyCamera pixy1 = null;
+    private static PixyCamera pixy2 = null;
 
     public static void setup() {
         initDrive();
-        pixy = new PixyCamera(new SPILink());
+        pixy1 = new PixyCamera(new SPILink());
+        pixy2 = new PixyCamera(new SPILink(), 1);
     }
 
-    public static void run() {
-        pixy.run();
+    public static PixyCamera getPixyCamera1() {
+        return pixy1;
     }
 
-    public static PixyCamera getPixyCamera() {
-        return pixy;
+    public static PixyCamera getPixyCamera2() {
+        return pixy2;
     }
 
     public static void initDrive() {
         drive = CameraServer.getInstance().startAutomaticCapture();
         if (drive != null) {
-			//drive.setVideoMode(PixelFormat.kBGR, 320, 240, 30);
-			drive.setResolution(320, 240);
+            drive.setResolution(320, 240);
             drive.setFPS(30);
-            drive.setWhiteBalanceManual(5000);
-			drive.setBrightness(50);
-            drive.setExposureManual(50);
-		}
+            drive.setWhiteBalanceManual(4500);
+            drive.setExposureAuto();
+            drive.setBrightness(50);
+        }
     }
 
 }
