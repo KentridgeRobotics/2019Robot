@@ -32,7 +32,7 @@ public class NeoDriveSubsystem extends Subsystem {
 		left = new CANSparkMax(Mappings.leftMotor, MotorType.kBrushless);
 		right = new CANSparkMax(Mappings.rightMotor, MotorType.kBrushless);
 		left.setSmartCurrentLimit(35);
-		right.setSmartCurrentLimit(35);	
+		right.setSmartCurrentLimit(35);
 		left.setRampRate(0.1);
 		right.setRampRate(0.1);
 
@@ -56,14 +56,12 @@ public class NeoDriveSubsystem extends Subsystem {
 		Dashboard.getInstance().putBoolean(true, "Break", kkBrake);
 		Dashboard.getInstance().putNumber(false, "Driving Speed", speed);
 		Dashboard.getInstance().putNumber(false, "TurnRate", turnRate);
-		if(this.kkBrake) {
+		if (this.kkBrake) {
 			speed *= 0.0;
 			turnRate *= 0.0;
-		}
-
-		if(this.boost) {
-			speed *= 2.0;
-			turnRate *= 2.0;
+		} else if (!this.boost) {
+			speed *= 0.75;
+			turnRate *= 0.75;
 		}
 
 		differentialDrive.arcadeDrive(speed, turnRate);
