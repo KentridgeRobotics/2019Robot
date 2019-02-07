@@ -16,16 +16,15 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
-import org.usfirst.frc.team3786.robot.commands.climber.ClimbWhileLevelCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.DriveToWallCommand;
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {
-	//Controller Inputs
+	// Controller Inputs
 	public final static int primaryControllerId = 0;
 	public final static int secondaryControllerId = 1;
 
-	//CAN Controllers
+	// CAN Controllers
 	public final static int leftMotor = 1; // Drive left 1, SPARK Max controller
 	public final static int rightMotor = 2; // Drive right 1, SPARK MAX controller
 
@@ -35,14 +34,14 @@ public class Mappings {
 	public final static int tiltMotor = 5; // Drive, Talon SRX
 	public final static int elevatorMotor = 12; // Lift, SPARK Max
 
-	//Analog Inputs
+	// Analog Inputs
 	public final static int UltrasonicSensor = 0;
-	
+
 	public static void setupDefaultMappings() {
-		
+
 		XboxController primary = OI.getPrimaryController();
-		primary.buttonA.whenPressed(new BrakeOnCommand());
-		primary.buttonA.whenReleased(new BrakeOffCommand());
+		// primary.buttonA.whenPressed(new BrakeOnCommand());
+		// primary.buttonA.whenReleased(new BrakeOffCommand());
 		primary.buttonB.whenPressed(new BoostOnCommand());
 		primary.buttonB.whenReleased(new BoostOffCommand());
 		primary.buttonX.whenPressed(new DriveToWallCommand());
