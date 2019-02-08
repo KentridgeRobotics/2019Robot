@@ -45,7 +45,7 @@ public class DriveToWallCommand extends Command {
       currentHeading = Gyroscope.getInstance().getHeading();
       error = targetHeading - currentHeading; //negative means too far right, positive means too far left
       correction = error/90;
-      ChargerDriveSubsystem.getInstance().arcadeDrive(0.5, correction);
+      ChargerDriveSubsystem.getInstance().arcadeDrive(0.8, correction);
       System.err.println("Distance to wall:" + UltrasonicSensor.getInstance().getDistanceCm());
     }
     else{
