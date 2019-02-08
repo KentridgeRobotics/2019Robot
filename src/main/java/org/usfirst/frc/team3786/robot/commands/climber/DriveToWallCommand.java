@@ -35,7 +35,7 @@ public class DriveToWallCommand extends Command {
     isDone = false;
     isGyroInverted = true;
     targetHeading = Gyroscope.getInstance().getHeading();
-    System.err.println("Started");
+    System.err.println("DriveToWallCommand Started");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -46,7 +46,7 @@ public class DriveToWallCommand extends Command {
       error = targetHeading - currentHeading; //negative means too far right, positive means too far left
       correction = error/90;
       ChargerDriveSubsystem.getInstance().arcadeDrive(0.5, correction);
-      System.err.println(UltrasonicSensor.getInstance().getDistanceCm());
+      System.err.println("Distance to wall:" + UltrasonicSensor.getInstance().getDistanceCm());
     }
     else{
       isDone = true;
