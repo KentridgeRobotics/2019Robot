@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveToWallCommand extends Command {
 
   private boolean isDone;
+  private boolean isGyroInverted;
   private double targetDist = 60.0;
 
   private double targetHeading;
@@ -32,7 +33,9 @@ public class DriveToWallCommand extends Command {
   @Override
   protected void initialize() {
     isDone = false;
+    isGyroInverted = true;
     targetHeading = Gyroscope.getInstance().getHeading();
+    System.err.println("Started");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -43,6 +46,7 @@ public class DriveToWallCommand extends Command {
       error = targetHeading - currentHeading; //negative means too far right, positive means too far left
       correction = error/90;
       ChargerDriveSubsystem.getInstance().arcadeDrive(0.5, correction);
+      System.err.println(UltrasonicSensor.getInstance().getDistanceCm());
     }
     else{
       isDone = true;
@@ -59,6 +63,7 @@ public class DriveToWallCommand extends Command {
   @Override
   protected void end() {
     ChargerDriveSubsystem.getInstance().setMotorSpeeds(0, 0);
+    System.err.println("Finished driving to wall");
   }
 
   // Called when another command which requires one or more of the same
