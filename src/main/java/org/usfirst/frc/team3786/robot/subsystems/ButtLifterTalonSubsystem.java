@@ -31,8 +31,8 @@ public class ButtLifterTalonSubsystem extends Subsystem {
   }
 
   public ButtLifterTalonSubsystem() {
-    buttLifter = new WPI_TalonSRX(999); //change 999 later. It's just a placeholder for now
-    rollers = new WPI_TalonSRX(888); //change 888 later. It's just a placeholder for now
+    buttLifter = new WPI_TalonSRX(4);
+    rollers = new WPI_TalonSRX(2);
   }
 
   public void setButtLifterSpeed(double speed) {

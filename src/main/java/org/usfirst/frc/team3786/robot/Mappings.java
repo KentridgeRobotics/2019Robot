@@ -28,8 +28,8 @@ public class Mappings {
 	public final static int leftMotor = 1; // Drive left 1, SPARK Max controller
 	public final static int rightMotor = 2; // Drive right 1, SPARK MAX controller
 
-	public final static int grabberMotor = 2; // Open/Close gripper, Talon SRX
-	public final static int flingerMotor = 4;
+	public final static int rollers = 2;
+	public final static int buttLifter = 4; // ID2 used to be grabber. ID 4 used to be flinger
 
 	public final static int tiltMotor = 5; // Drive, Talon SRX
 	public final static int elevatorMotor = 12; // Lift, SPARK Max

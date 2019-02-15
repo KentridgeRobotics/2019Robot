@@ -7,12 +7,20 @@
 
 package org.usfirst.frc.team3786.robot.commands.climber;
 
+import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveWiRRollersCommand extends Command {
+
+  private boolean isDone;
+  private double targetDist = 0.0;
+
   public DriveWiRRollersCommand() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(ButtLifterTalonSubsystem.getInstance()); //Test Chassis has Talons.
+    requires(ChargerDriveSubsystem.getInstance());
     //might require drive, buttlifter drive
   }
 
