@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import org.usfirst.frc.team3786.robot.Dashboard;
+import org.usfirst.frc.team3786.robot.Mappings;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -31,8 +32,8 @@ public class ButtLifterTalonSubsystem extends Subsystem {
   }
 
   public ButtLifterTalonSubsystem() {
-    buttLifter = new WPI_TalonSRX(4);
-    rollers = new WPI_TalonSRX(2);
+    buttLifter = new WPI_TalonSRX(Mappings.buttLifter);
+    rollers = new WPI_TalonSRX(Mappings.rollers);
   }
 
   public void setButtLifterSpeed(double speed) {
