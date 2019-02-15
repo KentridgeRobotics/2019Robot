@@ -31,6 +31,9 @@ public class Mappings {
 	public final static int rollers = 3;
 	public final static int buttLifter = 4; // ID2 used to be grabber. ID 4 used to be flinger
 
+	public final static int grabberMotor = 8;
+	public final static int flingerMotor = 9;
+
 	public final static int tiltMotor = 5; // Drive, Talon SRX
 	public final static int elevatorMotor = 12; // Lift, SPARK Max
 
