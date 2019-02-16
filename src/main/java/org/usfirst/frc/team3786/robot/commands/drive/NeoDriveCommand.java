@@ -1,13 +1,18 @@
 package org.usfirst.frc.team3786.robot.commands.drive;
 
+import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.OI;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
+import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class NeoDriveCommand extends Command {
 
 	public static NeoDriveCommand instance;
+
+	private boolean useTargetHeading;
+	private double targetHeading;
 
 	public static NeoDriveCommand getInstance() {
 		if (instance == null)
@@ -30,7 +35,25 @@ public class NeoDriveCommand extends Command {
 		// When the number is positive, the wheels go backwards.
 		double throttle = OI.getRobotThrottle();
 		double turn = OI.getRobotTurn();
-		NeoDriveSubsystem.getInstance().arcadeDrive(-throttle, turn);
+		//driver wants to go straight, haven't started using currentHeading yet.
+		if(Math.abs(turn) < 0.05 && !useTargetHeading) {
+			targetHeading = Gyroscope.getInstance().getHeading();
+			useTargetHeading = true;
+		}
+		//driver wants to turn
+		else if(Math.abs(turn) > 0.05) {
+			useTargetHeading = false;
+		}
+		//going straight with gyro
+		if(useTargetHeading) {
+			NeoDriveSubsystem.getInstance().gyroStraight(-throttle, targetHeading);
+			Dashboard.getInstance().putBoolean(false, "Straight with Gyro?", true);
+		}
+		//driving with turn
+		else {
+			NeoDriveSubsystem.getInstance().arcadeDrive(-throttle, turn);
+			Dashboard.getInstance().putBoolean(false, "Straight with Gyro?", false);
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

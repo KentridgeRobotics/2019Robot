@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import org.usfirst.frc.team3786.robot.Mappings;
+import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.Dashboard;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -84,5 +85,12 @@ public class NeoDriveSubsystem extends Subsystem {
 
 	public boolean getBoost() {
 		return this.boost;
+	}
+
+	public void gyroStraight(double spd, double tgtHeading) {
+		double currHeading = Gyroscope.getInstance().getHeading();
+		double error = tgtHeading - currHeading;
+		double correction = error/90;
+		arcadeDrive(spd, correction);
 	}
 }
