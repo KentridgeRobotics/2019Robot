@@ -14,8 +14,8 @@ public class ElevatorSubsystem extends Subsystem {
 
 	private static ElevatorSubsystem instance;
 
-	private CANSparkMax elevatorMotor;
-	private CANSparkMax tiltMotor;
+	private CANSparkMax rightElevator;
+	private CANSparkMax leftElevator;
 
 	public static ElevatorSubsystem getInstance() {
 		if (instance == null)
@@ -24,11 +24,15 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public ElevatorSubsystem() {
-		elevatorMotor = new CANSparkMax(Mappings.elevatorMotor, MotorType.kBrushless);
-		elevatorMotor.setIdleMode(IdleMode.kBrake);
-		elevatorMotor.setSmartCurrentLimit(30);
-		elevatorMotor.setOpenLoopRampRate(0.5);
-		//tiltMotor = new CANSparkMax(Mappings.tiltMotor, MotorType.kBrushless);
+		rightElevator = new CANSparkMax(Mappings.rightElevator, MotorType.kBrushless);
+		rightElevator.setIdleMode(IdleMode.kBrake);
+		rightElevator.setSmartCurrentLimit(30);
+		rightElevator.setOpenLoopRampRate(0.5);
+
+		leftElevator = new CANSparkMax(Mappings.leftElevator, MotorType.kBrushless);
+		leftElevator.setIdleMode(IdleMode.kBrake);
+		leftElevator.setSmartCurrentLimit(30);
+		leftElevator.setOpenLoopRampRate(0.5);
 		
 	}
 
@@ -37,18 +41,16 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void setElevatorSpeed(double speed) {
-		elevatorMotor.set(speed);
+		rightElevator.set(speed);
+		leftElevator.set(speed);
 		Dashboard.getInstance().putNumber(false,"Elevator Speed", speed);
 		System.err.println("[!] HERE'S THE SPEED: " + speed);
 	}
 
-	public void setTiltSpeed(double speed) {
-		Dashboard.getInstance().putNumber(false, "Tilt Speed", speed);
-		tiltMotor.set(speed);
-	}
-
-	public double getRotation() {
-		return elevatorMotor.getEncoder().getPosition();
+	public double getRotation() { //avg of right and left
+		double right = rightElevator.getEncoder().getPosition();
+		double left = leftElevator.getEncoder().getPosition();
+		return (right + left) / 2;
 	}
 
 	public double getHeight() {
