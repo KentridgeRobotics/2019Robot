@@ -5,6 +5,7 @@ import org.usfirst.frc.team3786.robot.commands.grabber.GrabberInCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOutCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopCommand;
+import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopFlingerCommand;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.VerticalDirection;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
@@ -13,9 +14,6 @@ import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostOnCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOnCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOffCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {
@@ -49,22 +47,19 @@ public class Mappings {
 
 		XboxController secondary = OI.getSecondaryController();
 		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
-		secondary.buttonA.whenPressed(new GrabberInCommand());
-		secondary.buttonA.whenReleased(grabberStopCommand);
-		secondary.buttonB.whenPressed(new GrabberOutCommand());
-		secondary.buttonB.whenReleased(grabberStopCommand);
-		secondary.buttonX.whenPressed(new ElevatorDownCommand());
-		secondary.buttonX.whenReleased(new ElevatorStopCommand());
-		secondary.buttonY.whenPressed(new ElevatorUpCommand());
-		secondary.buttonY.whenReleased(new ElevatorStopCommand());
-		secondary.buttonBumperLeft.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
-		secondary.buttonBumperLeft.whenReleased(new ElevatorChangeCommand(VerticalDirection.STOP));
-		secondary.buttonBumperRight.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
-		secondary.buttonBumperRight.whenReleased(new ElevatorChangeCommand(VerticalDirection.STOP));
-		secondary.buttonTriggerLeft.whenPressed(new GrabberOpenCommand());
-		secondary.buttonTriggerLeft.whenReleased(grabberStopCommand);
-		secondary.buttonTriggerRight.whenPressed(new GrabberCloseCommand());
-		secondary.buttonTriggerRight.whenReleased(grabberStopCommand);
+		GrabberStopFlingerCommand stopFlinger = new GrabberStopFlingerCommand();
+		secondary.buttonA.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
+		secondary.buttonA.whenReleased(new ElevatorChangeCommand(VerticalDirection.STOP));
+		secondary.buttonB.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
+		secondary.buttonB.whenReleased(new ElevatorChangeCommand(VerticalDirection.STOP));
+		secondary.buttonBumperLeft.whenPressed(new GrabberOpenCommand());
+		secondary.buttonBumperLeft.whenReleased(grabberStopCommand);
+		secondary.buttonBumperRight.whenPressed(new GrabberCloseCommand());
+		secondary.buttonBumperRight.whenReleased(grabberStopCommand);
+		secondary.buttonTriggerLeft.whenPressed(new GrabberOutCommand());
+		secondary.buttonTriggerLeft.whenReleased(stopFlinger);
+		secondary.buttonTriggerRight.whenPressed(new GrabberInCommand());
+		secondary.buttonTriggerRight.whenReleased(stopFlinger);
 	}
 
 	public static void setupTestMappings() {
