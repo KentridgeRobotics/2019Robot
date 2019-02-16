@@ -14,6 +14,7 @@ import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostOnCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOnCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOffCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {
@@ -48,10 +49,11 @@ public class Mappings {
 		XboxController secondary = OI.getSecondaryController();
 		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
 		GrabberStopFlingerCommand stopFlinger = new GrabberStopFlingerCommand();
+		ElevatorStopCommand stopElevator = new ElevatorStopCommand();
 		secondary.buttonA.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
-		secondary.buttonA.whenReleased(new ElevatorChangeCommand(VerticalDirection.STOP));
+		secondary.buttonA.whenReleased(stopElevator);
 		secondary.buttonB.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
-		secondary.buttonB.whenReleased(new ElevatorChangeCommand(VerticalDirection.STOP));
+		secondary.buttonB.whenReleased(stopElevator);
 		secondary.buttonBumperLeft.whenPressed(new GrabberOpenCommand());
 		secondary.buttonBumperLeft.whenReleased(grabberStopCommand);
 		secondary.buttonBumperRight.whenPressed(new GrabberCloseCommand());
