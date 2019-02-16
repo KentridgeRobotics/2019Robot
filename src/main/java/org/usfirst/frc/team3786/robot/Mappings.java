@@ -8,15 +8,14 @@ import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopCommand;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.VerticalDirection;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
-import org.usfirst.frc.team3786.robot.commands.drive.BoostOffCommand;
-import org.usfirst.frc.team3786.robot.commands.drive.BoostOnCommand;
-import org.usfirst.frc.team3786.robot.commands.drive.BrakeOnCommand;
-import org.usfirst.frc.team3786.robot.commands.drive.BrakeOffCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostOffCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostOnCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOnCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOffCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
-import org.usfirst.frc.team3786.robot.commands.climber.DriveToWallCommand;
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {
@@ -43,11 +42,10 @@ public class Mappings {
 	public static void setupDefaultMappings() {
 
 		XboxController primary = OI.getPrimaryController();
-		// primary.buttonA.whenPressed(new BrakeOnCommand());
-		// primary.buttonA.whenReleased(new BrakeOffCommand());
-		primary.buttonB.whenPressed(new BoostOnCommand());
-		primary.buttonB.whenReleased(new BoostOffCommand());
-		primary.buttonX.whenPressed(new DriveToWallCommand());
+		primary.buttonA.whenPressed(new NeoBrakeOnCommand());
+		primary.buttonA.whenReleased(new NeoBrakeOffCommand());
+		primary.buttonB.whenPressed(new NeoBoostOnCommand());
+		primary.buttonB.whenReleased(new NeoBoostOffCommand());
 
 		XboxController secondary = OI.getSecondaryController();
 		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
