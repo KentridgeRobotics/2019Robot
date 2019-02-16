@@ -53,7 +53,7 @@ public class ElevatorSubsystem extends Subsystem {
 		return (right + left) / 2;
 	}
 
-	public double getHeightLeft() {
+	public double getHeight() {
 		return getRotation();
 	}
 	
