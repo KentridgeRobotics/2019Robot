@@ -15,7 +15,7 @@ public class GrabberOutCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		GrabberSubsystem.getInstance().setGrabberSpeed(0.5);
+		GrabberSubsystem.getInstance().setFlingerSpeed(0.5); //tune later
 	}
 
 	// Called repeatedly when this Command is scheduled to run

@@ -23,17 +23,19 @@ public class Mappings {
 	public final static int secondaryControllerId = 1;
 
 	// CAN Controllers
-	public final static int leftMotor = 8; // Drive left 1, SPARK Max controller
-	public final static int rightMotor = 9; // Drive right 1, SPARK MAX controller
+	public final static int leftMotor = 8;
+	public final static int rightMotor = 9;
 
 	public final static int rollers = 3;
-	public final static int buttLifter = 4; // ID2 used to be grabber. ID 4 used to be flinger
+	public final static int buttLifter = 4;
 
 	public final static int grabberMotor = 10;
-	public final static int flingerMotor = 13;
+	public final static int leftFlinger = 1;
+	public final static int rightFlinger = 2;
+	public final static int tilt = 5;
 
-	public final static int tiltMotor = 5; // Drive, Talon SRX
-	public final static int elevatorMotor = 12; // Lift, SPARK Max
+	public final static int leftElevator = 6;
+	public final static int rightElevator = 7;
 
 	// Analog Inputs
 	public final static int UltrasonicSensor = 0;

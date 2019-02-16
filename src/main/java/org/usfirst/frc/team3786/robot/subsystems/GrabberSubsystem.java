@@ -14,7 +14,9 @@ public class GrabberSubsystem extends Subsystem {
 	private static GrabberSubsystem instance;
 
 	private WPI_TalonSRX grabber;
-	private WPI_TalonSRX flinger;
+	private WPI_TalonSRX rightFlinger;
+	private WPI_TalonSRX leftFlinger;
+	private WPI_TalonSRX tilt;
 
 	public static GrabberSubsystem getInstance() {
 		if (instance == null)
@@ -26,8 +28,18 @@ public class GrabberSubsystem extends Subsystem {
 		grabber = new WPI_TalonSRX(Mappings.grabberMotor);
 		grabber.setSafetyEnabled(false);
 		grabber.configPeakCurrentLimit(20);
-		flinger = new WPI_TalonSRX(Mappings.flingerMotor);
-		flinger.setSafetyEnabled(false);
+
+		rightFlinger = new WPI_TalonSRX(Mappings.rightFlinger);
+		rightFlinger.setSafetyEnabled(false);
+		rightFlinger.configPeakCurrentLimit(20);
+
+		leftFlinger = new WPI_TalonSRX(Mappings.leftFlinger);
+		leftFlinger.setSafetyEnabled(false);
+		leftFlinger.configPeakCurrentLimit(20);
+
+		tilt = new WPI_TalonSRX(Mappings.tilt);
+		tilt.setSafetyEnabled(false);
+		tilt.configPeakCurrentLimit(20);
 	}
 
 	public double getGrabberCurrent()
@@ -46,20 +58,30 @@ public class GrabberSubsystem extends Subsystem {
 	}
 
 	public void setFlingerSpeed(double speed) {
-		flinger.set(speed);
+		rightFlinger.set(speed);
+		leftFlinger.set(speed);
 		Dashboard.getInstance().putNumber(true, "Flinger Speed", speed);
+	}
+
+	public void setTiltSpeed(double speed) {
+		tilt.set(speed);
+		Dashboard.getInstance().putNumber(false, "Tilter Speed", speed);
 	}
 
 	public void setBrake(boolean brake) {
 		if(brake)
 		{
 			grabber.setNeutralMode(NeutralMode.Brake);
-			flinger.setNeutralMode(NeutralMode.Brake);
+			rightFlinger.setNeutralMode(NeutralMode.Brake);
+			leftFlinger.setNeutralMode(NeutralMode.Brake);
+			tilt.setNeutralMode(NeutralMode.Brake);
 		}
 		else
 		{
 			grabber.setNeutralMode(NeutralMode.Coast);
-			flinger.setNeutralMode(NeutralMode.Coast);
+			rightFlinger.setNeutralMode(NeutralMode.Coast);
+			leftFlinger.setNeutralMode(NeutralMode.Coast);
+			tilt.setNeutralMode(NeutralMode.Coast);
 		}
 	}
 
