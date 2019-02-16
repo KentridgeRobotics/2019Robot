@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team3786.robot;
 
-import org.usfirst.frc.team3786.robot.commands.drive.TankDriveCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.NeoDriveCommand;
 
 import java.awt.Color;
 
@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 		if (mode == RobotMode.TANK)
-			TankDriveCommand.getInstance().cancel();
+			NeoDriveCommand.getInstance().cancel();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
 		LED.setColor(idleColor);
@@ -102,7 +102,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		if (mode == RobotMode.TANK)
-			TankDriveCommand.getInstance().start();
+			NeoDriveCommand.getInstance().start();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().start();
 		LED.setColor(visionColor);
@@ -118,7 +118,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		if (mode == RobotMode.TANK)
-			TankDriveCommand.getInstance().cancel();
+			NeoDriveCommand.getInstance().cancel();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
 		LED.setColor(visionColor);
@@ -134,7 +134,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testInit() {
 		if (mode == RobotMode.TANK)
-			TankDriveCommand.getInstance().cancel();
+			NeoDriveCommand.getInstance().cancel();
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
 		LED.setColor(visionColor);
