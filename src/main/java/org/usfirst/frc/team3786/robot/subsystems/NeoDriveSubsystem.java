@@ -34,8 +34,8 @@ public class NeoDriveSubsystem extends Subsystem {
 		right = new CANSparkMax(Mappings.rightMotor, MotorType.kBrushless);
 		left.setSmartCurrentLimit(35);
 		right.setSmartCurrentLimit(35);
-		left.setRampRate(0.1);
-		right.setRampRate(0.1);
+		left.setOpenLoopRampRate(0.1);
+		right.setOpenLoopRampRate(0.1);
 
 		differentialDrive = new DifferentialDrive(left, right);
 	}
