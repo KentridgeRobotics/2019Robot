@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team3786.robot.commands.climber;
 
-import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
 
@@ -20,13 +20,10 @@ public class DriveToWallCommand extends Command {
   private double targetDist = 60.0;
 
   private double targetHeading;
-  private double error;
-  private double currentHeading;
-  private double correction;
 
   public DriveToWallCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(ChargerDriveSubsystem.getInstance());
+    requires(NeoDriveSubsystem.getInstance());
   }
 
   // Called just before this Command runs the first time
@@ -42,10 +39,7 @@ public class DriveToWallCommand extends Command {
   @Override
   protected void execute() {
     if (UltrasonicSensor.getInstance().getDistanceCm() > targetDist) {
-      currentHeading = Gyroscope.getInstance().getHeading();
-      error = targetHeading - currentHeading; //negative means too far right, positive means too far left
-      correction = error/90;
-      ChargerDriveSubsystem.getInstance().arcadeDrive(0.8, correction);
+      NeoDriveSubsystem.getInstance().gyroStraight(0.8, targetHeading);
       System.err.println("Distance to wall:" + UltrasonicSensor.getInstance().getDistanceCm());
     }
     else{
@@ -62,7 +56,7 @@ public class DriveToWallCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    ChargerDriveSubsystem.getInstance().setMotorSpeeds(0, 0);
+    NeoDriveSubsystem.getInstance().setMotorSpeeds(0, 0);
     System.err.println("Finished driving to wall");
   }
 

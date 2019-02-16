@@ -8,7 +8,7 @@
 package org.usfirst.frc.team3786.robot.commands.climber;
 
 import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
-import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.GrabberSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,7 +17,7 @@ public class AllMtrsBrakeCommand extends Command {
   public AllMtrsBrakeCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(ChargerDriveSubsystem.getInstance());
+    requires(NeoDriveSubsystem.getInstance());
     requires(GrabberSubsystem.getInstance());
     requires(ButtLifterTalonSubsystem.getInstance()); //Practice Chassis has Talons
   }
@@ -30,7 +30,7 @@ public class AllMtrsBrakeCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    ChargerDriveSubsystem.getInstance().setBrake(true);
+    NeoDriveSubsystem.getInstance().setkkBrake(true);
     GrabberSubsystem.getInstance().setBrake(true);
     ButtLifterTalonSubsystem.getInstance().setBrake(true);
   }

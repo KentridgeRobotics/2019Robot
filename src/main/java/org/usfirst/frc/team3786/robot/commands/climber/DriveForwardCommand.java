@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team3786.robot.commands.climber;
 
-import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
 
@@ -20,13 +20,10 @@ public class DriveForwardCommand extends Command {
   private double targetDist = 22.86; //9 inches.
 
   private double targetHeading;
-  private double currentHeading;
-  private double error;
-  private double correction;
 
   public DriveForwardCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(ChargerDriveSubsystem.getInstance());
+    requires(NeoDriveSubsystem.getInstance());
   }
 
   // Called just before this Command runs the first time
@@ -40,10 +37,7 @@ public class DriveForwardCommand extends Command {
   @Override
   protected void execute() {
     if(UltrasonicSensor.getInstance().getDistanceCm() > targetDist) {
-      currentHeading = Gyroscope.getInstance().getHeading();
-      error = targetHeading - currentHeading;
-      correction = error/90;
-      ChargerDriveSubsystem.getInstance().arcadeDrive(0.8, correction);
+      NeoDriveSubsystem.getInstance().gyroStraight(0.8, targetHeading);
     }
     else {
       isDone = true;
@@ -59,7 +53,7 @@ public class DriveForwardCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    ChargerDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
+    NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
   }
 
   // Called when another command which requires one or more of the same
