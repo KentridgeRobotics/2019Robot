@@ -8,7 +8,7 @@
 package org.usfirst.frc.team3786.robot.commands.climber;
 
 import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
-import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,7 +21,7 @@ public class DriveWiRRollersCommand extends Command {
   public DriveWiRRollersCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(ButtLifterTalonSubsystem.getInstance()); //Test Chassis has Talons.
-    requires(ChargerDriveSubsystem.getInstance());
+    requires(NeoDriveSubsystem.getInstance());
   }
 
   // Called just before this Command runs the first time
@@ -34,7 +34,7 @@ public class DriveWiRRollersCommand extends Command {
   @Override
   protected void execute() {
     if(UltrasonicSensor.getInstance().getDistanceCm() > targetDist) {
-      ChargerDriveSubsystem.getInstance().arcadeDrive(0.5, 0.0); //Powers probably need to be tuned
+      NeoDriveSubsystem.getInstance().arcadeDrive(0.5, 0.0); //Powers probably need to be tuned
       ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.5); //not sure if 0.5 or -0.5 is forward
     }
     else {
@@ -51,7 +51,7 @@ public class DriveWiRRollersCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    ChargerDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
+    NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
     ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.0);
   }
 
