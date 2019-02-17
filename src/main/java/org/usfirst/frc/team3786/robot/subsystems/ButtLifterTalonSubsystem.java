@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team3786.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -21,7 +22,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ButtLifterTalonSubsystem extends Subsystem {
   private static ButtLifterTalonSubsystem instance;
 
-  private WPI_TalonSRX buttLifter;
+  private WPI_TalonSRX lifter;
   private WPI_TalonSRX rollers;
 
 
@@ -32,33 +33,45 @@ public class ButtLifterTalonSubsystem extends Subsystem {
   }
 
   public ButtLifterTalonSubsystem() {
-    buttLifter = new WPI_TalonSRX(Mappings.buttLifter);
+    lifter = new WPI_TalonSRX(Mappings.buttLifter);
     rollers = new WPI_TalonSRX(Mappings.rollers);
+    lifter.setNeutralMode(NeutralMode.Brake);
   }
 
   public void setButtLifterSpeed(double speed) {
-    buttLifter.set(speed);
+    lifter.set(speed);
     Dashboard.getInstance().putNumber(false, "Butt Lifter Speed Talon", speed);
+  }
+
+  public void setDesiredLifterPosition(double positionReal) {
+    lifter.set(ControlMode.Position , positionReal);
+
+  }
+
+  public int getRealLifterPosition() {
+    return lifter.getSelectedSensorPosition();
   }
 
   public void setRollerSpeed(double speed) {
     rollers.set(speed);
-    Dashboard.getInstance().putNumber(false, "Roller Speed Talon", speed);
+    Dashboard.getInstance().putNumber(false, "Roller Speed  Talon", speed);
   }
 
   public void setBrake(boolean brake)
   {
     if(brake)
     {
-      buttLifter.setNeutralMode(NeutralMode.Brake);
+      lifter.setNeutralMode(NeutralMode.Brake);
       rollers.setNeutralMode(NeutralMode.Brake);
     }
     else
     {
-      buttLifter.setNeutralMode(NeutralMode.Coast);
+      lifter.setNeutralMode(NeutralMode.Coast);
       rollers.setNeutralMode(NeutralMode.Coast);
     }
   }
+
+
 
 
   @Override
