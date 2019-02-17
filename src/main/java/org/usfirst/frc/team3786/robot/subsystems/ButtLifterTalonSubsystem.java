@@ -36,6 +36,7 @@ public class ButtLifterTalonSubsystem extends Subsystem {
     lifter = new WPI_TalonSRX(Mappings.buttLifter);
     rollers = new WPI_TalonSRX(Mappings.rollers);
     lifter.setNeutralMode(NeutralMode.Brake);
+    lifter.config_kP(0 , 0.125);
   }
 
   public void setButtLifterSpeed(double speed) {
