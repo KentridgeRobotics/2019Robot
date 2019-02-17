@@ -43,14 +43,18 @@ public class ButtLifterTalonSubsystem extends Subsystem {
     Dashboard.getInstance().putNumber(false, "Butt Lifter Speed Talon", speed);
   }
 
-  public void setDesiredLifterPosition(double position) {
-    lifter.set(ControlMode.Position , position);
+  public void setDesiredLifterPosition(double positionReal) {
+    lifter.set(ControlMode.Position , positionReal);
 
+  }
+
+  public int getRealLifterPosition() {
+    return lifter.getSelectedSensorPosition();
   }
 
   public void setRollerSpeed(double speed) {
     rollers.set(speed);
-    Dashboard.getInstance().putNumber(false, "Roller Speed Talon", speed);
+    Dashboard.getInstance().putNumber(false, "Roller Speed  Talon", speed);
   }
 
   public void setBrake(boolean brake)
