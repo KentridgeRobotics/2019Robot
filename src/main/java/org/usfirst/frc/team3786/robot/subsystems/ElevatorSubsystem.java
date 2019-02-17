@@ -33,7 +33,8 @@ public class ElevatorSubsystem extends Subsystem {
 		leftElevator.setIdleMode(IdleMode.kBrake);
 		leftElevator.setSmartCurrentLimit(30);
 		leftElevator.setOpenLoopRampRate(0.5);
-		
+
+		leftElevator.follow(rightElevator);
 	}
 
 	@Override

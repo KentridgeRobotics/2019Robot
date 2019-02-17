@@ -32,8 +32,8 @@ public class NeoDriveSubsystem extends Subsystem {
 	public NeoDriveSubsystem() {
 		left = new CANSparkMax(Mappings.leftMotor, MotorType.kBrushless);
 		right = new CANSparkMax(Mappings.rightMotor, MotorType.kBrushless);
-		left.setSmartCurrentLimit(35);
-		right.setSmartCurrentLimit(35);
+		left.setSmartCurrentLimit(40);
+		right.setSmartCurrentLimit(40);
 		left.setOpenLoopRampRate(0.1);
 		right.setOpenLoopRampRate(0.1);
 
