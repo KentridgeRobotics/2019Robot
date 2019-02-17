@@ -5,30 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team3786.robot.commands.climber;
+package org.usfirst.frc.team3786.robot.commands.autodrive.rocketport;
 
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand;
-import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
+import org.usfirst.frc.team3786.robot.commands.climber.DriveToWallCommand;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.Levels;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ClimbCommandGroup extends CommandGroup {
+public class NavRocketPortCommandGroup extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public ClimbCommandGroup() {
-    //requires chassis, climber, grabber?
+  public NavRocketPortCommandGroup() {
     requires(NeoDriveSubsystem.getInstance());
-    requires(ElevatorSubsystem.getInstance());
-    requires(ButtLifterTalonSubsystem.getInstance()); //practice chassis has talons
 
     // Add Commands here:
-    addSequential(new AllMtrsBrakeCommand());
-    addSequential(new ElevatorSendCommand(Levels.THREE)); //tune later
-    addSequential(new DriveToWallCommand(60.0));
+    addSequential(new TurnToRocketPort());
+    addSequential(new DriveToWallCommand(20)); //tune later
 
     // To run multiple commands at the same time,
     // use addParallel()

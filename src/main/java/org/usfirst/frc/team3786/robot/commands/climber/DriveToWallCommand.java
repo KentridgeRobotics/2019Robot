@@ -17,13 +17,14 @@ public class DriveToWallCommand extends Command {
 
   private boolean isDone;
   private boolean isGyroInverted;
-  private double targetDist = 60.0;
+  private double targetDist;
 
   private double targetHeading;
 
-  public DriveToWallCommand() {
+  public DriveToWallCommand(double targetDist) {
     // Use requires() here to declare subsystem dependencies
     requires(NeoDriveSubsystem.getInstance());
+    this.targetDist = targetDist;
   }
 
   // Called just before this Command runs the first time
