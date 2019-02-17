@@ -17,9 +17,6 @@ public class NavRocketPortCommandGroup extends CommandGroup {
    * Add your docs here.
    */
   public NavRocketPortCommandGroup() {
-    requires(NeoDriveSubsystem.getInstance());
-
-    // Add Commands here:
     addSequential(new TurnToRocketPort());
     addSequential(new DriveToWallCommand(20)); //tune later
 

@@ -20,11 +20,6 @@ public class ClimbCommandGroup extends CommandGroup {
    * Add your docs here.
    */
   public ClimbCommandGroup() {
-    //requires chassis, climber, grabber?
-    requires(NeoDriveSubsystem.getInstance());
-    requires(ElevatorSubsystem.getInstance());
-    requires(ButtLifterTalonSubsystem.getInstance()); //practice chassis has talons
-
     // Add Commands here:
     addSequential(new AllMtrsBrakeCommand());
     addSequential(new ElevatorSendCommand(Levels.THREE)); //tune later
