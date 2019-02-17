@@ -5,22 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team3786.robot.commands.climber;
+package org.usfirst.frc.team3786.robot.commands.autodrive.rocketport;
 
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand;
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.Levels;
+import org.usfirst.frc.team3786.robot.commands.climber.DriveToWallCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ClimbCommandGroup extends CommandGroup {
+public class NavRocketPortCommandGroup extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public ClimbCommandGroup() {
-    // Add Commands here:
-    addSequential(new AllMtrsBrakeCommand());
-    addSequential(new ElevatorSendCommand(Levels.THREE)); //tune later
-    addSequential(new DriveToWallCommand(60.0));
+  public NavRocketPortCommandGroup() {
+    addSequential(new TurnToRocketPort());
+    addSequential(new DriveToWallCommand(20)); //tune later
 
     // To run multiple commands at the same time,
     // use addParallel()

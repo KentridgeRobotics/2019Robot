@@ -88,7 +88,7 @@ public class NeoDriveSubsystem extends Subsystem {
 	}
 
 	public void gyroStraight(double spd, double tgtHeading) {
-		double currHeading = Gyroscope.getInstance().getHeading();
+		double currHeading = Gyroscope.getInstance().getHeadingContinuous();
 		double error = tgtHeading - currHeading;
 		double correction = error/90;
 		arcadeDrive(spd, correction);

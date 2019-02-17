@@ -5,23 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team3786.robot.commands.climber;
+package org.usfirst.frc.team3786.robot.commands.autodrive.rocketport;
 
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
-import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
+import org.usfirst.frc.team3786.robot.utils.RocketPortFinder;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveForwardCommand extends Command {
-
-  private boolean isDone;
-
-  private double targetDist = 22.86; //9 inches.
+public class TurnToRocketPort extends Command {
 
   private double targetHeading;
+  private double initHeading;
+  private double currentHeading;
+  private double epsilon = 3.0; //tune this later
 
-  public DriveForwardCommand() {
+  private boolean isDone;
+  
+  public TurnToRocketPort() {
     // Use requires() here to declare subsystem dependencies
     requires(NeoDriveSubsystem.getInstance());
   }
@@ -30,14 +31,16 @@ public class DriveForwardCommand extends Command {
   @Override
   protected void initialize() {
     isDone = false;
-    targetHeading = Gyroscope.getInstance().getHeading();
+    initHeading = Gyroscope.getInstance().getHeadingContinuous();
+    targetHeading = initHeading + RocketPortFinder.calcTurn();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(UltrasonicSensor.getInstance().getDistanceCm() > targetDist) {
-      NeoDriveSubsystem.getInstance().gyroStraight(0.8, targetHeading);
+    currentHeading = Gyroscope.getInstance().getHeadingContinuous();
+    if(Math.abs(currentHeading - targetHeading) > epsilon) {
+      NeoDriveSubsystem.getInstance().gyroStraight(0.0, targetHeading);
     }
     else {
       isDone = true;
