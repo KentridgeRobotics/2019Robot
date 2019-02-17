@@ -8,7 +8,6 @@
 package org.usfirst.frc.team3786.robot.commands.autodrive.rocketport;
 
 import org.usfirst.frc.team3786.robot.commands.climber.DriveToWallCommand;
-import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
