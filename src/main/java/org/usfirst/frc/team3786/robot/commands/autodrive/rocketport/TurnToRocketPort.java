@@ -31,14 +31,14 @@ public class TurnToRocketPort extends Command {
   @Override
   protected void initialize() {
     isDone = false;
-    initHeading = Gyroscope.getInstance().getHeading();
+    initHeading = Gyroscope.getInstance().getHeadingContinuous();
     targetHeading = initHeading + RocketPortFinder.calcTurn();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    currentHeading = Gyroscope.getInstance().getHeading();
+    currentHeading = Gyroscope.getInstance().getHeadingContinuous();
     if(Math.abs(currentHeading - targetHeading) > epsilon) {
       NeoDriveSubsystem.getInstance().gyroStraight(0.0, targetHeading);
     }

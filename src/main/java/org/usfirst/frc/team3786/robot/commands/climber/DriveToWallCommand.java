@@ -32,7 +32,7 @@ public class DriveToWallCommand extends Command {
   protected void initialize() {
     isDone = false;
     isGyroInverted = true;
-    targetHeading = Gyroscope.getInstance().getHeading();
+    targetHeading = Gyroscope.getInstance().getHeadingContinuous();
     System.err.println("DriveToWallCommand Started");
   }
 
