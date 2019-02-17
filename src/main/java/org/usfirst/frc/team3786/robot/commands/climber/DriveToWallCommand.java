@@ -17,13 +17,14 @@ public class DriveToWallCommand extends Command {
 
   private boolean isDone;
   private boolean isGyroInverted;
-  private double targetDist = 60.0;
+  private double targetDist;
 
   private double targetHeading;
 
-  public DriveToWallCommand() {
+  public DriveToWallCommand(double targetDist) {
     // Use requires() here to declare subsystem dependencies
     requires(NeoDriveSubsystem.getInstance());
+    this.targetDist = targetDist;
   }
 
   // Called just before this Command runs the first time
@@ -31,7 +32,7 @@ public class DriveToWallCommand extends Command {
   protected void initialize() {
     isDone = false;
     isGyroInverted = true;
-    targetHeading = Gyroscope.getInstance().getHeading();
+    targetHeading = Gyroscope.getInstance().getHeadingContinuous();
     System.err.println("DriveToWallCommand Started");
   }
 

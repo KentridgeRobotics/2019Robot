@@ -37,7 +37,7 @@ public class NeoDriveCommand extends Command {
 		double turn = OI.getRobotTurn();
 		//driver wants to go straight, haven't started using currentHeading yet.
 		if(Math.abs(turn) < 0.05 && !useTargetHeading) {
-			targetHeading = Gyroscope.getInstance().getHeading();
+			targetHeading = Gyroscope.getInstance().getHeadingContinuous();
 			useTargetHeading = true;
 		}
 		//driver wants to turn
