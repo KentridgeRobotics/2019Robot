@@ -8,7 +8,6 @@
 package org.usfirst.frc.team3786.robot.commands.climber;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3786.robot.subsystems.ButtLifterCANSparkSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
 
 
