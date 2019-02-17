@@ -8,9 +8,6 @@
 package org.usfirst.frc.team3786.robot.commands.climber;
 
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand;
-import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
-import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.Levels;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
