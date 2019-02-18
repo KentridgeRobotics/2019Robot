@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team3786.robot.commands.autodrive.rocketport;
 
+import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.RocketPortFinder;
@@ -33,6 +34,8 @@ public class TurnToRocketPort extends Command {
     isDone = false;
     initHeading = Gyroscope.getInstance().getHeadingContinuous();
     targetHeading = initHeading + RocketPortFinder.calcTurn();
+    System.err.println("!!!Turn to Rocket Port started!!!");
+    Dashboard.getInstance().putNumber(false, "Target Heading", targetHeading);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -41,6 +44,8 @@ public class TurnToRocketPort extends Command {
     currentHeading = Gyroscope.getInstance().getHeadingContinuous();
     if(Math.abs(currentHeading - targetHeading) > epsilon) {
       NeoDriveSubsystem.getInstance().gyroStraight(0.0, targetHeading);
+      Dashboard.getInstance().putNumber(false, "Current Heading", currentHeading);
+      System.err.println("!!!Robot is Turning towards rocket!!!");
     }
     else {
       isDone = true;
@@ -57,11 +62,12 @@ public class TurnToRocketPort extends Command {
   @Override
   protected void end() {
     NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
+    System.err.println("!!!Turn To Rocket Port Completed!!!");
   }
-
+/*
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-  }
+  }*/
 }
