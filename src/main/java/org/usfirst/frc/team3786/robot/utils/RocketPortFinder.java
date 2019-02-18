@@ -10,6 +10,7 @@ public class RocketPortFinder {
     public static double calcTurn () {
         PixyCamera pixy = Cameras.getPixyCamera2();
         if(pixy == null) {
+            System.err.println("!!!Pixy is Null. Unsuccessful!!!");
             return 0.0;
         }
         else {
@@ -20,13 +21,16 @@ public class RocketPortFinder {
                     double leg1 = vector.getX0() - vector.getX1();
                     double leg2 = vector.getY1() - vector.getY0();
                     double theta = Math.toDegrees(Math.atan2(leg2, leg1));
+                    System.err.println("!!!Theta is " + theta + ". Successful!!!");
                     return theta;
                 }
                 else {
+                    System.err.println("!!!Vector length is 0 or less. Unsuccessful!!!");
                     return 0.0;
                 }
             }
             else {
+                System.err.println("!!!Vector is Null. Unsuccessful!!!");
                 return 0.0;
             }
         }
