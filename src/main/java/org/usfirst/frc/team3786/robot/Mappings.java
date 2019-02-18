@@ -6,6 +6,7 @@ import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOutCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopFlingerCommand;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.VerticalDirection;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostOffCommand;
@@ -14,6 +15,7 @@ import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOnCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOffCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnToRocketPort; //for testing
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDown; //for calibration
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterUp; //for calibration
