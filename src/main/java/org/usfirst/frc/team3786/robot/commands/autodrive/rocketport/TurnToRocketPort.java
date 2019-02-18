@@ -45,7 +45,7 @@ public class TurnToRocketPort extends Command {
     if(Math.abs(currentHeading - targetHeading) > epsilon) {
       NeoDriveSubsystem.getInstance().gyroStraight(0.0, targetHeading);
       Dashboard.getInstance().putNumber(false, "Current Heading", currentHeading);
-      System.err.println("!!!Robot is Turning towards rocket!!!");
+      System.err.println("!!!Robot is Turning towards rocket!!! target="+targetHeading+" current="+currentHeading);
     }
     else {
       isDone = true;

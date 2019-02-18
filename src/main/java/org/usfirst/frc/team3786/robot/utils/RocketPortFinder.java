@@ -9,7 +9,7 @@ import io.github.pseudoresonance.pixy2api.Pixy2Line.Vector;
 public class RocketPortFinder {
     
     public static double calcTurn () {
-        PixyCamera pixy = Cameras.getPixyCamera2();
+        PixyCamera pixy = Cameras.getPixyCamera1();
         if(pixy == null) {
             System.err.println("!!!Pixy is Null. Unsuccessful!!!");
             return 0.0;
