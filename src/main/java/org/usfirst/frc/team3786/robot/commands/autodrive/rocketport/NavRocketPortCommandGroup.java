@@ -17,7 +17,7 @@ public class NavRocketPortCommandGroup extends CommandGroup {
    */
   public NavRocketPortCommandGroup() {
     addSequential(new TurnToRocketPort());
-    addSequential(new DriveToWallCommand(20)); //tune later
+    addSequential(new DriveToWallCommand(0.8, 20, true)); //tune later
 
     // To run multiple commands at the same time,
     // use addParallel()
