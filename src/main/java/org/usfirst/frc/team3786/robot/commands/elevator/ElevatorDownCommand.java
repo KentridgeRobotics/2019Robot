@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3786.robot.commands.elevator;
 
+import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,22 +22,18 @@ public class ElevatorDownCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		Dashboard.getInstance().putNumber(false, "Elevator Pos", ElevatorSubsystem.getInstance().getRotation());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-	}
-
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	@Override
-	protected void interrupted() {
+	  ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
 	}
 }
