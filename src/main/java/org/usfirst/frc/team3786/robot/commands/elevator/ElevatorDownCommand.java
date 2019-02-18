@@ -30,4 +30,10 @@ public class ElevatorDownCommand extends Command {
 	protected boolean isFinished() {
 		return false;
 	}
+
+	// Called once after isFinished returns true
+	@Override
+	protected void end() {
+	  ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+	}
 }
