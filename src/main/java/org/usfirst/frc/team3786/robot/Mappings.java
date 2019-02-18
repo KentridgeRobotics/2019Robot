@@ -6,6 +6,7 @@ import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOutCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopFlingerCommand;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.VerticalDirection;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostOffCommand;
@@ -14,6 +15,7 @@ import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOnCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOffCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnToRocketPort; //for testing
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDown; //for calibration
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterUp; //for calibration
@@ -38,8 +40,8 @@ public class Mappings {
 	public final static int rightFlinger = 2;
 	public final static int tilt = 5;
 
-	public final static int leftElevator = 6;
-	public final static int rightElevator = 7;
+	public final static int leftElevator = 8;
+	public final static int rightElevator = 9;
 
 	// Analog Inputs
 	public final static int UltrasonicSensor = 0;
@@ -70,6 +72,8 @@ public class Mappings {
 		secondary.buttonTriggerLeft.whenReleased(stopFlinger);
 		secondary.buttonTriggerRight.whenPressed(new GrabberInCommand());
 		secondary.buttonTriggerRight.whenReleased(stopFlinger);
+		secondary.buttonView.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
+		secondary.buttonMenu.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
 	}
 
 	public static void setupTestMappings() {
