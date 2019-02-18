@@ -17,6 +17,8 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnToRocketPort; //for testing
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDown; //for calibration
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterUp; //for calibration
+import org.usfirst.frc.team3786.robot.commands.climber.RollersBackwardCommand; //for testing
+import org.usfirst.frc.team3786.robot.commands.climber.RollersForwardCommand; //for testing
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {
@@ -50,6 +52,8 @@ public class Mappings {
 		primary.buttonB.whenPressed(new NeoBoostOnCommand());
 		primary.buttonB.whenReleased(new NeoBoostOffCommand());
 		primary.buttonX.whileHeld(new TurnToRocketPort()); //for testing
+		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); //for testing
+		primary.buttonBumperRight.whileHeld(new RollersForwardCommand()); //for testing
 
 		XboxController secondary = OI.getSecondaryController();
 		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
