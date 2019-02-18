@@ -38,8 +38,8 @@ public class Mappings {
 	public final static int rightFlinger = 2;
 	public final static int tilt = 5;
 
-	public final static int leftElevator = 6;
-	public final static int rightElevator = 7;
+	public final static int leftElevator = 8;
+	public final static int rightElevator = 9;
 
 	// Analog Inputs
 	public final static int UltrasonicSensor = 0;
@@ -70,6 +70,8 @@ public class Mappings {
 		secondary.buttonTriggerLeft.whenReleased(stopFlinger);
 		secondary.buttonTriggerRight.whenPressed(new GrabberInCommand());
 		secondary.buttonTriggerRight.whenReleased(stopFlinger);
+		secondary.buttonView.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
+		secondary.buttonMenu.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
 	}
 
 	public static void setupTestMappings() {
