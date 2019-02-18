@@ -6,15 +6,16 @@ import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOutCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopFlingerCommand;
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.VerticalDirection;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostOffCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostOnCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOnCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOffCommand;
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDown; //for calibration
+import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterUp; //for calibration
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {
@@ -51,11 +52,10 @@ public class Mappings {
 		XboxController secondary = OI.getSecondaryController();
 		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
 		GrabberStopFlingerCommand stopFlinger = new GrabberStopFlingerCommand();
-		ElevatorStopCommand stopElevator = new ElevatorStopCommand();
-		secondary.buttonA.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
-		secondary.buttonA.whenReleased(stopElevator);
-		secondary.buttonB.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
-		secondary.buttonB.whenReleased(stopElevator);
+		secondary.buttonA.whileHeld(new ElevatorDownCommand());
+		secondary.buttonB.whileHeld(new ElevatorUpCommand());
+		secondary.buttonX.whileHeld(new ManualButtLifterDown()); //for calibration
+		secondary.buttonY.whileHeld(new ManualButtLifterUp()); //for calibration
 		secondary.buttonBumperLeft.whenPressed(new GrabberOpenCommand());
 		secondary.buttonBumperLeft.whenReleased(grabberStopCommand);
 		secondary.buttonBumperRight.whenPressed(new GrabberCloseCommand());
