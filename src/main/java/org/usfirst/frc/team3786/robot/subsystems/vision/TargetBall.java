@@ -11,8 +11,6 @@ import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 
 public class TargetBall extends Command {
 
-    private static ArrayList<Block> blocks = Cameras.getPixyCamera1().getPixy().getCCC().getBlocks();
-
     private static final int blockSignature = 1;
 
     public TargetBall() {
@@ -24,9 +22,17 @@ public class TargetBall extends Command {
 
     @Override
     protected void execute() {
-        Cameras.getPixyCamera1().getPixy().getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25);
+        int blockCount = Cameras.getPixyCamera1().getPixy().getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25);
+        if (blockCount <=0) {
+            System.err.println("No block count");
+            return;
+        }
+        ArrayList<Block> blocks = Cameras.getPixyCamera1().getPixy().getCCC().getBlocks();
         Block largestBlock = null;
-
+        if (blocks == null) {
+            System.err.println("No Blocks");
+            return;
+        }
         for (Block block : blocks) {
             if (block.getSignature() == blockSignature) {
                 if (largestBlock == null) {
