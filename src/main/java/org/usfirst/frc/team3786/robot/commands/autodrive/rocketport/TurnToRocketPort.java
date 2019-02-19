@@ -10,12 +10,13 @@ package org.usfirst.frc.team3786.robot.commands.autodrive.rocketport;
 import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
-import org.usfirst.frc.team3786.robot.utils.RocketPortFinder;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TurnToRocketPort extends Command {
 
+  private TurnHolder holder;
+  
   private double targetHeading;
   private double initHeading;
   private double currentHeading;
@@ -33,8 +34,9 @@ public class TurnToRocketPort extends Command {
   protected void initialize() {
     isDone = false;
     initHeading = Gyroscope.getInstance().getHeadingContinuous();
-    targetHeading = initHeading + RocketPortFinder.calcTurn();
+    targetHeading = initHeading + holder.turn;
     System.err.println("!!!Turn to Rocket Port started!!!");
+    System.err.println("Holder.Turn is "+holder.turn);
     Dashboard.getInstance().putNumber(false, "Target Heading", targetHeading);
   }
 
