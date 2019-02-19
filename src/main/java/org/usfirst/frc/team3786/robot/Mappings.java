@@ -16,6 +16,7 @@ import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOffCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
+import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnHolder;
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnToRocketPort; //for testing
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDown; //for calibration
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterUp; //for calibration
@@ -53,7 +54,7 @@ public class Mappings {
 		primary.buttonA.whenReleased(new NeoBrakeOffCommand());
 		primary.buttonB.whenPressed(new NeoBoostOnCommand());
 		primary.buttonB.whenReleased(new NeoBoostOffCommand());
-		primary.buttonX.whileHeld(new TurnToRocketPort()); //for testing
+		primary.buttonX.whileHeld(new TurnToRocketPort(new TurnHolder())); //for testing
 		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); //for testing
 		primary.buttonBumperRight.whileHeld(new RollersForwardCommand()); //for testing
 
