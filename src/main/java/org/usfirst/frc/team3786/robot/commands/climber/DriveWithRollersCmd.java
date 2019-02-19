@@ -13,12 +13,12 @@ import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveWiRRollersCommand extends Command {
+public class DriveWithRollersCmd extends Command {
 
   private boolean isDone;
   private double targetDist = 45.2; //18 inches. This is an estimate...
 
-  public DriveWiRRollersCommand() {
+  public DriveWithRollersCmd() {
     // Use requires() here to declare subsystem dependencies
     requires(ButtLifterTalonSubsystem.getInstance()); //Test Chassis has Talons.
     requires(NeoDriveSubsystem.getInstance());

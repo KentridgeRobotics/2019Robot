@@ -44,6 +44,8 @@ public class DriveUntilVectorFound extends Command {
   @Override
   protected void execute() {
     PixyCamera pixy = Cameras.getPixyCamera1();
+    pixy.getPixy().setLED(255, 255, 255);
+    pixy.getPixy().setLamp((byte)1,(byte)1);
     features = pixy.getPixy().getLine().getAllFeatures();
     if((features & Pixy2Line.LINE_VECTOR) == Pixy2Line.LINE_VECTOR) {
       Vector[] vectors = pixy.getPixy().getLine().getVectors();
@@ -84,6 +86,9 @@ public class DriveUntilVectorFound extends Command {
   protected void end() {
     NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
     System.err.println("Holder.turn is "+holder.turn);
+    PixyCamera pixy = Cameras.getPixyCamera1();
+    pixy.getPixy().setLED(0, 0, 0);
+    pixy.getPixy().setLamp((byte)0,(byte)0);
   }
 
   // Called when another command which requires one or more of the same

@@ -10,6 +10,8 @@ public class RocketPortFinder {
     
     public static double calcTurn () {
         PixyCamera pixy = Cameras.getPixyCamera1();
+        pixy.getPixy().setLED(255, 255, 255);
+        pixy.getPixy().setLamp((byte)1,(byte)1);
         if(pixy == null) {
             System.err.println("!!!Pixy is Null. Unsuccessful!!!");
             return 0.0;
