@@ -17,14 +17,17 @@ public class DriveToWallCommand extends Command {
 
   private boolean isDone;
   private boolean isGyroInverted;
+  private boolean goForward;
   private double targetDist;
-
+  private double speed;
   private double targetHeading;
 
-  public DriveToWallCommand(double targetDist) {
+  public DriveToWallCommand(double speed, double targetDist, boolean goForward) {
     // Use requires() here to declare subsystem dependencies
     requires(NeoDriveSubsystem.getInstance());
     this.targetDist = targetDist;
+    this.goForward = goForward;
+    this.speed = speed;
   }
 
   // Called just before this Command runs the first time
@@ -39,12 +42,26 @@ public class DriveToWallCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (UltrasonicSensor.getInstance().getDistanceCm() > targetDist) {
-      NeoDriveSubsystem.getInstance().gyroStraight(0.8, targetHeading);
-      System.err.println("Distance to wall:" + UltrasonicSensor.getInstance().getDistanceCm());
+    if(goForward) { //do we want to go forward?
+      if(UltrasonicSensor.getInstance().getDistanceCm() > targetDist) { //is the sensor farther than desired?
+        NeoDriveSubsystem.getInstance().gyroStraight(speed, targetHeading);
+        System.err.println("Distance to wall:" + UltrasonicSensor.getInstance().getDistanceCm());
+      }
+      else{
+        isDone = true;
+      }
     }
-    else{
-      isDone = true;
+    else{ //we're going backwards
+      if(UltrasonicSensor.getInstance().getDistanceCm() < targetDist) { //is the sensor closer than desired?
+        if(speed > 0) { //this is just to see if someone puts a negative number for speed when we're going backwards. A failsafe of sorts
+          speed = -1 * speed;
+        }
+        NeoDriveSubsystem.getInstance().gyroStraight(speed, targetHeading);
+        System.err.println("Distance to wall:" + UltrasonicSensor.getInstance().getDistanceCm());
+      }
+      else{
+        isDone = true;
+      }
     }
   }
 
