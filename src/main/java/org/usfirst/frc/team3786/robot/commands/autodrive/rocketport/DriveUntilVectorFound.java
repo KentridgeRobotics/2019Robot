@@ -27,9 +27,10 @@ public class DriveUntilVectorFound extends Command {
 
   private TurnHolder holder;
 
-  public DriveUntilVectorFound() {
+  public DriveUntilVectorFound(TurnHolder holder) {
     // Use requires() here to declare subsystem dependencies
     requires(NeoDriveSubsystem.getInstance());
+    this.holder = holder;
   }
 
   // Called just before this Command runs the first time

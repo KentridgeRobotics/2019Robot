@@ -24,9 +24,10 @@ public class TurnToRocketPort extends Command {
 
   private boolean isDone;
   
-  public TurnToRocketPort() {
+  public TurnToRocketPort(TurnHolder holder) {
     // Use requires() here to declare subsystem dependencies
     requires(NeoDriveSubsystem.getInstance());
+    this.holder = holder;
   }
 
   // Called just before this Command runs the first time
