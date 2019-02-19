@@ -20,7 +20,6 @@ public class DriveUntilVectorFound extends Command {
 
   private boolean isDone;
 
-  PixyCamera pixy = Cameras.getPixyCamera1();
   byte features;
 
   private double initHeading;
@@ -43,6 +42,7 @@ public class DriveUntilVectorFound extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    PixyCamera pixy = Cameras.getPixyCamera1();
     features = pixy.getPixy().getLine().getAllFeatures();
     if((features & Pixy2Line.LINE_VECTOR) == Pixy2Line.LINE_VECTOR) {
       Vector[] vectors = pixy.getPixy().getLine().getVectors();
