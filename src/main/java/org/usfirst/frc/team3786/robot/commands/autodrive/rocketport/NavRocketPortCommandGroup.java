@@ -16,6 +16,7 @@ public class NavRocketPortCommandGroup extends CommandGroup {
    * Add your docs here.
    */
   public NavRocketPortCommandGroup() {
+    addSequential(new DriveUntilVectorFound());
     addSequential(new TurnToRocketPort());
     addSequential(new DriveToWallCommand(0.8, 20, true)); //tune later
 
