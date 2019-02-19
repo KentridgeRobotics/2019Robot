@@ -10,6 +10,7 @@ public class ElevatorChangeCommand extends Command {
 	private double currentMotorRotations;
 	private ElevatorSubsystem.Levels nextLevel;
 	private ElevatorSubsystem.VerticalDirection verticalDirection;
+	private boolean isDone;
 
 	public ElevatorChangeCommand(ElevatorSubsystem.VerticalDirection changeLevel) {
 		verticalDirection = changeLevel;
@@ -54,20 +55,26 @@ public class ElevatorChangeCommand extends Command {
 	@Override
 	protected void initialize() {
 		this.desiredRotations = findRotations();
+		isDone = false;
 	}
 
 	@Override
 	protected void execute() {
+		currentMotorRotations = ElevatorSubsystem.getInstance().getRotation();
 		switch (verticalDirection) {
-			case UP:
+				case UP:
+				if(currentMotorRotations >= desiredRotations) {
+					isDone = true;
+					return;
+				}
 				ElevatorSubsystem.getInstance().setElevatorSpeed(0.7);
-				if(currentMotorRotations == desiredRotations)
-					ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
 				break;
 			case DOWN:
+				if(currentMotorRotations <= desiredRotations) {
+					isDone = true;
+					return;
+				}
 				ElevatorSubsystem.getInstance().setElevatorSpeed(-0.7);
-				if(currentMotorRotations == desiredRotations)
-					ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
 				break;
 			case STOP:
 				ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
@@ -77,14 +84,16 @@ public class ElevatorChangeCommand extends Command {
 				break;
 		}
 	}
+	
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return isDone;
 	}
 
 	@Override
 	protected void end() {
+		ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
 	}
 
 	@Override
