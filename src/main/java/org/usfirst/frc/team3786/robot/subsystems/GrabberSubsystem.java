@@ -14,8 +14,8 @@ public class GrabberSubsystem extends Subsystem {
 	private static GrabberSubsystem instance;
 
 	private WPI_TalonSRX grabber;
-	private WPI_TalonSRX rightFlinger;
-	private WPI_TalonSRX leftFlinger;
+	private WPI_TalonSRX rightGripper;
+	private WPI_TalonSRX leftGripper;
 	private WPI_TalonSRX tilt;
 
 	public static GrabberSubsystem getInstance() {
@@ -29,13 +29,13 @@ public class GrabberSubsystem extends Subsystem {
 		grabber.setSafetyEnabled(false);
 		grabber.configPeakCurrentLimit(20);
 
-		rightFlinger = new WPI_TalonSRX(Mappings.rightFlinger);
-		rightFlinger.setSafetyEnabled(false);
-		rightFlinger.configPeakCurrentLimit(20);
+		rightGripper = new WPI_TalonSRX(Mappings.rightGripper);
+		rightGripper.setSafetyEnabled(false);
+		rightGripper.configPeakCurrentLimit(20);
 
-		leftFlinger = new WPI_TalonSRX(Mappings.leftFlinger);
-		leftFlinger.setSafetyEnabled(false);
-		leftFlinger.configPeakCurrentLimit(20);
+		leftGripper = new WPI_TalonSRX(Mappings.leftGripper);
+		leftGripper.setSafetyEnabled(false);
+		leftGripper.configPeakCurrentLimit(20);
 
 		tilt = new WPI_TalonSRX(Mappings.tilt);
 		tilt.setSafetyEnabled(false);
@@ -57,10 +57,10 @@ public class GrabberSubsystem extends Subsystem {
 		Dashboard.getInstance().putNumber(false, "Grabber Speed", speed);
 	}
 
-	public void setFlingerSpeed(double speed) {
-		rightFlinger.set(speed);
-		leftFlinger.set(speed);
-		Dashboard.getInstance().putNumber(true, "Flinger Speed", speed);
+	public void setGripperSpeed(double speed) {
+		rightGripper.set(speed);
+		leftGripper.set(speed);
+		Dashboard.getInstance().putNumber(true, "Gripper Speed", speed);
 	}
 
 	public void setTiltSpeed(double speed) {
@@ -72,15 +72,15 @@ public class GrabberSubsystem extends Subsystem {
 		if(brake)
 		{
 			grabber.setNeutralMode(NeutralMode.Brake);
-			rightFlinger.setNeutralMode(NeutralMode.Brake);
-			leftFlinger.setNeutralMode(NeutralMode.Brake);
+			rightGripper.setNeutralMode(NeutralMode.Brake);
+			leftGripper.setNeutralMode(NeutralMode.Brake);
 			tilt.setNeutralMode(NeutralMode.Brake);
 		}
 		else
 		{
 			grabber.setNeutralMode(NeutralMode.Coast);
-			rightFlinger.setNeutralMode(NeutralMode.Coast);
-			leftFlinger.setNeutralMode(NeutralMode.Coast);
+			rightGripper.setNeutralMode(NeutralMode.Coast);
+			leftGripper.setNeutralMode(NeutralMode.Coast);
 			tilt.setNeutralMode(NeutralMode.Coast);
 		}
 	}

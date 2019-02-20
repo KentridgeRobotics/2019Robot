@@ -22,7 +22,7 @@ public class PullUpButtlifterCommand extends Command {
 
   public PullUpButtlifterCommand() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(ButtLifterTalonSubsystem.getInstance());
     //might require buttlifter
   }
 
@@ -32,7 +32,6 @@ public class PullUpButtlifterCommand extends Command {
   @Override
   protected void initialize() {
     isDone = false;
-    realPos = ButtLifterTalonSubsystem.getInstance().getRealLifterPosition();
     restPos = 0;
 
     ButtLifterTalonSubsystem.getInstance().setDesiredLifterPosition(restPos);
@@ -42,7 +41,8 @@ public class PullUpButtlifterCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Math.abs(restPos - realPos) < epsilon) {
+    realPos = ButtLifterTalonSubsystem.getInstance().getRealLifterPosition();
+    if(ButtLifterTalonSubsystem.getInstance().lifterGetMotorOutputPercent() < 5.0) {
       isDone = true;
     }
     else {

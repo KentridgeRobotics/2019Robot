@@ -49,6 +49,10 @@ public class ButtLifterTalonSubsystem extends Subsystem {
 
   }
 
+  public double lifterGetMotorOutputPercent() {
+    return lifter.getMotorOutputPercent();
+  }
+
   public int getRealLifterPosition() {
     return lifter.getSelectedSensorPosition();
   }
