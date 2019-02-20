@@ -4,9 +4,9 @@ import org.usfirst.frc.team3786.robot.subsystems.GrabberSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GrabberStopFlingerCommand extends Command {
+public class GripperStopCommand extends Command {
 
-	public GrabberStopFlingerCommand() {
+	public GripperStopCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(GrabberSubsystem.getInstance());
@@ -15,7 +15,7 @@ public class GrabberStopFlingerCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		GrabberSubsystem.getInstance().setFlingerSpeed(0);
+		GrabberSubsystem.getInstance().setGripperSpeed(0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

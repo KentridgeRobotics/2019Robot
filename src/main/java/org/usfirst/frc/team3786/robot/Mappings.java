@@ -5,7 +5,7 @@ import org.usfirst.frc.team3786.robot.commands.grabber.GripperInCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GripperOutCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopCommand;
-import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopFlingerCommand;
+import org.usfirst.frc.team3786.robot.commands.grabber.GripperStopCommand;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.VerticalDirection;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
@@ -37,8 +37,8 @@ public class Mappings {
 	public final static int buttLifter = 4;
 
 	public final static int grabberMotor = 10;
-	public final static int leftFlinger = 1;
-	public final static int rightFlinger = 2;
+	public final static int leftGripper = 1;
+	public final static int rightGripper = 2;
 	public final static int tilt = 5;
 
 	public final static int leftElevator = 6;
@@ -60,7 +60,7 @@ public class Mappings {
 
 		XboxController secondary = OI.getSecondaryController();
 		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
-		GrabberStopFlingerCommand stopFlinger = new GrabberStopFlingerCommand();
+		GripperStopCommand stopGripper = new GripperStopCommand();
 		secondary.buttonA.whileHeld(new ElevatorDownCommand());
 		secondary.buttonB.whileHeld(new ElevatorUpCommand());
 		secondary.buttonX.whileHeld(new ManualButtLifterDown()); //for calibration
@@ -70,9 +70,9 @@ public class Mappings {
 		secondary.buttonBumperRight.whenPressed(new GrabberCloseCommand());
 		secondary.buttonBumperRight.whenReleased(grabberStopCommand);
 		secondary.buttonTriggerLeft.whenPressed(new GripperOutCommand());
-		secondary.buttonTriggerLeft.whenReleased(stopFlinger);
+		secondary.buttonTriggerLeft.whenReleased(stopGripper);
 		secondary.buttonTriggerRight.whenPressed(new GripperInCommand());
-		secondary.buttonTriggerRight.whenReleased(stopFlinger);
+		secondary.buttonTriggerRight.whenReleased(stopGripper);
 		secondary.buttonView.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
 		secondary.buttonMenu.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
 	}
