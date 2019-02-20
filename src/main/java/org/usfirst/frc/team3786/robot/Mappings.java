@@ -1,9 +1,9 @@
 package org.usfirst.frc.team3786.robot;
 
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberCloseCommand;
-import org.usfirst.frc.team3786.robot.commands.grabber.GrabberInCommand;
+import org.usfirst.frc.team3786.robot.commands.grabber.GripperInCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
-import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOutCommand;
+import org.usfirst.frc.team3786.robot.commands.grabber.GripperOutCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopFlingerCommand;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.VerticalDirection;
@@ -69,9 +69,9 @@ public class Mappings {
 		secondary.buttonBumperLeft.whenReleased(grabberStopCommand);
 		secondary.buttonBumperRight.whenPressed(new GrabberCloseCommand());
 		secondary.buttonBumperRight.whenReleased(grabberStopCommand);
-		secondary.buttonTriggerLeft.whenPressed(new GrabberOutCommand());
+		secondary.buttonTriggerLeft.whenPressed(new GripperOutCommand());
 		secondary.buttonTriggerLeft.whenReleased(stopFlinger);
-		secondary.buttonTriggerRight.whenPressed(new GrabberInCommand());
+		secondary.buttonTriggerRight.whenPressed(new GripperInCommand());
 		secondary.buttonTriggerRight.whenReleased(stopFlinger);
 		secondary.buttonView.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
 		secondary.buttonMenu.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
