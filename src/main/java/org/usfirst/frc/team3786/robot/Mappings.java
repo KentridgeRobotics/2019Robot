@@ -41,8 +41,8 @@ public class Mappings {
 	public final static int rightFlinger = 2;
 	public final static int tilt = 5;
 
-	public final static int leftElevator = 8;
-	public final static int rightElevator = 9;
+	public final static int leftElevator = 6;
+	public final static int rightElevator = 7;
 
 	// Analog Inputs
 	public final static int UltrasonicSensor = 0;

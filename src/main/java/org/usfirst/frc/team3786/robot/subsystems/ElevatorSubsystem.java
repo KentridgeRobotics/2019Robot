@@ -28,11 +28,13 @@ public class ElevatorSubsystem extends Subsystem {
 		rightElevator.setIdleMode(IdleMode.kBrake);
 		rightElevator.setSmartCurrentLimit(30);
 		rightElevator.setOpenLoopRampRate(0.5);
+		rightElevator.getEncoder().setPosition(0.0);
 
 		leftElevator = new CANSparkMax(Mappings.leftElevator, MotorType.kBrushless);
 		leftElevator.setIdleMode(IdleMode.kBrake);
 		leftElevator.setSmartCurrentLimit(30);
 		leftElevator.setOpenLoopRampRate(0.5);
+		leftElevator.getEncoder().setPosition(0.0);
 
 		leftElevator.follow(rightElevator);
 	}
@@ -51,7 +53,7 @@ public class ElevatorSubsystem extends Subsystem {
 	public double getRotation() { //avg of right and left
 		double right = rightElevator.getEncoder().getPosition();
 		double left = leftElevator.getEncoder().getPosition();
-		return (right + left) / 2;
+		return right;
 	}
 
 	public double getHeight() {
@@ -66,9 +68,12 @@ public class ElevatorSubsystem extends Subsystem {
 
 	public enum Levels {
 		ZERO(0.0),
-		ONE(1.0),
-		TWO(2.0),
-		THREE(3.0);
+		ONE(5.0),
+		TWO(10.0),
+		THREE(15.0),
+		FOUR(20.0),
+		FIVE(25.0),
+		SIX(30.0);
 
 		private double rotations;
 
