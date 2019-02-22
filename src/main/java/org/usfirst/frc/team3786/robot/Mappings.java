@@ -6,6 +6,7 @@ import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GripperOutCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberStopCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GripperStopCommand;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.Levels; //for testing
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.VerticalDirection;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
@@ -14,6 +15,7 @@ import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostOnCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOnCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOffCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand; //for testing
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnHolder;
@@ -41,8 +43,8 @@ public class Mappings {
 	public final static int rightGripper = 2;
 	public final static int tilt = 5;
 
-	public final static int leftElevator = 6;
-	public final static int rightElevator = 7;
+	public final static int leftElevator = 12;
+	public final static int rightElevator = 13;
 
 	// Analog Inputs
 	public final static int UltrasonicSensor = 0;
@@ -64,7 +66,7 @@ public class Mappings {
 		secondary.buttonA.whileHeld(new ElevatorDownCommand());
 		secondary.buttonB.whileHeld(new ElevatorUpCommand());
 		secondary.buttonX.whileHeld(new ManualButtLifterDown()); //for calibration
-		secondary.buttonY.whileHeld(new ManualButtLifterUp()); //for calibration
+		secondary.buttonY.whenPressed(new ElevatorSendCommand(Levels.THREE)); //for calibration
 		secondary.buttonBumperLeft.whenPressed(new GrabberOpenCommand());
 		secondary.buttonBumperLeft.whenReleased(grabberStopCommand);
 		secondary.buttonBumperRight.whenPressed(new GrabberCloseCommand());
