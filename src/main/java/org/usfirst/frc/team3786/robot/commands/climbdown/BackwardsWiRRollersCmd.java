@@ -9,18 +9,18 @@ package org.usfirst.frc.team3786.robot.commands.climbdown;
 
 import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
-import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
+import org.usfirst.frc.team3786.robot.utils.MaxSonar;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class BackwardsWiRRollersCmd extends Command {
 
   private boolean isDone;
-  private double targetDist = 45.2; //18 inches. This is an estimate...
+  private double targetDist = 45.2; // 18 inches. This is an estimate...
 
   public BackwardsWiRRollersCmd() {
     // Use requires() here to declare subsystem dependencies
-    requires(ButtLifterTalonSubsystem.getInstance()); //Test Chassis has Talons.
+    requires(ButtLifterTalonSubsystem.getInstance()); // Test Chassis has Talons.
     requires(NeoDriveSubsystem.getInstance());
   }
 
@@ -33,11 +33,10 @@ public class BackwardsWiRRollersCmd extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(UltrasonicSensor.getInstance().getDistanceCm() < targetDist) {
-      NeoDriveSubsystem.getInstance().arcadeDrive(-0.5, 0.0); //Powers probably need to be tuned
-      ButtLifterTalonSubsystem.getInstance().setRollerSpeed(-0.5); //not sure if 0.5 or -0.5 is forward
-    }
-    else {
+    if (MaxSonar.getInstance().getDistanceCM() < targetDist) {
+      NeoDriveSubsystem.getInstance().arcadeDrive(-0.5, 0.0); // Powers probably need to be tuned
+      ButtLifterTalonSubsystem.getInstance().setRollerSpeed(-0.5); // not sure if 0.5 or -0.5 is forward
+    } else {
       isDone = true;
     }
   }

@@ -16,7 +16,7 @@ import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.subsystems.vision.RPiComs;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.LED;
-import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
+import org.usfirst.frc.team3786.robot.utils.MaxSonar;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -63,7 +63,6 @@ public class Robot extends TimedRobot {
 		LED.setup();
 		LED.setColor(idleColor);
 		SmartDashboard.putNumber("LED.BRIGHTNESS", 255);
-
 		RPiComs.setup();
 	}
 
@@ -80,7 +79,7 @@ public class Robot extends TimedRobot {
 			brightness = bright;
 			LED.setBrightness(bright);
 		}
-		SmartDashboard.putNumber("Ultrasonic Distance", UltrasonicSensor.getInstance().getDistanceCm());
+		SmartDashboard.putNumber("Ultrasonic Distance", MaxSonar.getInstance().getDistanceCM());
 	}
 
 	/**

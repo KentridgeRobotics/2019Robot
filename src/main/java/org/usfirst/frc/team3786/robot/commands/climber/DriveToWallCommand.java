@@ -9,7 +9,7 @@ package org.usfirst.frc.team3786.robot.commands.climber;
 
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
-import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
+import org.usfirst.frc.team3786.robot.utils.MaxSonar;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -42,24 +42,22 @@ public class DriveToWallCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(goForward) { //do we want to go forward?
-      if(UltrasonicSensor.getInstance().getDistanceCm() > targetDist) { //is the sensor farther than desired?
+    if (goForward) { // do we want to go forward?
+      if (MaxSonar.getInstance().getDistanceCM() > targetDist) { // is the sensor farther than desired?
         NeoDriveSubsystem.getInstance().gyroStraight(speed, targetHeading);
-        System.err.println("Distance to wall:" + UltrasonicSensor.getInstance().getDistanceCm());
-      }
-      else{
+        System.err.println("Distance to wall:" + MaxSonar.getInstance().getDistanceCM());
+      } else {
         isDone = true;
       }
-    }
-    else{ //we're going backwards
-      if(UltrasonicSensor.getInstance().getDistanceCm() < targetDist) { //is the sensor closer than desired?
-        if(speed > 0) { //this is just to see if someone puts a negative number for speed when we're going backwards. A failsafe of sorts
+    } else { // we're going backwards
+      if (MaxSonar.getInstance().getDistanceCM() < targetDist) { // is the sensor closer than desired?
+        if (speed > 0) { // this is just to see if someone puts a negative number for speed when we're
+                         // going backwards. A failsafe of sorts
           speed = -1 * speed;
         }
         NeoDriveSubsystem.getInstance().gyroStraight(speed, targetHeading);
-        System.err.println("Distance to wall:" + UltrasonicSensor.getInstance().getDistanceCm());
-      }
-      else{
+        System.err.println("Distance to wall:" + MaxSonar.getInstance().getDistanceCM());
+      } else {
         isDone = true;
       }
     }
