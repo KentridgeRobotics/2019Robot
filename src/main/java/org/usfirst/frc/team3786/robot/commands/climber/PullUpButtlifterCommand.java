@@ -32,9 +32,10 @@ public class PullUpButtlifterCommand extends Command {
   @Override
   protected void initialize() {
     isDone = false;
-    restPos = 0;
+    restPos = -200;
 
     ButtLifterTalonSubsystem.getInstance().setDesiredLifterPosition(restPos);
+    System.err.println("PullUpButtlifterCommand Initialized");
 
   }
 
@@ -43,9 +44,13 @@ public class PullUpButtlifterCommand extends Command {
   protected void execute() {
     realPos = ButtLifterTalonSubsystem.getInstance().getRealLifterPosition();
     if(ButtLifterTalonSubsystem.getInstance().lifterGetMotorOutputPercent() < 5.0) {
+      System.err.println("Buttlifter Position: "+realPos);
+      System.err.println("Buttlifter output percent: "+ButtLifterTalonSubsystem.getInstance().lifterGetMotorOutputPercent());
       isDone = true;
     }
     else {
+      System.err.println("Buttlifter Position: "+realPos);
+      System.err.println("Buttlifter output percent: "+ButtLifterTalonSubsystem.getInstance().lifterGetMotorOutputPercent());
       isDone = false;
     }
   }
@@ -59,6 +64,7 @@ public class PullUpButtlifterCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.err.println("PullUpButtlifterCommand finished");
   }
 
   // Called when another command which requires one or more of the same

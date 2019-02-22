@@ -50,6 +50,11 @@ public class ElevatorSubsystem extends Subsystem {
 		System.err.println("[!] HERE'S THE SPEED: " + speed);
 	}
 
+	public void setElevatorPos(double position) {
+		rightElevator.getEncoder().setPosition(position);
+		leftElevator.getEncoder().setPosition(position);
+	}
+
 	public double getRotation() { //avg of right and left
 		double right = rightElevator.getEncoder().getPosition();
 		double left = leftElevator.getEncoder().getPosition();
