@@ -13,6 +13,7 @@ import java.awt.Color;
 
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
+import org.usfirst.frc.team3786.robot.subsystems.vision.RPiComs;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.LED;
 import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
@@ -62,6 +63,8 @@ public class Robot extends TimedRobot {
 		LED.setup();
 		LED.setColor(idleColor);
 		SmartDashboard.putNumber("LED.BRIGHTNESS", 255);
+
+		RPiComs.setup();
 	}
 
 	@Override
