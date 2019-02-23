@@ -15,6 +15,8 @@ import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.subsystems.vision.RPiComs;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
+import org.usfirst.frc.team3786.robot.utils.SharpIRSensor;
+import org.usfirst.frc.team3786.robot.utils.HCSR04;
 import org.usfirst.frc.team3786.robot.utils.LED;
 import org.usfirst.frc.team3786.robot.utils.MaxSonar;
 
@@ -50,6 +52,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotInit() {
+        new HCSR04(0, 1);
 		if (mode == RobotMode.TANK) {
 			System.out.println("USING TANK DRIVE");
 			Mappings.setupDefaultMappings();
@@ -63,6 +66,7 @@ public class Robot extends TimedRobot {
 		LED.setup();
 		LED.setColor(idleColor);
 		SmartDashboard.putNumber("LED.BRIGHTNESS", 255);
+		HCSR04.init();
 		RPiComs.setup();
 	}
 
@@ -112,6 +116,12 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
+		double maxSonarDist = MaxSonar.getInstance().getDistanceCM();
+		double hcsDist = HCSR04.getInstance(0).getDistanceCM();
+		double sharpIRDist = SharpIRSensor.getInstance().getDistanceCM();
+		SmartDashboard.putNumber("MaxSonarDistCm", maxSonarDist);
+		SmartDashboard.putNumber("HCSR04DistCm", hcsDist);
+		SmartDashboard.putNumber("SharpIRDistCm", sharpIRDist);
 	}
 
 	/**

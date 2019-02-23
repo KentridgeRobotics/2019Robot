@@ -20,6 +20,7 @@ public class HCSR04 implements DistanceSensorInterface {
         ultrasonic = new Ultrasonic(dOut, dIn);
         ultrasonic.setDistanceUnits(Ultrasonic.Unit.kMillimeters);
         ultrasonic.setEnabled(true);
+        instances.add(this);
     }
 
     public static HCSR04 getInstance(int id) {

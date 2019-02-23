@@ -22,6 +22,7 @@ import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnHolder;
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnToRocketPort; //for testing
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDown; //for calibration
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterUp; //for calibration
+import org.usfirst.frc.team3786.robot.commands.climber.PullUpButtlifterCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.RollersBackwardCommand; //for testing
 import org.usfirst.frc.team3786.robot.commands.climber.RollersForwardCommand; //for testing
 import org.usfirst.frc.team3786.robot.utils.XboxController;
@@ -48,6 +49,7 @@ public class Mappings {
 
 	// Analog Inputs
 	public final static int UltrasonicSensor = 0;
+	public final static int IRSensor = 1;
 
 	public static void setupDefaultMappings() {
 
@@ -56,6 +58,7 @@ public class Mappings {
 		primary.buttonA.whenReleased(new NeoBrakeOffCommand());
 		primary.buttonB.whenPressed(new NeoBoostOnCommand());
 		primary.buttonB.whenReleased(new NeoBoostOffCommand());*/ //removed 2/22/19
+		primary.buttonA.whenPressed(new PullUpButtlifterCommand());
 		primary.buttonX.whileHeld(new TurnToRocketPort(new TurnHolder())); //for testing
 		primary.buttonY.whenPressed(new ElevatorSendCommand(Levels.THREE)); //for calibration
 		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); //for testing
@@ -68,6 +71,8 @@ public class Mappings {
 		secondary.buttonB.whileHeld(new ElevatorUpCommand());
 		//secondary.buttonX.whileHeld(new ManualButtLifterDown()); //for calibration
 		//secondary.buttonY.whenPressed(new ElevatorSendCommand(Levels.THREE)); //for calibration
+		secondary.buttonStickLeft.whileHeld(new ManualButtLifterUp());
+		secondary.buttonStickRight.whileHeld(new ManualButtLifterDown());
 		secondary.buttonX.whenPressed(new GripperInCommand());
 		secondary.buttonX.whenReleased(stopGripper);
 		secondary.buttonY.whenPressed(new GripperOutCommand());
