@@ -16,6 +16,7 @@ import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOnCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeOffCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand; //for testing
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnHolder;
@@ -67,24 +68,16 @@ public class Mappings {
 		XboxController secondary = OI.getSecondaryController();
 		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
 		GripperStopCommand stopGripper = new GripperStopCommand();
-		secondary.buttonA.whileHeld(new ElevatorDownCommand());
-		secondary.buttonB.whileHeld(new ElevatorUpCommand());
-		//secondary.buttonX.whileHeld(new ManualButtLifterDown()); //for calibration
-		//secondary.buttonY.whenPressed(new ElevatorSendCommand(Levels.THREE)); //for calibration
-		secondary.buttonStickLeft.whileHeld(new ManualButtLifterUp());
-		secondary.buttonStickRight.whileHeld(new ManualButtLifterDown());
-		secondary.buttonX.whenPressed(new GripperInCommand());
-		secondary.buttonX.whenReleased(stopGripper);
-		secondary.buttonY.whenPressed(new GripperOutCommand());
-		secondary.buttonY.whenReleased(stopGripper);
+		secondary.buttonA.whenPressed(new GripperInCommand());
+		secondary.buttonA.whenReleased(stopGripper);
+		secondary.buttonB.whenPressed(new GripperOutCommand());
+		secondary.buttonB.whenReleased(stopGripper);
+		secondary.buttonY.whileHeld(new ElevatorUpCommand());
+		secondary.buttonX.whileHeld(new ElevatorDownCommand());
 		secondary.buttonBumperLeft.whenPressed(new GrabberOpenCommand());
 		secondary.buttonBumperLeft.whenReleased(grabberStopCommand);
 		secondary.buttonBumperRight.whenPressed(new GrabberCloseCommand());
-		secondary.buttonBumperRight.whenReleased(grabberStopCommand);
-		/*secondary.buttonTriggerLeft.whenPressed(new GripperOutCommand());
-		secondary.buttonTriggerLeft.whenReleased(stopGripper);
-		secondary.buttonTriggerRight.whenPressed(new GripperInCommand());
-		secondary.buttonTriggerRight.whenReleased(stopGripper);*/ //removed 2/22/19
+		secondary.buttonBumperLeft.whenPressed(grabberStopCommand);
 		secondary.buttonView.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
 		secondary.buttonMenu.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
 	}
