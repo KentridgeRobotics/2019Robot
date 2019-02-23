@@ -29,59 +29,80 @@ public class ElevatorChangeCommand extends Command {
 					if(currentMotorRotations < levels.getRotations()) {
 						desiredRotations = levels.getRotations();
 						return desiredRotations;
+					}
+					else {
+						isDone = true;
 					} 
 					break;
 				
 				case DOWN:
-					if(currentMotorRotations > levels.getRotations() && levels.getRotations() > possibleLowerRotation) {
-						possibleLowerRotation = levels.getRotations();
+					if(currentMotorRotations <= 0.0) {
+						desiredRotations = 0.0;
+					}
+					else {
+						if(currentMotorRotations > levels.getRotations()) {
+							possibleLowerRotation = levels.getRotations();
+							desiredRotations = possibleLowerRotation;
+							//return desiredRotations;
+						}
+						else {
+							isDone = true;
+						}
 					}
 					break;
 			
 				case STOP:
 					desiredRotations = currentMotorRotations;
+					isDone = true;
 					break;
 			
 				default:
 					desiredRotations = currentMotorRotations;
+					isDone = true;
 					break;
 			}
 		}
-
-		desiredRotations = possibleLowerRotation;
 		return desiredRotations;
 	}
 
 	@Override
 	protected void initialize() {
 		this.desiredRotations = findRotations();
+		System.err.println("[!] Elevator Change Initialized");
+		System.err.println("[!] Starting Elevator Pos: "+ ElevatorSubsystem.getInstance().getRotation());
+		System.err.println("[!] Desired Rotations: "+ this.desiredRotations);
 		isDone = false;
 	}
 
 	@Override
 	protected void execute() {
-		currentMotorRotations = ElevatorSubsystem.getInstance().getRotation();
-		switch (verticalDirection) {
-				case UP:
-				if(currentMotorRotations >= desiredRotations) {
-					isDone = true;
-					return;
-				}
-				ElevatorSubsystem.getInstance().setElevatorSpeed(0.7);
-				break;
-			case DOWN:
-				if(currentMotorRotations <= desiredRotations) {
-					isDone = true;
-					return;
-				}
-				ElevatorSubsystem.getInstance().setElevatorSpeed(-0.7);
-				break;
-			case STOP:
-				ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
-				break;
-			default:
-				ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
-				break;
+		if(!isDone) {
+			currentMotorRotations = ElevatorSubsystem.getInstance().getRotation();
+			System.err.println("[!] Current Elevator Rotations: "+currentMotorRotations);
+			switch (verticalDirection) {
+					case UP:
+					if(currentMotorRotations >= desiredRotations) {
+						isDone = true;
+						return;
+					}
+					ElevatorSubsystem.getInstance().setElevatorSpeed(0.7);
+					System.err.println("[!] GOING UP");
+					break;
+				case DOWN:
+					if(currentMotorRotations <= desiredRotations) {
+						isDone = true;
+						return;
+					}
+					ElevatorSubsystem.getInstance().setElevatorSpeed(-0.7);
+					System.err.println("[!] GOING DOWN");
+					break;
+				case STOP:
+					ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+					break;
+				default:
+					ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+					break;
+			}
 		}
 	}
 	
@@ -94,6 +115,9 @@ public class ElevatorChangeCommand extends Command {
 	@Override
 	protected void end() {
 		ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+		ElevatorSubsystem.getInstance().setElevatorPos(desiredRotations);
+		System.err.println("[!] Elevator Change Completed");
+		System.err.println("[!] Final Elevator Position: "+ElevatorSubsystem.getInstance().getRotation());
 	}
 
 	@Override
