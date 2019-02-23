@@ -18,6 +18,7 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand; //for testing
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
+import org.usfirst.frc.team3786.robot.commands.TestCommand;
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnHolder;
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnToRocketPort; //for testing
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDown; //for calibration
@@ -54,23 +55,26 @@ public class Mappings {
 	public static void setupDefaultMappings() {
 
 		XboxController primary = OI.getPrimaryController();
-		/*primary.buttonA.whenPressed(new NeoBrakeOnCommand());
-		primary.buttonA.whenReleased(new NeoBrakeOffCommand());
-		primary.buttonB.whenPressed(new NeoBoostOnCommand());
-		primary.buttonB.whenReleased(new NeoBoostOffCommand());*/ //removed 2/22/19
+		/*
+		 * primary.buttonA.whenPressed(new NeoBrakeOnCommand());
+		 * primary.buttonA.whenReleased(new NeoBrakeOffCommand());
+		 * primary.buttonB.whenPressed(new NeoBoostOnCommand());
+		 * primary.buttonB.whenReleased(new NeoBoostOffCommand());
+		 */ // removed 2/22/19
 		primary.buttonA.whenPressed(new PullUpButtlifterCommand());
-		primary.buttonX.whileHeld(new TurnToRocketPort(new TurnHolder())); //for testing
-		primary.buttonY.whenPressed(new ElevatorSendCommand(Levels.THREE)); //for calibration
-		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); //for testing
-		primary.buttonBumperRight.whileHeld(new RollersForwardCommand()); //for testing
+		primary.buttonX.whileHeld(new TurnToRocketPort(new TurnHolder())); // for testing
+		primary.buttonY.whenPressed(new ElevatorSendCommand(Levels.THREE)); // for calibration
+		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); // for testing
+		primary.buttonBumperRight.whileHeld(new RollersForwardCommand()); // for testing
 
 		XboxController secondary = OI.getSecondaryController();
 		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
 		GripperStopCommand stopGripper = new GripperStopCommand();
 		secondary.buttonA.whileHeld(new ElevatorDownCommand());
 		secondary.buttonB.whileHeld(new ElevatorUpCommand());
-		//secondary.buttonX.whileHeld(new ManualButtLifterDown()); //for calibration
-		//secondary.buttonY.whenPressed(new ElevatorSendCommand(Levels.THREE)); //for calibration
+		// secondary.buttonX.whileHeld(new ManualButtLifterDown()); //for calibration
+		// secondary.buttonY.whenPressed(new ElevatorSendCommand(Levels.THREE)); //for
+		// calibration
 		secondary.buttonStickLeft.whileHeld(new ManualButtLifterUp());
 		secondary.buttonStickRight.whileHeld(new ManualButtLifterDown());
 		secondary.buttonX.whenPressed(new GripperInCommand());
@@ -81,10 +85,12 @@ public class Mappings {
 		secondary.buttonBumperLeft.whenReleased(grabberStopCommand);
 		secondary.buttonBumperRight.whenPressed(new GrabberCloseCommand());
 		secondary.buttonBumperRight.whenReleased(grabberStopCommand);
-		/*secondary.buttonTriggerLeft.whenPressed(new GripperOutCommand());
-		secondary.buttonTriggerLeft.whenReleased(stopGripper);
-		secondary.buttonTriggerRight.whenPressed(new GripperInCommand());
-		secondary.buttonTriggerRight.whenReleased(stopGripper);*/ //removed 2/22/19
+		/*
+		 * secondary.buttonTriggerLeft.whenPressed(new GripperOutCommand());
+		 * secondary.buttonTriggerLeft.whenReleased(stopGripper);
+		 * secondary.buttonTriggerRight.whenPressed(new GripperInCommand());
+		 * secondary.buttonTriggerRight.whenReleased(stopGripper);
+		 */ // removed 2/22/19
 		secondary.buttonView.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
 		secondary.buttonMenu.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
 	}

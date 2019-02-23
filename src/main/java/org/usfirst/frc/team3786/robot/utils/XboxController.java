@@ -1,9 +1,15 @@
 package org.usfirst.frc.team3786.robot.utils;
 
+import java.util.HashMap;
+
+import org.usfirst.frc.team3786.robot.utils.XboxPovButton.POVDirection;
+
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class XboxController {
+
+	private static final HashMap<Integer, XboxController> instances = new HashMap<Integer, XboxController>();
 
 	edu.wpi.first.wpilibj.XboxController controller;
 
@@ -17,8 +23,10 @@ public class XboxController {
 	public JoystickButton buttonMenu;
 	public JoystickButton buttonStickLeft;
 	public JoystickButton buttonStickRight;
-	public JoystickButton buttonTriggerLeft;
-	public JoystickButton buttonTriggerRight;
+	public XboxPovButton buttonPovUp;
+	public XboxPovButton buttonPovRight;
+	public XboxPovButton buttonPovDown;
+	public XboxPovButton buttonPovLeft;
 
 	private static final double deadzone = 0.13;
 
@@ -29,6 +37,11 @@ public class XboxController {
 	public XboxController(int id) {
 		controller = new edu.wpi.first.wpilibj.XboxController(id);
 		setupButtons();
+		instances.put(id, this);
+	}
+
+	public static XboxController getInstance(int id) {
+		return instances.get(id);
 	}
 
 	private void setupButtons() {
@@ -42,8 +55,10 @@ public class XboxController {
 		buttonMenu = new JoystickButton(controller, XboxControllerButton.MENU.getId());
 		buttonStickLeft = new JoystickButton(controller, XboxControllerButton.STICK_LEFT.getId());
 		buttonStickRight = new JoystickButton(controller, XboxControllerButton.STICK_RIGHT.getId());
-		buttonTriggerLeft = new JoystickButton(controller, XboxControllerButton.TRIGGER_LEFT.getId());
-		buttonTriggerRight = new JoystickButton(controller, XboxControllerButton.TRIGGER_RIGHT.getId());
+		buttonPovUp = new XboxPovButton(controller, POVDirection.UP);
+		buttonPovRight = new XboxPovButton(controller, POVDirection.RIGHT);
+		buttonPovDown = new XboxPovButton(controller, POVDirection.DOWN);
+		buttonPovLeft = new XboxPovButton(controller, POVDirection.LEFT);
 	}
 
 	public double getLeftStickX() {
@@ -52,7 +67,7 @@ public class XboxController {
 			return 0.0;
 		else {
 			double c = (Math.abs(n) - deadzone) / (1.0 - deadzone);
-			return (n > 0) ?  c: -c;
+			return (n > 0) ? c : -c;
 		}
 	}
 
@@ -62,7 +77,7 @@ public class XboxController {
 			return 0.0;
 		else {
 			double c = (Math.abs(n) - deadzone) / (1.0 - deadzone);
-			return (n > 0) ?  c: -c;
+			return (n > 0) ? c : -c;
 		}
 	}
 
@@ -72,7 +87,7 @@ public class XboxController {
 			return 0.0;
 		else {
 			double c = (Math.abs(n) - deadzone) / (1.0 - deadzone);
-			return (n > 0) ?  c: -c;
+			return (n > 0) ? c : -c;
 		}
 	}
 
@@ -82,7 +97,7 @@ public class XboxController {
 			return 0.0;
 		else {
 			double c = (Math.abs(n) - deadzone) / (1.0 - deadzone);
-			return (n > 0) ?  c: -c;
+			return (n > 0) ? c : -c;
 		}
 	}
 
@@ -95,18 +110,7 @@ public class XboxController {
 	}
 
 	public enum XboxControllerButton {
-		A(1),
-		B(2),
-		X(3),
-		Y(4),
-		BUMPER_LEFT(5),
-		BUMPER_RIGHT(6),
-		VIEW(7),
-		MENU(8),
-		STICK_LEFT(9),
-		STICK_RIGHT(10),
-		TRIGGER_LEFT(11),
-		TRIGGER_RIGHT(12);
+		A(1), B(2), X(3), Y(4), BUMPER_LEFT(5), BUMPER_RIGHT(6), VIEW(7), MENU(8), STICK_LEFT(9), STICK_RIGHT(10);
 
 		private final int id;
 

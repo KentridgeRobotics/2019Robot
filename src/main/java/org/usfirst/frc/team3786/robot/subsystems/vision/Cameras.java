@@ -26,6 +26,7 @@ public class Cameras {
 
     public static void initDrive() {
         drive = CameraServer.getInstance().startAutomaticCapture();
+        drive.setConnectVerbose(0);
         if (drive != null) {
             drive.setResolution(320, 240);
             drive.setFPS(30);

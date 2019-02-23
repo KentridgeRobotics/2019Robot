@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotInit() {
-        new HCSR04(0, 1);
+		new HCSR04(0, 1);
 		if (mode == RobotMode.TANK) {
 			System.out.println("USING TANK DRIVE");
 			Mappings.setupDefaultMappings();
