@@ -19,6 +19,7 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand; //f
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
+import org.usfirst.frc.team3786.robot.commands.TestCommand;
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnHolder;
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnToRocketPort; //for testing
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDown; //for calibration
@@ -55,15 +56,17 @@ public class Mappings {
 	public static void setupDefaultMappings() {
 
 		XboxController primary = OI.getPrimaryController();
-		/*primary.buttonA.whenPressed(new NeoBrakeOnCommand());
-		primary.buttonA.whenReleased(new NeoBrakeOffCommand());
-		primary.buttonB.whenPressed(new NeoBoostOnCommand());
-		primary.buttonB.whenReleased(new NeoBoostOffCommand());*/ //removed 2/22/19
+		/*
+		 * primary.buttonA.whenPressed(new NeoBrakeOnCommand());
+		 * primary.buttonA.whenReleased(new NeoBrakeOffCommand());
+		 * primary.buttonB.whenPressed(new NeoBoostOnCommand());
+		 * primary.buttonB.whenReleased(new NeoBoostOffCommand());
+		 */ // removed 2/22/19
 		primary.buttonA.whenPressed(new PullUpButtlifterCommand());
-		primary.buttonX.whileHeld(new TurnToRocketPort(new TurnHolder())); //for testing
-		primary.buttonY.whenPressed(new ElevatorSendCommand(Levels.THREE)); //for calibration
-		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); //for testing
-		primary.buttonBumperRight.whileHeld(new RollersForwardCommand()); //for testing
+		primary.buttonX.whileHeld(new TurnToRocketPort(new TurnHolder())); // for testing
+		primary.buttonY.whenPressed(new ElevatorSendCommand(Levels.THREE)); // for calibration
+		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); // for testing
+		primary.buttonBumperRight.whileHeld(new RollersForwardCommand()); // for testing
 
 		XboxController secondary = OI.getSecondaryController();
 		GrabberStopCommand grabberStopCommand = new GrabberStopCommand();
