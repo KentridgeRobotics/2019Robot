@@ -19,7 +19,9 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand; //f
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorStopCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
-import org.usfirst.frc.team3786.robot.commands.TestCommand;
+
+import java.util.Map;
+
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnHolder;
 import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.TurnToRocketPort; //for testing
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDown; //for calibration
@@ -30,11 +32,11 @@ import org.usfirst.frc.team3786.robot.commands.climber.RollersForwardCommand; //
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {
-	// Controller Inputs
+	// Controller IDs
 	public final static int primaryControllerId = 0;
 	public final static int secondaryControllerId = 1;
 
-	// CAN Controllers
+	// CAN IDs
 	public final static int leftMotor = 8;
 	public final static int rightMotor = 9;
 
@@ -49,9 +51,14 @@ public class Mappings {
 	public final static int leftElevator = 12;
 	public final static int rightElevator = 13;
 
-	// Analog Inputs
-	public final static int UltrasonicSensor = 0;
-	public final static int IRSensor = 1;
+	// Digital IO
+	public final static Map.Entry<Integer, Integer> ultrasonicLeft = Map.entry(0, 1);
+	public final static Map.Entry<Integer, Integer> ultrasonicRight = Map.entry(2, 3);
+	public final static int grabberLimitSwitch = 4;
+
+	// Analog IO
+	public final static int irSensorLeft = 0;
+	public final static int irSensorRight = 1;
 
 	public static void setupDefaultMappings() {
 
