@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3786.robot.utils;
 
-import org.usfirst.frc.team3786.robot.Mappings;
-
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -9,7 +7,7 @@ public class MaxSonar implements DistanceSensorInterface {
 
     private static MaxSonar instance;
 
-    private AnalogInput distSensor = new AnalogInput(Mappings.UltrasonicSensor);
+    private AnalogInput distSensor = null;
 
     public static MaxSonar getInstance() {
         if (instance == null)
