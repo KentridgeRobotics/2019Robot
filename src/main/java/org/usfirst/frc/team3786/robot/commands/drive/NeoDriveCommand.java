@@ -36,12 +36,12 @@ public class NeoDriveCommand extends Command {
 		double throttle = OI.getRobotThrottle();
 		double turn = OI.getRobotTurn();
 		//driver wants to go straight, haven't started using currentHeading yet.
-		if(Math.abs(turn) < 0.05 && !useTargetHeading) {
+		if(Math.abs(turn) == 0 && !useTargetHeading) {
 			targetHeading = Gyroscope.getInstance().getHeadingContinuous();
 			useTargetHeading = true;
 		}
 		//driver wants to turn
-		else if(Math.abs(turn) > 0.05) {
+		else if(Math.abs(turn) > 0) {
 			useTargetHeading = false;
 		}
 		//going straight with gyro
