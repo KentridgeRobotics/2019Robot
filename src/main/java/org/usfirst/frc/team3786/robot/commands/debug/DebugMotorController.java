@@ -51,11 +51,6 @@ public class DebugMotorController extends Command {
 	protected void end() {
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	protected void interrupted() {
-	}
-
 	public void setId(int id) {
 		if (id < 1)
 			id = 1;

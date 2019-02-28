@@ -120,10 +120,6 @@ public class ElevatorChangeCommand extends Command {
 		System.err.println("[!] Final Elevator Position: "+ElevatorSubsystem.getInstance().getRotation());
 	}
 
-	@Override
-	protected void interrupted() {
-	}
-
 	public void up() {
 		verticalDirection = ElevatorSubsystem.VerticalDirection.UP;
 	}

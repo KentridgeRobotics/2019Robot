@@ -75,10 +75,4 @@ public class DriveToWallCommand extends Command {
     NeoDriveSubsystem.getInstance().setMotorSpeeds(0, 0);
     System.err.println("Finished driving to wall");
   }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
 }
