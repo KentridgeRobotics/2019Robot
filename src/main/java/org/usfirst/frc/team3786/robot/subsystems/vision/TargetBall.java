@@ -23,7 +23,7 @@ public class TargetBall extends Command {
     @Override
     protected void execute() {
         int blockCount = Cameras.getPixyCamera1().getPixy().getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25);
-        if (blockCount <=0) {
+        if (blockCount <= 0) {
             System.err.println("No block count");
             return;
         }

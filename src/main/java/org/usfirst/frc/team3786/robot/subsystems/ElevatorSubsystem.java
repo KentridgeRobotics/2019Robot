@@ -46,7 +46,7 @@ public class ElevatorSubsystem extends Subsystem {
 	public void setElevatorSpeed(double speed) {
 		rightElevator.set(speed);
 		leftElevator.set(speed);
-		Dashboard.getInstance().putNumber(false,"Elevator Speed", speed);
+		Dashboard.getInstance().putNumber(false, "Elevator Speed", speed);
 		System.err.println("[!] HERE'S THE SPEED: " + speed);
 	}
 
@@ -55,7 +55,7 @@ public class ElevatorSubsystem extends Subsystem {
 		leftElevator.getEncoder().setPosition(position);
 	}
 
-	public double getRotation() { //avg of right and left
+	public double getRotation() { // avg of right and left
 		double right = rightElevator.getEncoder().getPosition();
 		double left = leftElevator.getEncoder().getPosition();
 		return right;
@@ -64,27 +64,20 @@ public class ElevatorSubsystem extends Subsystem {
 	public double getHeight() {
 		return getRotation();
 	}
-	
+
 	public enum VerticalDirection {
-		UP,
-		DOWN,
-		STOP;
+		UP, DOWN, STOP;
 	}
 
 	public enum Levels {
-		ZERO(0.0),
-		ONE(5.0),
-		TWO(10.0),
-		THREE(15.0),
-		FOUR(20.0),
-		FIVE(25.0),
-		SIX(30.0);
+		ZERO(0.0), ONE(5.0), TWO(10.0), THREE(15.0), FOUR(20.0), FIVE(25.0), SIX(30.0);
 
 		private double rotations;
 
 		Levels(double rotations) {
 			this.rotations = rotations;
 		}
+
 		public double getRotations() {
 			return rotations;
 		}

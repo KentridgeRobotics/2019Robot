@@ -27,7 +27,8 @@ public class ManualButtLifterUp extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Dashboard.getInstance().putNumber(false, "Buttlifter Pos", ButtLifterTalonSubsystem.getInstance().getRealLifterPosition());
+    Dashboard.getInstance().putNumber(false, "Buttlifter Pos",
+        ButtLifterTalonSubsystem.getInstance().getRealLifterPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -25,9 +25,8 @@ public class ButtLifterTalonSubsystem extends Subsystem {
   private WPI_TalonSRX lifter;
   private WPI_TalonSRX rollers;
 
-
   public static ButtLifterTalonSubsystem getInstance() {
-    if(instance == null)
+    if (instance == null)
       instance = new ButtLifterTalonSubsystem();
     return instance;
   }
@@ -36,7 +35,7 @@ public class ButtLifterTalonSubsystem extends Subsystem {
     lifter = new WPI_TalonSRX(Mappings.buttLifter);
     rollers = new WPI_TalonSRX(Mappings.rollers);
     lifter.setNeutralMode(NeutralMode.Brake);
-    lifter.config_kP(0 , 0.125);
+    lifter.config_kP(0, 0.125);
   }
 
   public void setButtLifterSpeed(double speed) {
@@ -45,7 +44,7 @@ public class ButtLifterTalonSubsystem extends Subsystem {
   }
 
   public void setDesiredLifterPosition(double positionReal) {
-    lifter.set(ControlMode.Position , positionReal);
+    lifter.set(ControlMode.Position, positionReal);
 
   }
 
@@ -62,22 +61,15 @@ public class ButtLifterTalonSubsystem extends Subsystem {
     Dashboard.getInstance().putNumber(false, "Roller Speed  Talon", speed);
   }
 
-  public void setBrake(boolean brake)
-  {
-    if(brake)
-    {
+  public void setBrake(boolean brake) {
+    if (brake) {
       lifter.setNeutralMode(NeutralMode.Brake);
       rollers.setNeutralMode(NeutralMode.Brake);
-    }
-    else
-    {
+    } else {
       lifter.setNeutralMode(NeutralMode.Coast);
       rollers.setNeutralMode(NeutralMode.Coast);
     }
   }
-
-
-
 
   @Override
   public void initDefaultCommand() {

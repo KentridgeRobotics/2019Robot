@@ -11,7 +11,7 @@ public class DebugMotorController extends Command {
 	private static DebugMotorController instance;
 
 	private WPI_TalonSRX motor;
-	
+
 	private int motorId = 1;
 
 	public static DebugMotorController getInstance() {
@@ -55,7 +55,7 @@ public class DebugMotorController extends Command {
 	// subsystems is scheduled to run
 	protected void interrupted() {
 	}
-	
+
 	public void setId(int id) {
 		if (id < 1)
 			id = 1;
@@ -71,7 +71,7 @@ public class DebugMotorController extends Command {
 		motorId++;
 		motor = new WPI_TalonSRX(motorId);
 	}
-	
+
 	public void decrement() {
 		motorId--;
 		if (motorId < 1) {
