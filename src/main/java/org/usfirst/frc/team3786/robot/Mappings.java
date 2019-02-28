@@ -8,6 +8,7 @@ import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.VerticalDirec
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
@@ -53,9 +54,7 @@ public class Mappings {
 	public static void setupDefaultMappings() {
 
 		XboxController primary = OI.getPrimaryController();
-		/*
-		 * primary.buttonA.whileHeld(new NeoBrakeCommand());
-		 */ // removed 2/22/19
+		primary.buttonA.whileHeld(new NeoBrakeCommand());
 		primary.buttonB.whileHeld(new NeoBoostCommand());
 		primary.buttonBumperLeft.whileHeld(new RollersForwardCommand());
 		primary.buttonBumperRight.whileHeld(new RollersBackwardCommand());
