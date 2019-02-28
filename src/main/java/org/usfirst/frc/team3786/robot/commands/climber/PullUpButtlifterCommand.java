@@ -66,10 +66,4 @@ public class PullUpButtlifterCommand extends Command {
   protected void end() {
     System.err.println("PullUpButtlifterCommand finished");
   }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
 }

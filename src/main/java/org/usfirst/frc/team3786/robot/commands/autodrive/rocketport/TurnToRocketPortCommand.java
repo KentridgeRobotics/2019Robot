@@ -67,10 +67,4 @@ public class TurnToRocketPortCommand extends Command {
     NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
     System.err.println("!!!Turn To Rocket Port Completed!!!");
   }
-  /*
-   * // Called when another command which requires one or more of the same //
-   * subsystems is scheduled to run
-   * 
-   * @Override protected void interrupted() { }
-   */
 }

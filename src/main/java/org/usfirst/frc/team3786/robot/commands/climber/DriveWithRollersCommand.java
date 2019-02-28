@@ -53,10 +53,4 @@ public class DriveWithRollersCommand extends Command {
     NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
     ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.0);
   }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
 }

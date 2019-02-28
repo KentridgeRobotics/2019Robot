@@ -89,9 +89,4 @@ public class ElevatorSendCommand extends Command {
         System.err.println("Elevator Send completed");
         System.err.println("Final Elevator Position: "+ElevatorSubsystem.getInstance().getRotation());
     }
-
-    @Override
-    protected void interrupted() {
-        
-    }
 }

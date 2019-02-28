@@ -17,12 +17,12 @@ public class GrabberOpenCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		GrabberSubsystem.getInstance().setGrabberSpeed(0.5);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		GrabberSubsystem.getInstance().setGrabberSpeed(0.5);
 		Dashboard.getInstance().putNumber(false, "Grabber Current (Amps)",
 				GrabberSubsystem.getInstance().getGrabberCurrent());
 		if (GrabberSubsystem.getInstance().getGrabberCurrent() > NumConstants.GRABBER_AMP_LIMIT) {
@@ -42,11 +42,5 @@ public class GrabberOpenCommand extends Command {
 	@Override
 	protected void end() {
 		GrabberSubsystem.getInstance().setGrabberSpeed(0);
-	}
-
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	@Override
-	protected void interrupted() {
 	}
 }
