@@ -9,7 +9,7 @@ package org.usfirst.frc.team3786.robot.commands.climbdown;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-import org.usfirst.frc.team3786.robot.commands.climber.AllMtrsBrakeCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.AllMotorsBrakeCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.DriveToWallCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.Levels;
@@ -20,7 +20,7 @@ public class ClimbDownCommandGroup extends CommandGroup {
    * Add your docs here.
    */
   public ClimbDownCommandGroup() {
-    addSequential(new AllMtrsBrakeCommand());
+    addSequential(new AllMotorsBrakeCommand());
     addSequential(new ElevatorSendCommand(Levels.ONE)); // tune later
     addSequential(new DriveToWallCommand(0.8, 40.0, false)); // tune later
     // buttlifter down

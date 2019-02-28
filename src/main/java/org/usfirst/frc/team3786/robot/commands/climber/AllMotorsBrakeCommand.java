@@ -13,13 +13,13 @@ import org.usfirst.frc.team3786.robot.subsystems.GrabberSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AllMtrsBrakeCommand extends Command {
-  public AllMtrsBrakeCommand() {
+public class AllMotorsBrakeCommand extends Command {
+  public AllMotorsBrakeCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(NeoDriveSubsystem.getInstance());
     requires(GrabberSubsystem.getInstance());
-    requires(ButtLifterTalonSubsystem.getInstance()); //Practice Chassis has Talons
+    requires(ButtLifterTalonSubsystem.getInstance()); // Practice Chassis has Talons
   }
 
   // Called just before this Command runs the first time
