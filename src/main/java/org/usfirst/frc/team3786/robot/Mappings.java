@@ -4,13 +4,13 @@ import org.usfirst.frc.team3786.robot.commands.grabber.GrabberCloseCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GripperInCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GripperOutCommand;
+import org.usfirst.frc.team3786.robot.commands.grabber.TiltDownCommand;
+import org.usfirst.frc.team3786.robot.commands.grabber.TiltUpCommand;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.VerticalDirection;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeCommand;
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
 
 import java.util.Map;
@@ -67,8 +67,8 @@ public class Mappings {
 		secondary.buttonA.whileHeld(new GripperInCommand());
 		secondary.buttonBumperLeft.whileHeld(new GrabberOpenCommand());
 		secondary.buttonBumperRight.whileHeld(new GrabberCloseCommand());
-		secondary.buttonY.whileHeld(new ElevatorUpCommand());
-		secondary.buttonX.whileHeld(new ElevatorDownCommand());
+		secondary.buttonY.whileHeld(new TiltUpCommand());
+		secondary.buttonX.whileHeld(new TiltDownCommand());
 		secondary.buttonPovUp.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
 		secondary.buttonPovDown.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
 	}
