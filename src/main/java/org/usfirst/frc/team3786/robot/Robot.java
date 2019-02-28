@@ -138,12 +138,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		if (mode == RobotMode.TANK)
-			NeoDriveCommand.getInstance().cancel();
+			NeoDriveCommand.getInstance().start();
 		else if (mode == RobotMode.DEBUG)
-			DebugMotorController.getInstance().cancel();
+			DebugMotorController.getInstance().start();
 		LED.setColor(visionColor);
-		buttLifterRunCommand.cancel();
-		elevatorRunCommand.cancel();
+		buttLifterRunCommand.start();
+		elevatorRunCommand.start();
 	}
 
 	@Override
