@@ -47,7 +47,6 @@ public class ElevatorSubsystem extends Subsystem {
 		rightElevator.set(speed);
 		leftElevator.set(speed);
 		Dashboard.getInstance().putNumber(false, "Elevator Speed", speed);
-		System.err.println("[!] HERE'S THE SPEED: " + speed);
 	}
 
 	public void setElevatorPos(double position) {
