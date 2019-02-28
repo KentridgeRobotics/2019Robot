@@ -12,8 +12,8 @@ import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ManualButtLifterDown extends Command {
-  public ManualButtLifterDown() {
+public class ManualButtLifterDownCommand extends Command {
+  public ManualButtLifterDownCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(ButtLifterTalonSubsystem.getInstance());
   }
@@ -27,7 +27,8 @@ public class ManualButtLifterDown extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Dashboard.getInstance().putNumber(false, "Buttlifter Pos", ButtLifterTalonSubsystem.getInstance().getRealLifterPosition());
+    Dashboard.getInstance().putNumber(false, "Buttlifter Pos",
+        ButtLifterTalonSubsystem.getInstance().getRealLifterPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()

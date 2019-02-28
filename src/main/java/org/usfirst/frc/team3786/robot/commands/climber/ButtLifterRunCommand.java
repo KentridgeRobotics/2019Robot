@@ -7,56 +7,40 @@
 
 package org.usfirst.frc.team3786.robot.commands.climber;
 
+import org.usfirst.frc.team3786.robot.Dashboard;
+import org.usfirst.frc.team3786.robot.OI;
 import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
-import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
-import org.usfirst.frc.team3786.robot.utils.MaxSonar;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveWithRollersCmd extends Command {
-
-  private boolean isDone;
-  private double targetDist = 45.2; // 18 inches. This is an estimate...
-
-  public DriveWithRollersCmd() {
+public class ButtLifterRunCommand extends Command {
+  public ButtLifterRunCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(ButtLifterTalonSubsystem.getInstance()); // Test Chassis has Talons.
-    requires(NeoDriveSubsystem.getInstance());
+    requires(ButtLifterTalonSubsystem.getInstance());
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    isDone = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (MaxSonar.getInstance().getDistanceCM() > targetDist) {
-      NeoDriveSubsystem.getInstance().arcadeDrive(0.5, 0.0); // Powers probably need to be tuned
-      ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.5); // not sure if 0.5 or -0.5 is forward
-    } else {
-      isDone = true;
-    }
+    ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(OI.getButtLifterPower());
+    Dashboard.getInstance().putNumber(false, "Buttlifter Pos",
+        ButtLifterTalonSubsystem.getInstance().getRealLifterPosition());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return isDone;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
-    ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.0);
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
+    ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(0.0);
   }
 }

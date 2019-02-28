@@ -16,7 +16,7 @@ import io.github.pseudoresonance.pixy2api.Pixy2Line.Vector;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveUntilVectorFound extends Command {
+public class DriveUntilVectorFoundCommand extends Command {
 
   private boolean isDone;
 
@@ -27,7 +27,7 @@ public class DriveUntilVectorFound extends Command {
 
   private TurnHolder holder;
 
-  public DriveUntilVectorFound(TurnHolder holder) {
+  public DriveUntilVectorFoundCommand(TurnHolder holder) {
     // Use requires() here to declare subsystem dependencies
     requires(NeoDriveSubsystem.getInstance());
     this.holder = holder;

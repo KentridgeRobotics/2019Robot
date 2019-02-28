@@ -1,17 +1,17 @@
 package org.usfirst.frc.team3786.robot.commands.drive;
 
-import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.ChargerDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class NeoBrakeOffCommand extends Command {
+public class BrakeCommand extends Command {
 
-    public NeoBrakeOffCommand() {
+    public BrakeCommand() {
     }
 
     @Override
     protected void initialize() {
-        NeoDriveSubsystem.getInstance().setkkBrake(false);
+        ChargerDriveSubsystem.getInstance().setBrake(true);
     }
 
     @Override
@@ -20,11 +20,12 @@ public class NeoBrakeOffCommand extends Command {
 
     @Override
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override
     protected void end() {
+        ChargerDriveSubsystem.getInstance().setBrake(false);
     }
 
 }
