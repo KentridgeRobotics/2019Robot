@@ -13,7 +13,7 @@ import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TurnToRocketPort extends Command {
+public class TurnToRocketPortCommand extends Command {
 
   private TurnHolder holder;
 
@@ -24,7 +24,7 @@ public class TurnToRocketPort extends Command {
 
   private boolean isDone;
 
-  public TurnToRocketPort(TurnHolder holder) {
+  public TurnToRocketPortCommand(TurnHolder holder) {
     // Use requires() here to declare subsystem dependencies
     requires(NeoDriveSubsystem.getInstance());
     this.holder = holder;

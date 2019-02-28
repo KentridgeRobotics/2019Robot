@@ -1,21 +1,20 @@
-package org.usfirst.frc.team3786.robot.commands.grabber;
+package org.usfirst.frc.team3786.robot.commands.drive;
 
-import org.usfirst.frc.team3786.robot.subsystems.GrabberSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GripperStopCommand extends Command {
+public class NeoBoostCommand extends Command {
 
-	public GripperStopCommand() {
+	public NeoBoostCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(GrabberSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		GrabberSubsystem.getInstance().setGripperSpeed(0);
+		NeoDriveSubsystem.getInstance().setBoost(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -26,12 +25,13 @@ public class GripperStopCommand extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		NeoDriveSubsystem.getInstance().setBoost(false);
 	}
 
 	// Called when another command which requires one or more of the same

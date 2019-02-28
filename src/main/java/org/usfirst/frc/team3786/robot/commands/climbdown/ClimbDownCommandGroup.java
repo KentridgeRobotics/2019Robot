@@ -13,18 +13,18 @@ import org.usfirst.frc.team3786.robot.commands.climber.AllMtrsBrakeCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.DriveToWallCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.Levels;
-import org.usfirst.frc.team3786.robot.commands.climbdown.BackwardsWiRRollersCmd;
+import org.usfirst.frc.team3786.robot.commands.climbdown.BackwardsWithRollersCommand;
 
-public class ClimbDownCmdGroup extends CommandGroup {
+public class ClimbDownCommandGroup extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public ClimbDownCmdGroup() {
+  public ClimbDownCommandGroup() {
     addSequential(new AllMtrsBrakeCommand());
     addSequential(new ElevatorSendCommand(Levels.ONE)); // tune later
     addSequential(new DriveToWallCommand(0.8, 40.0, false)); // tune later
     // buttlifter down
-    addSequential(new BackwardsWiRRollersCmd());
+    addSequential(new BackwardsWithRollersCommand());
     // pull up buttlifter and raise elevator. Some variation of
     // ClimbWhileLevelCommand.
     addSequential(new DriveToWallCommand(0.8, 60, false)); // tune later

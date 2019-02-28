@@ -13,12 +13,12 @@ import org.usfirst.frc.team3786.robot.utils.MaxSonar;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BackwardsWiRRollersCmd extends Command {
+public class BackwardsWithRollersCommand extends Command {
 
   private boolean isDone;
   private double targetDist = 45.2; // 18 inches. This is an estimate...
 
-  public BackwardsWiRRollersCmd() {
+  public BackwardsWithRollersCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(ButtLifterTalonSubsystem.getInstance()); // Test Chassis has Talons.
     requires(NeoDriveSubsystem.getInstance());

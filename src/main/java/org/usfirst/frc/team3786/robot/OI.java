@@ -27,4 +27,12 @@ public class OI {
 		return getPrimaryController().getLeftStickY();
 	}
 
+	public static double getButtLifterPower() {
+		return getPrimaryController().getRightTrigger() - getPrimaryController().getLeftTrigger();
+	}
+
+	public static double getElevatorPower() {
+		return getSecondaryController().getRightTrigger() - getSecondaryController().getLeftTrigger();
+	}
+
 }

@@ -8,9 +8,11 @@
 package org.usfirst.frc.team3786.robot;
 
 import org.usfirst.frc.team3786.robot.commands.drive.NeoDriveCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorRunCommand;
 
 import java.awt.Color;
 
+import org.usfirst.frc.team3786.robot.commands.climber.ButtLifterRunCommand;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.subsystems.vision.RPiComs;
@@ -48,6 +50,9 @@ public class Robot extends TimedRobot {
 	private static final Color visionColor = new Color(0, 255, 0);
 	private static final Color idleColor = new Color(0, 0, 0);
 	private static byte brightness = (byte) 255;
+
+	private static final ButtLifterRunCommand buttLifterRunCommand = new ButtLifterRunCommand();
+	private static final ElevatorRunCommand elevatorRunCommand = new ElevatorRunCommand();
 
 	@Override
 	public void robotInit() {
@@ -98,10 +103,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		if (mode == RobotMode.TANK)
-			NeoDriveCommand.getInstance().cancel();
-		else if (mode == RobotMode.DEBUG)
-			DebugMotorController.getInstance().cancel();
 		LED.setColor(idleColor);
 	}
 
@@ -119,6 +120,8 @@ public class Robot extends TimedRobot {
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().start();
 		LED.setColor(visionColor);
+		buttLifterRunCommand.start();
+		elevatorRunCommand.start();
 	}
 
 	@Override
@@ -131,10 +134,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		if (mode == RobotMode.TANK)
-			NeoDriveCommand.getInstance().cancel();
+			NeoDriveCommand.getInstance().start();
 		else if (mode == RobotMode.DEBUG)
-			DebugMotorController.getInstance().cancel();
+			DebugMotorController.getInstance().start();
 		LED.setColor(visionColor);
+		buttLifterRunCommand.start();
+		elevatorRunCommand.start();
 	}
 
 	@Override
@@ -151,6 +156,8 @@ public class Robot extends TimedRobot {
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
 		LED.setColor(visionColor);
+		buttLifterRunCommand.cancel();
+		elevatorRunCommand.cancel();
 	}
 
 	@Override
