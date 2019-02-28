@@ -35,21 +35,21 @@ public class NeoDriveCommand extends Command {
 		// When the number is positive, the wheels go backwards.
 		double throttle = OI.getRobotThrottle();
 		double turn = OI.getRobotTurn();
-		//driver wants to go straight, haven't started using currentHeading yet.
-		if(Math.abs(turn) == 0 && !useTargetHeading) {
+		// driver wants to go straight, haven't started using currentHeading yet.
+		if (Math.abs(turn) == 0 && !useTargetHeading) {
 			targetHeading = Gyroscope.getInstance().getHeadingContinuous();
 			useTargetHeading = true;
 		}
-		//driver wants to turn
-		else if(Math.abs(turn) > 0) {
+		// driver wants to turn
+		else if (Math.abs(turn) > 0) {
 			useTargetHeading = false;
 		}
-		//going straight with gyro
-		if(useTargetHeading) {
+		// going straight with gyro
+		if (useTargetHeading) {
 			NeoDriveSubsystem.getInstance().gyroStraight(-throttle, targetHeading);
 			Dashboard.getInstance().putBoolean(false, "Straight with Gyro?", true);
 		}
-		//driving with turn
+		// driving with turn
 		else {
 			NeoDriveSubsystem.getInstance().arcadeDrive(-throttle, turn);
 			Dashboard.getInstance().putBoolean(false, "Straight with Gyro?", false);

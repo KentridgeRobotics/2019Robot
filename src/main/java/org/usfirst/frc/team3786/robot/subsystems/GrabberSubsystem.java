@@ -42,8 +42,7 @@ public class GrabberSubsystem extends Subsystem {
 		tilt.configPeakCurrentLimit(20);
 	}
 
-	public double getGrabberCurrent()
-	{
+	public double getGrabberCurrent() {
 		return grabber.getOutputCurrent();
 	}
 
@@ -69,15 +68,12 @@ public class GrabberSubsystem extends Subsystem {
 	}
 
 	public void setBrake(boolean brake) {
-		if(brake)
-		{
+		if (brake) {
 			grabber.setNeutralMode(NeutralMode.Brake);
 			rightGripper.setNeutralMode(NeutralMode.Brake);
 			leftGripper.setNeutralMode(NeutralMode.Brake);
 			tilt.setNeutralMode(NeutralMode.Brake);
-		}
-		else
-		{
+		} else {
 			grabber.setNeutralMode(NeutralMode.Coast);
 			rightGripper.setNeutralMode(NeutralMode.Coast);
 			leftGripper.setNeutralMode(NeutralMode.Coast);

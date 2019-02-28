@@ -45,12 +45,12 @@ public class DriveUntilVectorFound extends Command {
   protected void execute() {
     PixyCamera pixy = Cameras.getPixyCamera1();
     pixy.getPixy().setLED(255, 255, 255);
-    pixy.getPixy().setLamp((byte)1,(byte)1);
+    pixy.getPixy().setLamp((byte) 1, (byte) 1);
     features = pixy.getPixy().getLine().getAllFeatures();
-    if((features & Pixy2Line.LINE_VECTOR) == Pixy2Line.LINE_VECTOR) {
+    if ((features & Pixy2Line.LINE_VECTOR) == Pixy2Line.LINE_VECTOR) {
       Vector[] vectors = pixy.getPixy().getLine().getVectors();
-      if(vectors != null) {
-        if(vectors.length > 0) {
+      if (vectors != null) {
+        if (vectors.length > 0) {
           Vector vector = vectors[0];
           double leg1 = vector.getX0() - vector.getX1();
           double leg2 = vector.getY1() - vector.getY0();
@@ -58,21 +58,18 @@ public class DriveUntilVectorFound extends Command {
           holder.turn = theta;
           System.err.println("!!!Theta is " + theta + ". Successful!!!");
           isDone = true;
-        }
-        else {
+        } else {
           System.err.println("!!!Vector length is 0 or less. Unsuccessful!!!");
           NeoDriveSubsystem.getInstance().gyroStraight(0.5, initHeading);
-        }//(vectors.length > 0)
-      }
-      else {
+        } // (vectors.length > 0)
+      } else {
         System.err.println("!!!Vector is Null. Unsuccessful!!!");
         NeoDriveSubsystem.getInstance().gyroStraight(0.5, initHeading);
-        }//(vectors != null)
-      }
-    else {
+      } // (vectors != null)
+    } else {
       System.err.println("!!!LINE_VECTOR Byte not on. Unsuccessful!!!");
       NeoDriveSubsystem.getInstance().gyroStraight(0.5, initHeading);
-    }//((features & Pixy2Line.LINE_VECTOR) == Pixy2Line.LINE_VECTOR)
+    } // ((features & Pixy2Line.LINE_VECTOR) == Pixy2Line.LINE_VECTOR)
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -85,10 +82,10 @@ public class DriveUntilVectorFound extends Command {
   @Override
   protected void end() {
     NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
-    System.err.println("Holder.turn is "+holder.turn);
+    System.err.println("Holder.turn is " + holder.turn);
     PixyCamera pixy = Cameras.getPixyCamera1();
     pixy.getPixy().setLED(0, 0, 0);
-    pixy.getPixy().setLamp((byte)0,(byte)0);
+    pixy.getPixy().setLamp((byte) 0, (byte) 0);
   }
 
   // Called when another command which requires one or more of the same

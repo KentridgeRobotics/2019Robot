@@ -16,14 +16,14 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TurnToRocketPort extends Command {
 
   private TurnHolder holder;
-  
+
   private double targetHeading;
   private double initHeading;
   private double currentHeading;
-  private double epsilon = 3.0; //tune this later
+  private double epsilon = 3.0; // tune this later
 
   private boolean isDone;
-  
+
   public TurnToRocketPort(TurnHolder holder) {
     // Use requires() here to declare subsystem dependencies
     requires(NeoDriveSubsystem.getInstance());
@@ -37,7 +37,7 @@ public class TurnToRocketPort extends Command {
     initHeading = Gyroscope.getInstance().getHeadingContinuous();
     targetHeading = initHeading + holder.turn;
     System.err.println("!!!Turn to Rocket Port started!!!");
-    System.err.println("Holder.Turn is "+holder.turn);
+    System.err.println("Holder.Turn is " + holder.turn);
     Dashboard.getInstance().putNumber(false, "Target Heading", targetHeading);
   }
 
@@ -45,12 +45,12 @@ public class TurnToRocketPort extends Command {
   @Override
   protected void execute() {
     currentHeading = Gyroscope.getInstance().getHeadingContinuous();
-    if(Math.abs(currentHeading - targetHeading) > epsilon) {
+    if (Math.abs(currentHeading - targetHeading) > epsilon) {
       NeoDriveSubsystem.getInstance().gyroStraight(0.0, targetHeading);
       Dashboard.getInstance().putNumber(false, "Current Heading", currentHeading);
-      System.err.println("!!!Robot is Turning towards rocket!!! target="+targetHeading+" current="+currentHeading);
-    }
-    else {
+      System.err
+          .println("!!!Robot is Turning towards rocket!!! target=" + targetHeading + " current=" + currentHeading);
+    } else {
       isDone = true;
     }
   }
@@ -67,10 +67,10 @@ public class TurnToRocketPort extends Command {
     NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
     System.err.println("!!!Turn To Rocket Port Completed!!!");
   }
-/*
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }*/
+  /*
+   * // Called when another command which requires one or more of the same //
+   * subsystems is scheduled to run
+   * 
+   * @Override protected void interrupted() { }
+   */
 }

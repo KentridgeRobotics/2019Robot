@@ -23,13 +23,11 @@ public class GrabberCloseCommand extends Command {
 	@Override
 	protected void execute() {
 		GrabberSubsystem.getInstance().setGrabberSpeed(-0.5);
-		Dashboard.getInstance().putNumber(false, "Grabber Current (Amps)", GrabberSubsystem.getInstance().getGrabberCurrent());
-		if(GrabberSubsystem.getInstance().getGrabberCurrent() > NumConstants.GRABBER_AMP_LIMIT)
-		{
+		Dashboard.getInstance().putNumber(false, "Grabber Current (Amps)",
+				GrabberSubsystem.getInstance().getGrabberCurrent());
+		if (GrabberSubsystem.getInstance().getGrabberCurrent() > NumConstants.GRABBER_AMP_LIMIT) {
 			Dashboard.getInstance().putBoolean(true, "Grabber Overcurrent", true);
-		}
-		else
-		{
+		} else {
 			Dashboard.getInstance().putBoolean(true, "Grabber Overcurrent", false);
 		}
 	}
@@ -43,7 +41,7 @@ public class GrabberCloseCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		GrabberSubsystem.getInstance().setGrabberSpeed(0); //not using shortcut strategy anymore.
+		GrabberSubsystem.getInstance().setGrabberSpeed(0); // not using shortcut strategy anymore.
 	}
 
 	// Called when another command which requires one or more of the same
