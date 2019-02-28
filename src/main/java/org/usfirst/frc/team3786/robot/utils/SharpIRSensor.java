@@ -12,6 +12,7 @@ public class SharpIRSensor implements DistanceSensorInterface {
 
     public SharpIRSensor(int port) {
         analogIn = new AnalogInput(port);
+        instances.add(this);
     }
 
     public static SharpIRSensor getInstance(int id) {

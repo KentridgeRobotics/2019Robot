@@ -58,6 +58,8 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		new HCSR04(Mappings.ultrasonicLeft.getKey(), Mappings.ultrasonicLeft.getValue());
 		new HCSR04(Mappings.ultrasonicRight.getKey(), Mappings.ultrasonicRight.getValue());
+		new SharpIRSensor(Mappings.irSensorLeft);
+		new SharpIRSensor(Mappings.irSensorRight);
 		if (mode == RobotMode.TANK) {
 			System.out.println("USING TANK DRIVE");
 			Mappings.setupDefaultMappings();
