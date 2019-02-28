@@ -103,10 +103,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		if (mode == RobotMode.TANK)
-			NeoDriveCommand.getInstance().cancel();
-		else if (mode == RobotMode.DEBUG)
-			DebugMotorController.getInstance().cancel();
 		LED.setColor(idleColor);
 	}
 
