@@ -39,8 +39,8 @@ public class Mappings {
 	public final static int rightGripper = 2;
 	public final static int tilt = 5;
 
-	public final static int leftElevator = 12;
-	public final static int rightElevator = 13;
+	public final static int leftElevator = 6;
+	public final static int rightElevator = 7;
 
 	// Digital IO
 	public final static Map.Entry<Integer, Integer> ultrasonicLeft = Map.entry(0, 1);

@@ -34,6 +34,8 @@ public class RPiComs {
     static void setData(String data) {
         angles.clear();
         RPiComs.data = data;
+        if (data.equals(""))
+            return;
         for (String s : data.split(",")) {
             angles.add(Double.valueOf(s));
         }

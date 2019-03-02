@@ -18,9 +18,11 @@ import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.subsystems.vision.RPiComs;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.SharpIRSensor;
+import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
 import org.usfirst.frc.team3786.robot.utils.HCSR04;
 import org.usfirst.frc.team3786.robot.utils.LED;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -56,10 +58,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotInit() {
-		new HCSR04(Mappings.ultrasonicLeft.getKey(), Mappings.ultrasonicLeft.getValue());
-		new HCSR04(Mappings.ultrasonicRight.getKey(), Mappings.ultrasonicRight.getValue());
-		new SharpIRSensor(Mappings.irSensorLeft);
-		new SharpIRSensor(Mappings.irSensorRight);
+		new UltrasonicSensor(UltrasonicSensor.Side.LEFT, new SharpIRSensor(Mappings.irSensorLeft), new HCSR04(Mappings.ultrasonicLeft.getKey(), Mappings.ultrasonicLeft.getValue()));
+		new UltrasonicSensor(UltrasonicSensor.Side.RIGHT, new SharpIRSensor(Mappings.irSensorRight), new HCSR04(Mappings.ultrasonicRight.getKey(), Mappings.ultrasonicRight.getValue()));
 		if (mode == RobotMode.TANK) {
 			System.out.println("USING TANK DRIVE");
 			Mappings.setupDefaultMappings();
