@@ -60,11 +60,11 @@ public class Mappings {
 		primary.buttonA.whileHeld(new NeoBrakeCommand());
 		primary.buttonB.whileHeld(boostCommand);
 		primary.buttonStickLeft.whileHeld(boostCommand);
-		primary.buttonBumperRight.whileHeld(new RollersForwardCommand());
-		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand());
-		primary.buttonPovLeft.whenPressed(new NavRocketPortCommandGroup());
-		primary.buttonPovDown.whenPressed(new ClimbDownCommandGroup());
-		primary.buttonPovUp.whenPressed(new ClimbCommandGroup());
+		//primary.buttonBumperRight.whileHeld(new RollersForwardCommand());
+		//primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand());
+		//primary.buttonPovLeft.whenPressed(new NavRocketPortCommandGroup());
+		//primary.buttonPovDown.whenPressed(new ClimbDownCommandGroup());
+		//primary.buttonPovUp.whenPressed(new ClimbCommandGroup());
 
 		XboxController secondary = OI.getSecondaryController();
 		secondary.buttonB.whileHeld(new GripperOutCommand());
@@ -73,10 +73,10 @@ public class Mappings {
 		secondary.buttonBumperRight.whileHeld(new GrabberCloseCommand());
 		secondary.buttonY.whileHeld(new TiltUpCommand());
 		secondary.buttonX.whileHeld(new TiltDownCommand());
-		//secondary.buttonPovUp.whenPressed(new ElevatorUpCommand());
-		//secondary.buttonPovDown.whenPressed(new ElevatorDownCommand());
-		secondary.buttonPovUp.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
-		secondary.buttonPovDown.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
+		secondary.buttonPovUp.whenPressed(new ElevatorUpCommand());
+		secondary.buttonPovDown.whenPressed(new ElevatorDownCommand());
+		//secondary.buttonPovUp.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
+		//secondary.buttonPovDown.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
 	}
 
 	public static void setupTestMappings() {
