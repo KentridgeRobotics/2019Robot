@@ -9,7 +9,6 @@ public class ElevatorChangeCommand extends Command {
 	
 	private double desiredRotations;
 	private double currentMotorRotations;
-	private ElevatorSubsystem.Levels nextLevel;
 	private ElevatorSubsystem.VerticalDirection verticalDirection;
 	private boolean isDone;
 
@@ -19,16 +18,15 @@ public class ElevatorChangeCommand extends Command {
 	}
 
 	private double findRotations() {
-
 		currentMotorRotations = ElevatorSubsystem.getInstance().getRotation();
 		double possibleLowerRotation = 0.0;
 		// Smallest one that is bigger than my current OR Biggest one that is smaller than my current
 
-		for (ElevatorSubsystem.Levels levels : ElevatorSubsystem.Levels.values()) {
+		for (ElevatorSubsystem.Levels level : ElevatorSubsystem.Levels.values()) {
 			switch (verticalDirection) {
 				case UP:
-					if(currentMotorRotations < levels.getRotations()) {
-						desiredRotations = levels.getRotations();
+					if(currentMotorRotations < level.getRotations()) {
+						desiredRotations = level.getRotations();
 						return desiredRotations;
 					}
 					else {
@@ -41,8 +39,8 @@ public class ElevatorChangeCommand extends Command {
 						desiredRotations = 0.0;
 					}
 					else {
-						if(currentMotorRotations > levels.getRotations()) {
-							possibleLowerRotation = levels.getRotations();
+						if(currentMotorRotations > level.getRotations()) {
+							possibleLowerRotation = level.getRotations();
 							desiredRotations = possibleLowerRotation;
 							//return desiredRotations;
 						}

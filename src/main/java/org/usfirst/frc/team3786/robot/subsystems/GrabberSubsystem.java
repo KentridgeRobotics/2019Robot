@@ -29,7 +29,8 @@ public class GrabberSubsystem extends Subsystem {
 	public GrabberSubsystem() {
 		grabber = new WPI_TalonSRX(Mappings.grabberMotor);
 		grabber.setSafetyEnabled(false);
-		grabber.configPeakCurrentLimit(20);
+		grabber.configPeakCurrentLimit(30);
+		grabber.setNeutralMode(NeutralMode.Brake);
 		grabber.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed);
 		grabber.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed);
 		//grabber.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
@@ -77,11 +78,9 @@ public class GrabberSubsystem extends Subsystem {
 
 	public void setBrake(boolean brake) {
 		if (brake) {
-			grabber.setNeutralMode(NeutralMode.Brake);
 			rightGripper.setNeutralMode(NeutralMode.Brake);
 			leftGripper.setNeutralMode(NeutralMode.Brake);
 		} else {
-			grabber.setNeutralMode(NeutralMode.Coast);
 			rightGripper.setNeutralMode(NeutralMode.Coast);
 			leftGripper.setNeutralMode(NeutralMode.Coast);
 		}

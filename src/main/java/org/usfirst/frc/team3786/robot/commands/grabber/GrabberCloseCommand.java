@@ -11,13 +11,12 @@ public class GrabberCloseCommand extends Command {
 	public GrabberCloseCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(GrabberSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		GrabberSubsystem.getInstance().setGrabberSpeed(-0.15);
+		GrabberSubsystem.getInstance().setGrabberSpeed(-0.2);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

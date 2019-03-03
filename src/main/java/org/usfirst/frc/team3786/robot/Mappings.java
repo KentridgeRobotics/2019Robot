@@ -12,6 +12,8 @@ import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncreme
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
 
 import java.util.Map;
 
@@ -71,6 +73,8 @@ public class Mappings {
 		secondary.buttonBumperRight.whileHeld(new GrabberCloseCommand());
 		secondary.buttonY.whileHeld(new TiltUpCommand());
 		secondary.buttonX.whileHeld(new TiltDownCommand());
+		//secondary.buttonPovUp.whenPressed(new ElevatorUpCommand());
+		//secondary.buttonPovDown.whenPressed(new ElevatorDownCommand());
 		secondary.buttonPovUp.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
 		secondary.buttonPovDown.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
 	}

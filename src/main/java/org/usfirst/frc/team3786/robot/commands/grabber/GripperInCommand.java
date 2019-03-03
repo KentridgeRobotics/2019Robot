@@ -9,7 +9,6 @@ public class GripperInCommand extends Command {
 	public GripperInCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(GrabberSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time

@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TiltDownCommand extends Command {
   public TiltDownCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(GrabberSubsystem.getInstance());
   }
 
   // Called just before this Command runs the first time

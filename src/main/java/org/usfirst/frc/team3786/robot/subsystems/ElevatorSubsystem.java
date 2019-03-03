@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.Mappings;
+import org.usfirst.frc.team3786.robot.Robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,6 +23,10 @@ public class ElevatorSubsystem extends Subsystem {
 	public static final double upMultiplier = 0.6;
 	public static final double downMultiplier = 0.45;
 	private static final double downMultiplierLow = 0.2 / downMultiplier;
+
+	private boolean autoDone = true;
+    private ElevatorSubsystem.Levels targetLevel;
+    private ElevatorSubsystem.VerticalDirection direction;
 
 	public static ElevatorSubsystem getInstance() {
 		if (instance == null)
@@ -50,6 +55,8 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void safetyRun() {
+		if (!autoDone)
+			runAuto();
 		if (!dIn.get() && rightElevator.get() < 0) {
 			rightElevator.set(0);
 			leftElevator.set(0);
@@ -97,8 +104,72 @@ public class ElevatorSubsystem extends Subsystem {
 		UP, DOWN, STOP;
 	}
 
+	public ElevatorSubsystem.Levels getLevelUp() {
+		double currentMotorRotations = getRotation();
+		for (ElevatorSubsystem.Levels level : ElevatorSubsystem.Levels.values()) {
+			if (currentMotorRotations < level.getRotations()) {
+				System.out.println("Level: " + level.getRotations());
+				return level;
+			}
+		}
+		return null;
+	}
+
+	public ElevatorSubsystem.Levels getLevelDown() {
+		double currentMotorRotations = getRotation();
+		ElevatorSubsystem.Levels testDown = null;
+		for (ElevatorSubsystem.Levels level : ElevatorSubsystem.Levels.values()) {
+			if (currentMotorRotations > level.getRotations()) {
+				testDown = level;
+			} else {
+				System.out.println("Level: " + level.getRotations());
+				return testDown;
+			}
+		}
+		return null;
+	}
+
+	public void incrementLevel() {
+		targetLevel = ElevatorSubsystem.getInstance().getLevelUp();
+		if (targetLevel == null)
+			return;
+        direction = ElevatorSubsystem.VerticalDirection.UP;
+        if (autoDone) {
+            autoDone = false;
+			Robot.elevatorRunCommand.cancel();
+        }
+	}
+
+	public void decrementLevel() {
+		targetLevel = ElevatorSubsystem.getInstance().getLevelDown();
+		if (targetLevel == null)
+			return;
+        direction = ElevatorSubsystem.VerticalDirection.DOWN;
+        if (autoDone) {
+            autoDone = false;
+			Robot.elevatorRunCommand.cancel();
+        }
+	}
+
+	public void runAuto() {
+        if (!autoDone) {
+			double currentMotorRotations = ElevatorSubsystem.getInstance().getRotation();
+            if (currentMotorRotations < targetLevel.getRotations() && direction == ElevatorSubsystem.VerticalDirection.UP) {
+                ElevatorSubsystem.getInstance().setElevatorSpeed(ElevatorSubsystem.upMultiplier);
+            } else if (currentMotorRotations > targetLevel.getRotations() && direction == ElevatorSubsystem.VerticalDirection.DOWN) {
+                ElevatorSubsystem.getInstance().setElevatorSpeed(-ElevatorSubsystem.downMultiplier);
+            } else {
+                autoDone = true;
+				ElevatorSubsystem.getInstance().setElevatorSpeed(0);
+				Robot.elevatorRunCommand.start();
+				System.out.println("Done");
+            }
+        }
+	}
+
 	public enum Levels {
-		ZERO(0.0), ONE(25.8), TWO(182.7), THREE(326.2), FOUR(78.3), FIVE(222.9), SIX(371.8);
+		ZERO(0.0), ONE(25.8), TWO(182.7), THREE(326.2);
+		//FOUR(78.3), FIVE(222.9), SIX(371.8)
 
 		private double rotations;
 
