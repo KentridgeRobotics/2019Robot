@@ -54,7 +54,7 @@ public class ElevatorSubsystem extends Subsystem {
 		leftElevator.setOpenLoopRampRate(0.2);
 		leftElevator.getEncoder().setPosition(0.0);
 
-		dIn = new DigitalInput(5);
+		dIn = new DigitalInput(Mappings.elevatorLimitSwitch);
 	}
 
 	@Override

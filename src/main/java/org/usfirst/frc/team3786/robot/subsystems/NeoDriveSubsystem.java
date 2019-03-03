@@ -17,6 +17,8 @@ public class NeoDriveSubsystem extends Subsystem {
 
 	private CANSparkMax left;
 	private CANSparkMax right;
+	private CANSparkMax leftSlave;
+	private CANSparkMax rightSlave;
 
 	private DifferentialDrive differentialDrive;
 
@@ -30,12 +32,21 @@ public class NeoDriveSubsystem extends Subsystem {
 	}
 
 	public NeoDriveSubsystem() {
-		left = new CANSparkMax(Mappings.leftMotor, MotorType.kBrushless);
-		right = new CANSparkMax(Mappings.rightMotor, MotorType.kBrushless);
+		left = new CANSparkMax(Mappings.left1Motor, MotorType.kBrushless);
+		right = new CANSparkMax(Mappings.right1Motor, MotorType.kBrushless);
+		leftSlave = new CANSparkMax(Mappings.leftSlaveMotor, MotorType.kBrushless);
+		rightSlave = new CANSparkMax(Mappings.rightSlaveMotor, MotorType.kBrushless);
 		left.setSmartCurrentLimit(40);
 		right.setSmartCurrentLimit(40);
+		leftSlave.setSmartCurrentLimit(40);
+		rightSlave.setSmartCurrentLimit(40);
 		left.setOpenLoopRampRate(0.1);
 		right.setOpenLoopRampRate(0.1);
+		leftSlave.setOpenLoopRampRate(0.1);
+		rightSlave.setOpenLoopRampRate(0.1);
+
+		leftSlave.follow(left);
+		rightSlave.follow(right);
 
 		differentialDrive = new DifferentialDrive(left, right);
 	}
@@ -73,9 +84,13 @@ public class NeoDriveSubsystem extends Subsystem {
 		if (this.kkBrake) {
 			left.setIdleMode(IdleMode.kBrake);
 			right.setIdleMode(IdleMode.kBrake);
+			leftSlave.setIdleMode(IdleMode.kBrake);
+			rightSlave.setIdleMode(IdleMode.kBrake);
 		} else {
 			left.setIdleMode(IdleMode.kCoast);
 			right.setIdleMode(IdleMode.kCoast);
+			leftSlave.setIdleMode(IdleMode.kCoast);
+			rightSlave.setIdleMode(IdleMode.kCoast);
 		}
 	}
 

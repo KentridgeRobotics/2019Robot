@@ -32,8 +32,11 @@ public class Mappings {
 	public final static int secondaryControllerId = 1;
 
 	// CAN IDs
-	public final static int leftMotor = 8;
-	public final static int rightMotor = 9;
+	public final static int left1Motor = 8;
+	public final static int right1Motor = 9;
+	public final static int leftSlaveMotor = 12;
+	public final static int rightSlaveMotor = 13;
+
 
 	public final static int rollers = 3;
 	public final static int buttLifter = 4;
@@ -50,6 +53,7 @@ public class Mappings {
 	public final static Map.Entry<Integer, Integer> ultrasonicLeft = Map.entry(0, 1);
 	public final static Map.Entry<Integer, Integer> ultrasonicRight = Map.entry(2, 3);
 	public final static int grabberLimitSwitch = 4;
+	public final static int elevatorLimitSwitch = 5;
 
 	// Analog IO
 	public final static int irSensorLeft = 0;
