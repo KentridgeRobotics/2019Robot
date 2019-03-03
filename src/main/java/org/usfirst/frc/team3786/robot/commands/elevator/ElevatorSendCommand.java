@@ -9,14 +9,14 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ElevatorSendCommand extends Command {
     
-    ElevatorSubsystem.Levels levels;
+    ElevatorSubsystem.HatchLevels levels;
     private double targetRotations;
     private double rotations;
     private boolean goingUp;
     private boolean done;
     private final double epsilon = 3.5;
 
-    public ElevatorSendCommand(ElevatorSubsystem.Levels gotoLevel) {
+    public ElevatorSendCommand(ElevatorSubsystem.HatchLevels gotoLevel) {
         requires(ElevatorSubsystem.getInstance());
         levels = gotoLevel;
         targetRotations = levels.getRotations();

@@ -8,7 +8,7 @@
 package org.usfirst.frc.team3786.robot.commands.climber;
 
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorSendCommand;
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.Levels;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.HatchLevels;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -19,7 +19,7 @@ public class ClimbCommandGroup extends CommandGroup {
   public ClimbCommandGroup() {
     // Add Commands here:
     addSequential(new AllMotorsBrakeCommand());
-    addSequential(new ElevatorSendCommand(Levels.THREE)); // tune later
+    addSequential(new ElevatorSendCommand(HatchLevels.THREE)); // tune later
     addSequential(new DriveToWallCommand(0.8, 60.0, true));
 
     // To run multiple commands at the same time,

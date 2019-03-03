@@ -4,18 +4,17 @@ import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ElevatorUpCommand extends Command {
+public class ElevatorBallDownCommand extends Command {
 
-	public ElevatorUpCommand() {
+	public ElevatorBallDownCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(ElevatorSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		ElevatorAutoRunCommand.getInstance().incrementLevel();
+		ElevatorSubsystem.getInstance().decrementBallLevel();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -26,12 +25,11 @@ public class ElevatorUpCommand extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		ElevatorSubsystem.getInstance().setElevatorSpeed(0);
 	}
 }

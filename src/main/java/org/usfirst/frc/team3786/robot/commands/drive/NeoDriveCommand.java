@@ -4,6 +4,7 @@ import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.OI;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
+import org.usfirst.frc.team3786.robot.utils.BNO055.CalData;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,8 +12,7 @@ public class NeoDriveCommand extends Command {
 
 	public static NeoDriveCommand instance;
 
-	private boolean useTargetHeading;
-	private double targetHeading;
+	private boolean isGyroCalibrated = false;
 
 	public static NeoDriveCommand getInstance() {
 		if (instance == null)
@@ -31,18 +31,22 @@ public class NeoDriveCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		if (!isGyroCalibrated) {
+			CalData calibration = Gyroscope.getInstance().getCalibration();
+			if (calibration.accel > 1 && calibration.gyro > 2 && calibration.mag > 2 && calibration.sys > 1) {
+				isGyroCalibrated = true;
+			}
+		}
 		// When the number is negative, the wheels go forwards.
 		// When the number is positive, the wheels go backwards.
 		double throttle = OI.getRobotThrottle();
 		double turn = OI.getRobotTurn();
+		double targetHeading = 0.0;
+		boolean useTargetHeading = false;
 		// driver wants to go straight, haven't started using currentHeading yet.
-		if (turn == 0 && !useTargetHeading) {
+		if (turn == 0 && throttle != 0 && isGyroCalibrated) {
 			targetHeading = Gyroscope.getInstance().getHeadingContinuous();
 			useTargetHeading = true;
-		}
-		// driver wants to turn
-		else if (turn != 0 || throttle == 0) {
-			useTargetHeading = false;
 		}
 		// going straight with gyro
 		if (useTargetHeading) {

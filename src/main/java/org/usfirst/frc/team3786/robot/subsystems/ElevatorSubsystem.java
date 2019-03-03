@@ -11,6 +11,7 @@ import org.usfirst.frc.team3786.robot.Robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ElevatorSubsystem extends Subsystem {
 
@@ -20,13 +21,19 @@ public class ElevatorSubsystem extends Subsystem {
 	private CANSparkMax leftElevator;
 	private DigitalInput dIn;
 
-	public static final double upMultiplier = 0.6;
-	public static final double downMultiplier = 0.45;
-	private static final double downMultiplierLow = 0.2 / downMultiplier;
+	public static final double upMultiplier = 0.8;
+	public static final double downMultiplier = 0.55;
+	private static final double downMultiplierLow = 0.25 / downMultiplier;
+	
+
+	public static final double upAutoMultiplier = 0.8;
+	public static final double downAutoMultiplier = 1.0;
+
+	private static final int rotationsAcceptableRange = 10;
 
 	private boolean autoDone = true;
-    private ElevatorSubsystem.Levels targetLevel;
-    private ElevatorSubsystem.VerticalDirection direction;
+    private double targetLevel;
+	private ElevatorSubsystem.VerticalDirection direction;
 
 	public static ElevatorSubsystem getInstance() {
 		if (instance == null)
@@ -55,6 +62,7 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void safetyRun() {
+		//System.out.println("Right: " + rightElevator.getEncoder().getPosition());
 		if (!autoDone)
 			runAuto();
 		if (!dIn.get() && rightElevator.get() < 0) {
@@ -72,8 +80,6 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public void setElevatorSpeed(double speed) {
-		System.out.println("Right: " + rightElevator.getEncoder().getPosition());
-		System.out.println("Left: " + leftElevator.getEncoder().getPosition());
 		if (speed > 0)
 			speed *= upMultiplier;
 		else
@@ -100,14 +106,12 @@ public class ElevatorSubsystem extends Subsystem {
 		return getRotation();
 	}
 
-	public enum VerticalDirection {
-		UP, DOWN, STOP;
-	}
-
-	public ElevatorSubsystem.Levels getLevelUp() {
+	public HatchLevels getHatchLevelUp() {
 		double currentMotorRotations = getRotation();
-		for (ElevatorSubsystem.Levels level : ElevatorSubsystem.Levels.values()) {
-			if (currentMotorRotations < level.getRotations()) {
+		if (!autoDone)
+			currentMotorRotations = targetLevel;
+		for (HatchLevels level : HatchLevels.values()) {
+			if ((currentMotorRotations + rotationsAcceptableRange) < level.getRotations()) {
 				System.out.println("Level: " + level.getRotations());
 				return level;
 			}
@@ -115,36 +119,105 @@ public class ElevatorSubsystem extends Subsystem {
 		return null;
 	}
 
-	public ElevatorSubsystem.Levels getLevelDown() {
+	public HatchLevels getHatchLevelDown() {
 		double currentMotorRotations = getRotation();
-		ElevatorSubsystem.Levels testDown = null;
-		for (ElevatorSubsystem.Levels level : ElevatorSubsystem.Levels.values()) {
-			if (currentMotorRotations > level.getRotations()) {
-				testDown = level;
-			} else {
+		if (!autoDone)
+			currentMotorRotations = targetLevel;
+		for (int i = HatchLevels.values().length - 1; i >= 0; i--) {
+			HatchLevels level = HatchLevels.get(i);
+			if ((currentMotorRotations - rotationsAcceptableRange) > level.getRotations()) {
 				System.out.println("Level: " + level.getRotations());
-				return testDown;
+				return level;
 			}
 		}
 		return null;
 	}
 
-	public void incrementLevel() {
-		targetLevel = ElevatorSubsystem.getInstance().getLevelUp();
+	public BallLevels getBallLevelUp() {
+		double currentMotorRotations = getRotation();
+		if (!autoDone)
+			currentMotorRotations = targetLevel;
+		for (BallLevels level : BallLevels.values()) {
+			if ((currentMotorRotations + rotationsAcceptableRange) < level.getRotations()) {
+				System.out.println("Level: " + level.getRotations());
+				return level;
+			}
+		}
+		return null;
+	}
+
+	public BallLevels getBallLevelDown() {
+		double currentMotorRotations = getRotation();
+		if (!autoDone)
+			currentMotorRotations = targetLevel;
+		for (int i = BallLevels.values().length - 1; i >= 0; i--) {
+			BallLevels level = BallLevels.get(i);
+			if ((currentMotorRotations - rotationsAcceptableRange) > level.getRotations()) {
+				System.out.println("Level: " + level.getRotations());
+				return level;
+			}
+		}
+		return null;
+	}
+
+	public void incrementHatchLevel() {
+		HatchLevels targetLevel = ElevatorSubsystem.getInstance().getHatchLevelUp();
 		if (targetLevel == null)
 			return;
-        direction = ElevatorSubsystem.VerticalDirection.UP;
+		direction = ElevatorSubsystem.VerticalDirection.UP;
+		if (targetLevel == HatchLevels.ZERO)
+			SmartDashboard.putString("Elevator Level", targetLevel.toString());
+		else
+			SmartDashboard.putString("Elevator Level", "HATCH " + targetLevel.toString());
+		this.targetLevel = targetLevel.getRotations();
         if (autoDone) {
             autoDone = false;
 			Robot.elevatorRunCommand.cancel();
         }
 	}
 
-	public void decrementLevel() {
-		targetLevel = ElevatorSubsystem.getInstance().getLevelDown();
+	public void decrementHatchLevel() {
+		HatchLevels targetLevel = ElevatorSubsystem.getInstance().getHatchLevelDown();
 		if (targetLevel == null)
 			return;
         direction = ElevatorSubsystem.VerticalDirection.DOWN;
+		if (targetLevel == HatchLevels.ZERO)
+			SmartDashboard.putString("Elevator Level", targetLevel.toString());
+		else
+			SmartDashboard.putString("Elevator Level", "HATCH " + targetLevel.toString());
+		this.targetLevel = targetLevel.getRotations();
+        if (autoDone) {
+            autoDone = false;
+			Robot.elevatorRunCommand.cancel();
+        }
+	}
+
+	public void incrementBallLevel() {
+		BallLevels targetLevel = ElevatorSubsystem.getInstance().getBallLevelUp();
+		if (targetLevel == null)
+			return;
+		direction = ElevatorSubsystem.VerticalDirection.UP;
+		if (targetLevel == BallLevels.ZERO)
+			SmartDashboard.putString("Elevator Level", targetLevel.toString());
+		else
+			SmartDashboard.putString("Elevator Level", "BALL " + targetLevel.toString());
+		this.targetLevel = targetLevel.getRotations();
+        if (autoDone) {
+            autoDone = false;
+			Robot.elevatorRunCommand.cancel();
+        }
+	}
+
+	public void decrementBallLevel() {
+		BallLevels targetLevel = ElevatorSubsystem.getInstance().getBallLevelDown();
+		if (targetLevel == null)
+			return;
+        direction = ElevatorSubsystem.VerticalDirection.DOWN;
+		if (targetLevel == BallLevels.ZERO)
+			SmartDashboard.putString("Elevator Level", targetLevel.toString());
+		else
+			SmartDashboard.putString("Elevator Level", "BALL " + targetLevel.toString());
+		this.targetLevel = targetLevel.getRotations();
         if (autoDone) {
             autoDone = false;
 			Robot.elevatorRunCommand.cancel();
@@ -154,46 +227,108 @@ public class ElevatorSubsystem extends Subsystem {
 	public void runAuto() {
         if (!autoDone) {
 			double currentMotorRotations = ElevatorSubsystem.getInstance().getRotation();
-            if (currentMotorRotations < targetLevel.getRotations() && direction == ElevatorSubsystem.VerticalDirection.UP) {
-                ElevatorSubsystem.getInstance().setElevatorSpeed(ElevatorSubsystem.upMultiplier);
-            } else if (currentMotorRotations > targetLevel.getRotations() && direction == ElevatorSubsystem.VerticalDirection.DOWN) {
-                ElevatorSubsystem.getInstance().setElevatorSpeed(-ElevatorSubsystem.downMultiplier);
+            if (currentMotorRotations < targetLevel && direction == ElevatorSubsystem.VerticalDirection.UP) {
+                ElevatorSubsystem.getInstance().setElevatorSpeed(ElevatorSubsystem.upAutoMultiplier);
+            } else if (currentMotorRotations > targetLevel && direction == ElevatorSubsystem.VerticalDirection.DOWN) {
+                ElevatorSubsystem.getInstance().setElevatorSpeed(-ElevatorSubsystem.downAutoMultiplier);
             } else {
-                autoDone = true;
+				autoDone = true;
 				ElevatorSubsystem.getInstance().setElevatorSpeed(0);
-				Robot.elevatorRunCommand.start();
 				System.out.println("Done");
+				Robot.elevatorRunCommand.start();
             }
         }
 	}
 
-	public enum Levels {
-		ZERO(0.0), ONE(25.8), TWO(182.7), THREE(326.2);
-		//FOUR(78.3), FIVE(222.9), SIX(371.8)
+	public enum VerticalDirection {
+		UP, DOWN, STOP;
+	}
 
+	public enum HatchLevels {
+		//ZERO(0.0), ONE(52.7), TWO(202.7), THREE(343.6);
+		ZERO(0, 0.0), ONE(1, 25.8), TWO(2, 182.7), THREE(3, 326.2);
+
+		private int level;
 		private double rotations;
 
-		Levels(double rotations) {
+		HatchLevels(int level, double rotations) {
+			this.level = level;
 			this.rotations = rotations;
+		}
+
+		public int getLevel() {
+			return level;
+		}
+
+		public static HatchLevels get(int level) {
+			for (HatchLevels levels : values()) {
+				if (levels.getLevel() == level)
+					return levels;
+			}
+			return null;
 		}
 
 		public double getRotations() {
 			return rotations;
 		}
 
-		public Levels getLevels() {
+		public HatchLevels getLevels() {
 			return values()[ordinal()];
 		}
 
-		public Levels up() {
+		public HatchLevels up() {
 			return values()[ordinal() + 1];
 		}
 
-		public Levels down() {
+		public HatchLevels down() {
 			return values()[ordinal() - 1];
 		}
 
-		public Levels stop() {
+		public HatchLevels stop() {
+			return values()[ordinal() + 0];
+		}
+	}
+
+	public enum BallLevels {
+		ZERO(0, 0.0), ONE(1, 78.3), TWO(2, 222.9), THREE(3, 371.8);
+
+		private int level;
+		private double rotations;
+
+		BallLevels(int level, double rotations) {
+			this.level = level;
+			this.rotations = rotations;
+		}
+
+		public int getLevel() {
+			return level;
+		}
+
+		public static BallLevels get(int level) {
+			for (BallLevels levels : values()) {
+				if (levels.getLevel() == level)
+					return levels;
+			}
+			return null;
+		}
+
+		public double getRotations() {
+			return rotations;
+		}
+
+		public BallLevels getLevels() {
+			return values()[ordinal()];
+		}
+
+		public BallLevels up() {
+			return values()[ordinal() + 1];
+		}
+
+		public BallLevels down() {
+			return values()[ordinal() - 1];
+		}
+
+		public BallLevels stop() {
 			return values()[ordinal() + 0];
 		}
 	}

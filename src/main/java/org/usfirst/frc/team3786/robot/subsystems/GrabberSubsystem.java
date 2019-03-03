@@ -31,10 +31,10 @@ public class GrabberSubsystem extends Subsystem {
 		grabber.setSafetyEnabled(false);
 		grabber.configPeakCurrentLimit(30);
 		grabber.setNeutralMode(NeutralMode.Brake);
-		grabber.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed);
-		grabber.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed);
-		//grabber.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
-		//grabber.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+		//grabber.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyOpen);
+		grabber.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+		grabber.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+		//grabber.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
 
 		rightGripper = new WPI_TalonSRX(Mappings.rightGripper);
 		rightGripper.setSafetyEnabled(false);

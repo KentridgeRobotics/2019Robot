@@ -22,7 +22,7 @@ public class ElevatorChangeCommand extends Command {
 		double possibleLowerRotation = 0.0;
 		// Smallest one that is bigger than my current OR Biggest one that is smaller than my current
 
-		for (ElevatorSubsystem.Levels level : ElevatorSubsystem.Levels.values()) {
+		for (ElevatorSubsystem.HatchLevels level : ElevatorSubsystem.HatchLevels.values()) {
 			switch (verticalDirection) {
 				case UP:
 					if(currentMotorRotations < level.getRotations()) {

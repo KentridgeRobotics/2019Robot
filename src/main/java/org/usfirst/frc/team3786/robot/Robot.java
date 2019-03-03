@@ -114,11 +114,7 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 	}
 
-	/**
-	 * Teleoperated
-	 */
-	@Override
-	public void teleopInit() {
+	public void initDrive() {
 		if (mode == RobotMode.TANK)
 			NeoDriveCommand.getInstance().start();
 		else if (mode == RobotMode.DEBUG)
@@ -126,6 +122,14 @@ public class Robot extends TimedRobot {
 		LED.setColor(visionColor);
 		//buttLifterRunCommand.start();
 		elevatorRunCommand.start();
+	}
+
+	/**
+	 * Teleoperated
+	 */
+	@Override
+	public void teleopInit() {
+		initDrive();
 	}
 
 	@Override
@@ -137,13 +141,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		if (mode == RobotMode.TANK)
-			NeoDriveCommand.getInstance().start();
-		else if (mode == RobotMode.DEBUG)
-			DebugMotorController.getInstance().start();
-		LED.setColor(visionColor);
-		//buttLifterRunCommand.start();
-		elevatorRunCommand.start();
+		initDrive();
 	}
 
 	@Override

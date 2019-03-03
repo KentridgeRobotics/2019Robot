@@ -11,9 +11,11 @@ import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecreme
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallDownCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorDownCommand;
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorUpCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchDownCommand;
+import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchUpCommand;
 
 import java.util.Map;
 
@@ -73,8 +75,10 @@ public class Mappings {
 		secondary.buttonBumperRight.whileHeld(new GrabberCloseCommand());
 		secondary.buttonY.whileHeld(new TiltUpCommand());
 		secondary.buttonX.whileHeld(new TiltDownCommand());
-		secondary.buttonPovUp.whenPressed(new ElevatorUpCommand());
-		secondary.buttonPovDown.whenPressed(new ElevatorDownCommand());
+		secondary.buttonPovUp.whenPressed(new ElevatorHatchUpCommand());
+		secondary.buttonPovDown.whenPressed(new ElevatorHatchDownCommand());
+		secondary.buttonPovRight.whenPressed(new ElevatorBallUpCommand());
+		secondary.buttonPovLeft.whenPressed(new ElevatorBallDownCommand());
 		//secondary.buttonPovUp.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
 		//secondary.buttonPovDown.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
 	}
