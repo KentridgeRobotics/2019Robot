@@ -79,8 +79,6 @@ public class Mappings {
 		secondary.buttonPovDown.whenPressed(new ElevatorHatchDownCommand());
 		secondary.buttonPovRight.whenPressed(new ElevatorBallUpCommand());
 		secondary.buttonPovLeft.whenPressed(new ElevatorBallDownCommand());
-		//secondary.buttonPovUp.whenPressed(new ElevatorChangeCommand(VerticalDirection.UP));
-		//secondary.buttonPovDown.whenPressed(new ElevatorChangeCommand(VerticalDirection.DOWN));
 	}
 
 	public static void setupTestMappings() {
