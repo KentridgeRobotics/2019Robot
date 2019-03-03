@@ -17,7 +17,7 @@ public class GrabberOpenCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		GrabberSubsystem.getInstance().setGrabberSpeed(0.5);
+		GrabberSubsystem.getInstance().setGrabberSpeed(0.15);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

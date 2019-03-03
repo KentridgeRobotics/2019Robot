@@ -85,7 +85,7 @@ public class ElevatorChangeCommand extends Command {
 						isDone = true;
 						return;
 					}
-					ElevatorSubsystem.getInstance().setElevatorSpeed(0.7);
+					ElevatorSubsystem.getInstance().setElevatorSpeed(ElevatorSubsystem.upMultiplier);
 					System.err.println("[!] GOING UP");
 					break;
 				case DOWN:
@@ -93,14 +93,16 @@ public class ElevatorChangeCommand extends Command {
 						isDone = true;
 						return;
 					}
-					ElevatorSubsystem.getInstance().setElevatorSpeed(-0.7);
+					ElevatorSubsystem.getInstance().setElevatorSpeed(-ElevatorSubsystem.downMultiplier);
 					System.err.println("[!] GOING DOWN");
 					break;
 				case STOP:
 					ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+					isDone = true;
 					break;
 				default:
 					ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+					isDone = true;
 					break;
 			}
 		}

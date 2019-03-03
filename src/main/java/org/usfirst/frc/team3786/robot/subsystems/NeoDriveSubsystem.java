@@ -42,7 +42,7 @@ public class NeoDriveSubsystem extends Subsystem {
 
 	public void setMotorSpeeds(double leftSpeed, double rightSpeed) {
 		left.set(leftSpeed);
-		right.set(rightSpeed);
+		right.set(-rightSpeed);
 		Dashboard.getInstance().putNumber(false, "Left Motor Speed", leftSpeed);
 		Dashboard.getInstance().putNumber(false, "Right Motor Speed", rightSpeed);
 	}

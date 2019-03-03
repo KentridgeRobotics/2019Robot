@@ -14,6 +14,7 @@ import java.awt.Color;
 
 import org.usfirst.frc.team3786.robot.commands.climber.ButtLifterRunCommand;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.subsystems.vision.RPiComs;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
@@ -98,6 +99,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Distance.HCSR04.1", hcsDist1);
 		SmartDashboard.putNumber("Distance.SharpIR.0", sharpIRDist0);
 		SmartDashboard.putNumber("Distance.SharpIR.1", sharpIRDist1);
+		ElevatorSubsystem.getInstance().safetyRun();
 	}
 
 	/**
@@ -122,7 +124,7 @@ public class Robot extends TimedRobot {
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().start();
 		LED.setColor(visionColor);
-		buttLifterRunCommand.start();
+		//buttLifterRunCommand.start();
 		elevatorRunCommand.start();
 	}
 
@@ -140,7 +142,7 @@ public class Robot extends TimedRobot {
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().start();
 		LED.setColor(visionColor);
-		buttLifterRunCommand.start();
+		//buttLifterRunCommand.start();
 		elevatorRunCommand.start();
 	}
 

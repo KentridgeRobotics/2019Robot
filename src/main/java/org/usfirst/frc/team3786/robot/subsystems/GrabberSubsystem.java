@@ -4,6 +4,8 @@ import org.usfirst.frc.team3786.robot.Dashboard;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -28,6 +30,10 @@ public class GrabberSubsystem extends Subsystem {
 		grabber = new WPI_TalonSRX(Mappings.grabberMotor);
 		grabber.setSafetyEnabled(false);
 		grabber.configPeakCurrentLimit(20);
+		grabber.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed);
+		grabber.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed);
+		//grabber.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+		//grabber.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
 
 		rightGripper = new WPI_TalonSRX(Mappings.rightGripper);
 		rightGripper.setSafetyEnabled(false);
@@ -39,7 +45,9 @@ public class GrabberSubsystem extends Subsystem {
 
 		tilt = new WPI_TalonSRX(Mappings.tilt);
 		tilt.setSafetyEnabled(false);
-		tilt.configPeakCurrentLimit(20);
+		tilt.configPeakCurrentLimit(40);
+		tilt.configContinuousCurrentLimit(30);
+		tilt.setNeutralMode(NeutralMode.Brake);
 	}
 
 	public double getGrabberCurrent() {
@@ -52,18 +60,18 @@ public class GrabberSubsystem extends Subsystem {
 	}
 
 	public void setGrabberSpeed(double speed) {
-		grabber.set(speed);
+		grabber.set(-speed);
 		Dashboard.getInstance().putNumber(false, "Grabber Speed", speed);
 	}
 
 	public void setGripperSpeed(double speed) {
-		rightGripper.set(speed);
-		leftGripper.set(speed);
+		rightGripper.set(-speed);
+		leftGripper.set(-speed);
 		Dashboard.getInstance().putNumber(true, "Gripper Speed", speed);
 	}
 
 	public void setTiltSpeed(double speed) {
-		tilt.set(speed);
+		tilt.set(-speed);
 		Dashboard.getInstance().putNumber(false, "Tilter Speed", speed);
 	}
 
@@ -72,12 +80,10 @@ public class GrabberSubsystem extends Subsystem {
 			grabber.setNeutralMode(NeutralMode.Brake);
 			rightGripper.setNeutralMode(NeutralMode.Brake);
 			leftGripper.setNeutralMode(NeutralMode.Brake);
-			tilt.setNeutralMode(NeutralMode.Brake);
 		} else {
 			grabber.setNeutralMode(NeutralMode.Coast);
 			rightGripper.setNeutralMode(NeutralMode.Coast);
 			leftGripper.setNeutralMode(NeutralMode.Coast);
-			tilt.setNeutralMode(NeutralMode.Coast);
 		}
 	}
 

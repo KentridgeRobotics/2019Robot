@@ -54,8 +54,10 @@ public class Mappings {
 	public static void setupDefaultMappings() {
 
 		XboxController primary = OI.getPrimaryController();
+		NeoBoostCommand boostCommand = new NeoBoostCommand();
 		primary.buttonA.whileHeld(new NeoBrakeCommand());
-		primary.buttonB.whileHeld(new NeoBoostCommand());
+		primary.buttonB.whileHeld(boostCommand);
+		primary.buttonStickLeft.whileHeld(boostCommand);
 		primary.buttonBumperRight.whileHeld(new RollersForwardCommand());
 		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand());
 		primary.buttonPovLeft.whenPressed(new NavRocketPortCommandGroup());
