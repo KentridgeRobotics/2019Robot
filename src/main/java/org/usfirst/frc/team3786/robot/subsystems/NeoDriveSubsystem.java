@@ -45,8 +45,8 @@ public class NeoDriveSubsystem extends Subsystem {
 		leftSlave.setOpenLoopRampRate(0.1);
 		rightSlave.setOpenLoopRampRate(0.1);
 
-		//leftSlave.follow(left);
-		//rightSlave.follow(right);
+		leftSlave.follow(left);
+		rightSlave.follow(right);
 
 		differentialDrive = new DifferentialDrive(left, right);
 	}

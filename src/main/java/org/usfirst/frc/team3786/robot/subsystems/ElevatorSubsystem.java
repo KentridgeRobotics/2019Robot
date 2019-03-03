@@ -106,13 +106,51 @@ public class ElevatorSubsystem extends Subsystem {
 		return getRotation();
 	}
 
+	public void setLevel(HatchLevels targetLevel) {
+		if (targetLevel == null)
+			return;
+		direction = ElevatorSubsystem.VerticalDirection.UP;
+		if (targetLevel == HatchLevels.ZERO)
+			SmartDashboard.putString("Elevator Level", targetLevel.toString());
+		else
+			SmartDashboard.putString("Elevator Level", "HATCH " + targetLevel.toString());
+		this.targetLevel = targetLevel.getRotations();
+        if (autoDone) {
+            autoDone = false;
+			Robot.elevatorRunCommand.cancel();
+        }
+	}
+
+	public void setLevel(BallLevels targetLevel) {
+		if (targetLevel == null)
+			return;
+		direction = ElevatorSubsystem.VerticalDirection.UP;
+		if (targetLevel == BallLevels.ZERO)
+			SmartDashboard.putString("Elevator Level", targetLevel.toString());
+		else
+			SmartDashboard.putString("Elevator Level", "BALL " + targetLevel.toString());
+		this.targetLevel = targetLevel.getRotations();
+        if (autoDone) {
+            autoDone = false;
+			Robot.elevatorRunCommand.cancel();
+        }
+	}
+
+	public void setLevel(double target) {
+		this.targetLevel = target;
+		SmartDashboard.putString("Elevator Level", String.valueOf(targetLevel));
+        if (autoDone) {
+            autoDone = false;
+			Robot.elevatorRunCommand.cancel();
+        }
+	}
+
 	public HatchLevels getHatchLevelUp() {
 		double currentMotorRotations = getRotation();
 		if (!autoDone)
 			currentMotorRotations = targetLevel;
 		for (HatchLevels level : HatchLevels.values()) {
 			if ((currentMotorRotations + rotationsAcceptableRange) < level.getRotations()) {
-				System.out.println("Level: " + level.getRotations());
 				return level;
 			}
 		}
@@ -126,7 +164,6 @@ public class ElevatorSubsystem extends Subsystem {
 		for (int i = HatchLevels.values().length - 1; i >= 0; i--) {
 			HatchLevels level = HatchLevels.get(i);
 			if ((currentMotorRotations - rotationsAcceptableRange) > level.getRotations()) {
-				System.out.println("Level: " + level.getRotations());
 				return level;
 			}
 		}
@@ -139,7 +176,6 @@ public class ElevatorSubsystem extends Subsystem {
 			currentMotorRotations = targetLevel;
 		for (BallLevels level : BallLevels.values()) {
 			if ((currentMotorRotations + rotationsAcceptableRange) < level.getRotations()) {
-				System.out.println("Level: " + level.getRotations());
 				return level;
 			}
 		}
@@ -153,7 +189,6 @@ public class ElevatorSubsystem extends Subsystem {
 		for (int i = BallLevels.values().length - 1; i >= 0; i--) {
 			BallLevels level = BallLevels.get(i);
 			if ((currentMotorRotations - rotationsAcceptableRange) > level.getRotations()) {
-				System.out.println("Level: " + level.getRotations());
 				return level;
 			}
 		}
@@ -234,7 +269,6 @@ public class ElevatorSubsystem extends Subsystem {
             } else {
 				autoDone = true;
 				ElevatorSubsystem.getInstance().setElevatorSpeed(0);
-				System.out.println("Done");
 				Robot.elevatorRunCommand.start();
             }
         }

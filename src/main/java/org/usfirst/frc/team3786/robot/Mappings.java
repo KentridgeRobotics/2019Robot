@@ -6,24 +6,17 @@ import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GripperOutCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.TiltDownCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.TiltUpCommand;
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.VerticalDirection;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecrement;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallUpCommand;
-import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorChangeCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchUpCommand;
 
 import java.util.Map;
 
-import org.usfirst.frc.team3786.robot.commands.autodrive.rocketport.NavRocketPortCommandGroup;
-import org.usfirst.frc.team3786.robot.commands.climbdown.ClimbDownCommandGroup;
-import org.usfirst.frc.team3786.robot.commands.climber.ClimbCommandGroup;
-import org.usfirst.frc.team3786.robot.commands.climber.RollersBackwardCommand; //for testing
-import org.usfirst.frc.team3786.robot.commands.climber.RollersForwardCommand; //for testing
 import org.usfirst.frc.team3786.robot.utils.XboxController;
 
 public class Mappings {

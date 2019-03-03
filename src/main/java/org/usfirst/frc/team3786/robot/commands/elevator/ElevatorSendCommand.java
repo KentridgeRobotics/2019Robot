@@ -9,84 +9,31 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ElevatorSendCommand extends Command {
     
-    ElevatorSubsystem.HatchLevels levels;
     private double targetRotations;
-    private double rotations;
-    private boolean goingUp;
-    private boolean done;
-    private final double epsilon = 3.5;
 
-    public ElevatorSendCommand(ElevatorSubsystem.HatchLevels gotoLevel) {
-        requires(ElevatorSubsystem.getInstance());
-        levels = gotoLevel;
-        targetRotations = levels.getRotations();
+    public ElevatorSendCommand(ElevatorSubsystem.HatchLevels target) {
+        targetRotations = target.getRotations();
+    }
+
+    public ElevatorSendCommand(ElevatorSubsystem.BallLevels target) {
+        targetRotations = target.getRotations();
     }
 
     @Override
     protected void initialize() {
-        done = false;
-        System.err.println("Elevator Send Initialized");
-        System.err.println("Elevator Starting Position: "+ElevatorSubsystem.getInstance().getRotation());
-        System.err.println("[!] TARGET LEVEL IS: " + levels);
-        System.err.println("[!] TARGET ROTATIONS: "+ targetRotations);
-        rotations = ElevatorSubsystem.getInstance().getRotation();
-        if(rotations < targetRotations) {
-            if(Math.abs(targetRotations - rotations) < epsilon) {
-                done = true;
-            }
-            else {
-                goingUp = true;
-            }
-        }
-        else if(rotations > targetRotations) {
-            if(Math.abs(targetRotations - rotations) < epsilon) {
-                done = true;
-            }
-            else {
-                goingUp = false;   
-            }
-        }
-        else {
-            done = true;
-        }
-        System.err.println("Elevator Send Going Up?"+ goingUp);
+        ElevatorSubsystem.getInstance().setLevel(targetRotations);
     }
 
     @Override
     protected void execute() {
-        if(!done) {
-            rotations = ElevatorSubsystem.getInstance().getRotation();
-            if(goingUp) {
-                if(Math.abs(targetRotations - rotations) > epsilon) {
-                    ElevatorSubsystem.getInstance().setElevatorSpeed(0.7);
-                    System.err.println("[!] NUMBER OF ROTATIONS: "+ rotations);
-                }
-                else {
-                    done = true;
-                }
-            }
-            else {
-                if(Math.abs(targetRotations - rotations) > epsilon) {
-                    ElevatorSubsystem.getInstance().setElevatorSpeed(-0.7);
-                    System.err.println("[!] NUMBER OF ROTATIONS: "+ rotations);
-                }
-                else {
-                    done = true;
-                }
-            }
-        }
     }
 
     @Override
     protected boolean isFinished() {
-        return done;
+        return true;
     }
 
     @Override
     protected void end() {
-        ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
-        ElevatorSubsystem.getInstance().setElevatorPos(targetRotations);
-        System.err.println("Elevator Send completed");
-        System.err.println("Final Elevator Position: "+ElevatorSubsystem.getInstance().getRotation());
     }
 }
