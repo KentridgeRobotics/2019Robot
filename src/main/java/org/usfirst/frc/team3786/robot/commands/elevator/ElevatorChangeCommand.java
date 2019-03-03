@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3786.robot.commands.elevator;
 
+import org.usfirst.frc.team3786.robot.Robot;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -120,6 +121,7 @@ public class ElevatorChangeCommand extends Command {
 		ElevatorSubsystem.getInstance().setElevatorPos(desiredRotations);
 		System.err.println("[!] Elevator Change Completed");
 		System.err.println("[!] Final Elevator Position: "+ElevatorSubsystem.getInstance().getRotation());
+		Robot.elevatorRunCommand.start();
 	}
 
 	public void up() {

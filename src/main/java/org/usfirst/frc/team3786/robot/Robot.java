@@ -54,8 +54,8 @@ public class Robot extends TimedRobot {
 	private static final Color idleColor = new Color(0, 0, 0);
 	private static byte brightness = (byte) 255;
 
-	private static final ButtLifterRunCommand buttLifterRunCommand = new ButtLifterRunCommand();
-	private static final ElevatorRunCommand elevatorRunCommand = new ElevatorRunCommand();
+	public static final ButtLifterRunCommand buttLifterRunCommand = new ButtLifterRunCommand();
+	public static final ElevatorRunCommand elevatorRunCommand = new ElevatorRunCommand();
 
 	@Override
 	public void robotInit() {
