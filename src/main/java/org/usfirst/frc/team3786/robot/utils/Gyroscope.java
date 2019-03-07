@@ -142,13 +142,13 @@ public class Gyroscope implements Runnable {
 						for (int i = 1; i > 0; i++) {
 							if (!(new File(directory, Mappings.gyroCalibrationFileName + ".old" + i).isFile())) {
 								configFile.renameTo(new File(directory, Mappings.gyroCalibrationFileName + ".old" + i));
-								oldFile = "config.yml.old" + i;
+								oldFile = Mappings.gyroCalibrationFileName + ".old" + i;
 								break;
 							}
 						}
 					} else {
 						configFile.renameTo(new File(directory, Mappings.gyroCalibrationFileName + ".old"));
-						oldFile = "config.yml.old";
+						oldFile = Mappings.gyroCalibrationFileName + ".old";
 					}
 					if (configFile.createNewFile()) {
 						try (FileOutputStream fos = new FileOutputStream(configFile)) {
