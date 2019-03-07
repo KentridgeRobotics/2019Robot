@@ -1,5 +1,15 @@
 package org.usfirst.frc.team3786.robot.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.FileTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
+import org.usfirst.frc.team3786.robot.Mappings;
 import org.usfirst.frc.team3786.robot.utils.BNO055.CalData;
 import org.usfirst.frc.team3786.robot.utils.BNO055.opmode_t;
 
@@ -8,6 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Gyroscope implements Runnable {
 
 	private static Gyroscope instance;
+
+	private static final File configFile = new File(Mappings.flashDrivePath, Mappings.gyroCalibrationFileName);
 
 	public static Gyroscope getInstance() {
 		if (instance == null)
@@ -21,10 +33,30 @@ public class Gyroscope implements Runnable {
 	private double velX, velY, dispX, dispY;
 	private double last, now;
 	private double dT;
+	private boolean hasFlashDrive = false;
 
 	public Gyroscope() {
 		if (imu == null)
 			imu = BNO055.getInstance(opmode_t.OPERATION_MODE_NDOF);
+
+		if (new File(Mappings.flashDriveDevicePath).exists()) {
+			hasFlashDrive = true;
+			SmartDashboard.putBoolean("Save Gyro Calibration", false);
+			if (configFile.isFile()) {
+				try (FileInputStream fis = new FileInputStream(configFile)) {
+					byte[] calibData = fis.readAllBytes();
+					imu.setSensorOffsets(calibData);
+					FileTime ft = Files.getLastModifiedTime(configFile.toPath());
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM.dd.yy HH:mm:ss")
+							.withZone(ZoneId.systemDefault());
+					String formattedTime = formatter.format(ft.toInstant());
+					System.out.println("Loaded Gyro Calibration from: " + formattedTime);
+				} catch (IOException e) {
+					System.out.println("Failed to read gyro calibration data!");
+					e.printStackTrace();
+				}
+			}
+		}
 
 		velX = 0.0;
 		velY = 0.0;
@@ -100,6 +132,42 @@ public class Gyroscope implements Runnable {
 
 		last = now;
 
+		if (hasFlashDrive) {
+			if (SmartDashboard.getBoolean("Save Gyro Calibration", false)) {
+				byte[] calibData = imu.getSensorOffsets();
+				try {
+					File directory = configFile.getParentFile();
+					String oldFile = "";
+					if (new File(directory, Mappings.gyroCalibrationFileName + ".old").isFile()) {
+						for (int i = 1; i > 0; i++) {
+							if (!(new File(directory, Mappings.gyroCalibrationFileName + ".old" + i).isFile())) {
+								configFile.renameTo(new File(directory, Mappings.gyroCalibrationFileName + ".old" + i));
+								oldFile = Mappings.gyroCalibrationFileName + ".old" + i;
+								break;
+							}
+						}
+					} else {
+						configFile.renameTo(new File(directory, Mappings.gyroCalibrationFileName + ".old"));
+						oldFile = Mappings.gyroCalibrationFileName + ".old";
+					}
+					if (configFile.createNewFile()) {
+						try (FileOutputStream fos = new FileOutputStream(configFile)) {
+							fos.write(calibData);
+							System.out.println("Saved Gyro Calibration Data");
+							if (!oldFile.equals(""))
+								System.out.println("Old Calibration Renamed to: " + oldFile);
+						} catch (IOException e) {
+							System.out.println("Failed to save gyro calibration data!");
+							e.printStackTrace();
+						}
+					}
+				} catch (IOException e) {
+					System.out.println("Failed to save gyro calibration data!");
+					e.printStackTrace();
+				}
+				SmartDashboard.putBoolean("Save Gyro Calibration", false);
+			}
+		}
 	}
 
 	public double getVelX() {
