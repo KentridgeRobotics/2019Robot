@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3786.robot.utils;
 
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Timer;
@@ -69,6 +70,7 @@ public class BNO055 {
 	public static final byte BNO055_ADDRESS_A = 0x28;
 	public static final byte BNO055_ADDRESS_B = 0x29;
 	public static final int BNO055_ID = 0xA0;
+	public static final int NUM_BNO055_OFFSET_REGISTERS = 22;
 
 	private static BNO055 instance;
 
@@ -718,6 +720,62 @@ public class BNO055 {
 	 */
 	public boolean isInitialized() {
 		return initialized;
+	}
+
+	/**
+	 * Gets current calibration data.
+	 * 
+	 * @return current calibration data of sensor offsets.
+	 */
+	public byte[] getSensorOffsets() {
+		if (isCalibrated()) {
+			setMode(opmode_t.OPERATION_MODE_CONFIG);
+			byte[] buffer = new byte[NUM_BNO055_OFFSET_REGISTERS];
+			readLen(reg_t.ACCEL_OFFSET_X_LSB_ADDR, buffer);
+			return buffer;
+		}
+		return null;
+	}
+
+	/**
+	 * Sets preexisting calibration data.
+	 */
+	public void setSensorOffsets(byte[] calibData) {
+		int mode = _mode;
+		setMode(opmode_t.OPERATION_MODE_CONFIG.getVal());
+		try {
+			TimeUnit.MILLISECONDS.sleep(25);
+		} catch (InterruptedException e) {
+		}
+
+		write8(reg_t.ACCEL_OFFSET_X_LSB_ADDR, calibData[0]);
+		write8(reg_t.ACCEL_OFFSET_X_MSB_ADDR, calibData[1]);
+		write8(reg_t.ACCEL_OFFSET_Y_LSB_ADDR, calibData[2]);
+		write8(reg_t.ACCEL_OFFSET_Y_MSB_ADDR, calibData[3]);
+		write8(reg_t.ACCEL_OFFSET_Z_LSB_ADDR, calibData[4]);
+		write8(reg_t.ACCEL_OFFSET_Z_MSB_ADDR, calibData[5]);
+
+		write8(reg_t.MAG_OFFSET_X_LSB_ADDR, calibData[6]);
+		write8(reg_t.MAG_OFFSET_X_MSB_ADDR, calibData[7]);
+		write8(reg_t.MAG_OFFSET_Y_LSB_ADDR, calibData[8]);
+		write8(reg_t.MAG_OFFSET_Y_MSB_ADDR, calibData[9]);
+		write8(reg_t.MAG_OFFSET_Z_LSB_ADDR, calibData[10]);
+		write8(reg_t.MAG_OFFSET_Z_MSB_ADDR, calibData[11]);
+
+		write8(reg_t.GYRO_OFFSET_X_LSB_ADDR, calibData[12]);
+		write8(reg_t.GYRO_OFFSET_X_MSB_ADDR, calibData[13]);
+		write8(reg_t.GYRO_OFFSET_Y_LSB_ADDR, calibData[14]);
+		write8(reg_t.GYRO_OFFSET_Y_MSB_ADDR, calibData[15]);
+		write8(reg_t.GYRO_OFFSET_Z_LSB_ADDR, calibData[16]);
+		write8(reg_t.GYRO_OFFSET_Z_MSB_ADDR, calibData[17]);
+
+		write8(reg_t.ACCEL_RADIUS_LSB_ADDR, calibData[18]);
+		write8(reg_t.ACCEL_RADIUS_MSB_ADDR, calibData[19]);
+
+		write8(reg_t.MAG_RADIUS_LSB_ADDR, calibData[20]);
+		write8(reg_t.MAG_RADIUS_MSB_ADDR, calibData[21]);
+
+		setMode(mode);
 	}
 
 	/**

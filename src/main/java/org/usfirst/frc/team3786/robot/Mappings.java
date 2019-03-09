@@ -52,6 +52,11 @@ public class Mappings {
 	public final static int irSensorLeft = 0;
 	public final static int irSensorRight = 1;
 
+	// Flash Drive Location for Data Storage
+	public final static String flashDriveDevicePath = "/dev/sda1";
+	public final static String flashDrivePath = "/media/sda1";
+	public final static String gyroCalibrationFileName = "gyroCalibration.dat";
+
 	public static void setupDefaultMappings() {
 
 		XboxController primary = OI.getPrimaryController();
