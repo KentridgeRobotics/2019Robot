@@ -19,7 +19,7 @@ public class Gyroscope implements Runnable {
 
 	private static Gyroscope instance;
 
-	private static final File configFile = new File(Mappings.flashDrivePath, Mappings.gyroCalibrationFileName);
+	private static final File configFile = new File(Mappings.dataStoragePath, Mappings.gyroCalibrationFileName);
 
 	public static Gyroscope getInstance() {
 		if (instance == null)
@@ -33,24 +33,28 @@ public class Gyroscope implements Runnable {
 	private double velX, velY, dispX, dispY;
 	private double last, now;
 	private double dT;
-	private boolean hasFlashDrive = false;
+	private boolean hasStorage = false;
 
 	public Gyroscope() {
 		if (imu == null)
 			imu = BNO055.getInstance(opmode_t.OPERATION_MODE_NDOF);
 
-		if (new File(Mappings.flashDriveDevicePath).exists()) {
-			hasFlashDrive = true;
+		if (new File(Mappings.dataStoragePath).exists()) {
+			hasStorage = true;
 			SmartDashboard.putBoolean("Save Gyro Calibration", false);
 			if (configFile.isFile()) {
 				try (FileInputStream fis = new FileInputStream(configFile)) {
 					byte[] calibData = fis.readAllBytes();
-					imu.setSensorOffsets(calibData);
-					FileTime ft = Files.getLastModifiedTime(configFile.toPath());
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM.dd.yy HH:mm:ss")
-							.withZone(ZoneId.systemDefault());
-					String formattedTime = formatter.format(ft.toInstant());
-					System.out.println("Loaded Gyro Calibration from: " + formattedTime);
+					if (calibData.length >= 22) {
+						imu.setSensorOffsets(calibData);
+						FileTime ft = Files.getLastModifiedTime(configFile.toPath());
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM.dd.yy HH:mm:ss")
+								.withZone(ZoneId.systemDefault());
+						String formattedTime = formatter.format(ft.toInstant());
+						System.out.println("Loaded Gyro Calibration from: " + formattedTime);
+					} else {
+						System.out.println("Gyro calibration data is corrupt!");
+					}
 				} catch (IOException e) {
 					System.out.println("Failed to read gyro calibration data!");
 					e.printStackTrace();
@@ -131,39 +135,49 @@ public class Gyroscope implements Runnable {
 		dispY = dispYNext;
 
 		last = now;
+		SmartDashboard.putNumber("GyroCalibration.Accel", imu.getCalibration().accel);
+		SmartDashboard.putNumber("GyroCalibration.Gyro", imu.getCalibration().gyro);
+		SmartDashboard.putNumber("GyroCalibration.Mag", imu.getCalibration().mag);
+		SmartDashboard.putNumber("GyroCalibration.Sys", imu.getCalibration().sys);
 
-		if (hasFlashDrive) {
+		if (hasStorage) {
 			if (SmartDashboard.getBoolean("Save Gyro Calibration", false)) {
 				byte[] calibData = imu.getSensorOffsets();
-				try {
-					File directory = configFile.getParentFile();
-					String oldFile = "";
-					if (new File(directory, Mappings.gyroCalibrationFileName + ".old").isFile()) {
-						for (int i = 1; i > 0; i++) {
-							if (!(new File(directory, Mappings.gyroCalibrationFileName + ".old" + i).isFile())) {
-								configFile.renameTo(new File(directory, Mappings.gyroCalibrationFileName + ".old" + i));
-								oldFile = Mappings.gyroCalibrationFileName + ".old" + i;
-								break;
+				CalData calibration = imu.getCalibration();
+				if (calibration.accel >= 1 && calibration.gyro >= 3 && calibration.mag >= 3) {
+					try {
+						File directory = configFile.getParentFile();
+						String oldFile = "";
+						if (new File(directory, Mappings.gyroCalibrationFileName + ".old").isFile()) {
+							for (int i = 1; i > 0; i++) {
+								if (!(new File(directory, Mappings.gyroCalibrationFileName + ".old" + i).isFile())) {
+									configFile.renameTo(
+											new File(directory, Mappings.gyroCalibrationFileName + ".old" + i));
+									oldFile = Mappings.gyroCalibrationFileName + ".old" + i;
+									break;
+								}
+							}
+						} else {
+							configFile.renameTo(new File(directory, Mappings.gyroCalibrationFileName + ".old"));
+							oldFile = Mappings.gyroCalibrationFileName + ".old";
+						}
+						if (configFile.createNewFile()) {
+							try (FileOutputStream fos = new FileOutputStream(configFile)) {
+								fos.write(calibData);
+								System.out.println("Saved Gyro Calibration Data");
+								if (!oldFile.equals(""))
+									System.out.println("Old Calibration Renamed to: " + oldFile);
+							} catch (IOException e) {
+								System.out.println("Failed to save gyro calibration data!");
+								e.printStackTrace();
 							}
 						}
-					} else {
-						configFile.renameTo(new File(directory, Mappings.gyroCalibrationFileName + ".old"));
-						oldFile = Mappings.gyroCalibrationFileName + ".old";
+					} catch (IOException e) {
+						System.out.println("Failed to save gyro calibration data!");
+						e.printStackTrace();
 					}
-					if (configFile.createNewFile()) {
-						try (FileOutputStream fos = new FileOutputStream(configFile)) {
-							fos.write(calibData);
-							System.out.println("Saved Gyro Calibration Data");
-							if (!oldFile.equals(""))
-								System.out.println("Old Calibration Renamed to: " + oldFile);
-						} catch (IOException e) {
-							System.out.println("Failed to save gyro calibration data!");
-							e.printStackTrace();
-						}
-					}
-				} catch (IOException e) {
-					System.out.println("Failed to save gyro calibration data!");
-					e.printStackTrace();
+				} else {
+					System.out.println("Gyroscope is not calibrated!");
 				}
 				SmartDashboard.putBoolean("Save Gyro Calibration", false);
 			}
