@@ -728,13 +728,10 @@ public class BNO055 {
 	 * @return current calibration data of sensor offsets.
 	 */
 	public byte[] getSensorOffsets() {
-		if (isCalibrated()) {
-			setMode(opmode_t.OPERATION_MODE_CONFIG);
-			byte[] buffer = new byte[NUM_BNO055_OFFSET_REGISTERS];
-			readLen(reg_t.ACCEL_OFFSET_X_LSB_ADDR, buffer);
-			return buffer;
-		}
-		return null;
+		setMode(opmode_t.OPERATION_MODE_CONFIG);
+		byte[] buffer = new byte[NUM_BNO055_OFFSET_REGISTERS];
+		readLen(reg_t.ACCEL_OFFSET_X_LSB_ADDR, buffer);
+		return buffer;
 	}
 
 	/**

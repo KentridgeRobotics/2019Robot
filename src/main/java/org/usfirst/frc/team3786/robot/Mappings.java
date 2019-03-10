@@ -30,7 +30,6 @@ public class Mappings {
 	public final static int leftSlaveMotor = 12;
 	public final static int rightSlaveMotor = 13;
 
-
 	public final static int rollers = 3;
 	public final static int buttLifter = 4;
 
@@ -53,8 +52,8 @@ public class Mappings {
 	public final static int irSensorRight = 1;
 
 	// Flash Drive Location for Data Storage
-	public final static String flashDriveDevicePath = "/dev/sda1";
-	public final static String flashDrivePath = "/media/sda1";
+	public final static String dataStoragePath = "/home/lvuser";
+	// public final static String dataStoragePath = "/media/sda1";
 	public final static String gyroCalibrationFileName = "gyroCalibration.dat";
 
 	public static void setupDefaultMappings() {
@@ -64,11 +63,11 @@ public class Mappings {
 		primary.buttonA.whileHeld(new NeoBrakeCommand());
 		primary.buttonB.whileHeld(boostCommand);
 		primary.buttonStickLeft.whileHeld(boostCommand);
-		//primary.buttonBumperRight.whileHeld(new RollersForwardCommand());
-		//primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand());
-		//primary.buttonPovLeft.whenPressed(new NavRocketPortCommandGroup());
-		//primary.buttonPovDown.whenPressed(new ClimbDownCommandGroup());
-		//primary.buttonPovUp.whenPressed(new ClimbCommandGroup());
+		// primary.buttonBumperRight.whileHeld(new RollersForwardCommand());
+		// primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand());
+		// primary.buttonPovLeft.whenPressed(new NavRocketPortCommandGroup());
+		// primary.buttonPovDown.whenPressed(new ClimbDownCommandGroup());
+		// primary.buttonPovUp.whenPressed(new ClimbCommandGroup());
 
 		XboxController secondary = OI.getSecondaryController();
 		secondary.buttonB.whileHeld(new GripperOutCommand());
