@@ -24,7 +24,7 @@ public class TargetLine extends Command {
 
     @Override
     protected void initialize() {
-        Cameras.getPixyCamera1().getPixy();
+        pixy = Cameras.getPixyCamera1().getPixy();
         pixy.getLine().setMode(Pixy2Line.LINE_MODE_WHITE_LINE);
     }
 
