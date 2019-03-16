@@ -38,7 +38,7 @@ public class TargetLine extends Command {
             for (Vector v : vectors) {
                 double x = v.getX1() - v.getX0();
                 double y = v.getY1() - v.getY0();
-                double angle = 0.0;
+                double angle = 90.0;
                 if (y != 0)
                     angle = Math.toDegrees(Math.atan(x / y));
                 System.out.println("Vector " + v.getIndex() + ": " + angle);
