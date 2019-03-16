@@ -16,8 +16,7 @@ public class GrabberSubsystem extends Subsystem {
 	private static GrabberSubsystem instance;
 
 	private WPI_TalonSRX grabber;
-	private WPI_TalonSRX rightGripper;
-	private WPI_TalonSRX leftGripper;
+	private WPI_TalonSRX gripper;
 	private WPI_TalonSRX tilt;
 
 	public static GrabberSubsystem getInstance() {
@@ -34,13 +33,9 @@ public class GrabberSubsystem extends Subsystem {
 		grabber.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
 		grabber.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
 
-		rightGripper = new WPI_TalonSRX(Mappings.rightGripper);
-		rightGripper.setSafetyEnabled(false);
-		rightGripper.configPeakCurrentLimit(20);
-
-		leftGripper = new WPI_TalonSRX(Mappings.leftGripper);
-		leftGripper.setSafetyEnabled(false);
-		leftGripper.configPeakCurrentLimit(20);
+		gripper = new WPI_TalonSRX(Mappings.gripper);
+		gripper.setSafetyEnabled(false);
+		gripper.configPeakCurrentLimit(20);
 
 		tilt = new WPI_TalonSRX(Mappings.tilt);
 		tilt.setSafetyEnabled(false);
@@ -64,8 +59,7 @@ public class GrabberSubsystem extends Subsystem {
 	}
 
 	public void setGripperSpeed(double speed) {
-		rightGripper.set(-speed);
-		leftGripper.set(-speed);
+		gripper.set(-speed);
 		Dashboard.getInstance().putNumber(true, "Gripper Speed", speed);
 	}
 
@@ -76,11 +70,9 @@ public class GrabberSubsystem extends Subsystem {
 
 	public void setBrake(boolean brake) {
 		if (brake) {
-			rightGripper.setNeutralMode(NeutralMode.Brake);
-			leftGripper.setNeutralMode(NeutralMode.Brake);
+			gripper.setNeutralMode(NeutralMode.Brake);
 		} else {
-			rightGripper.setNeutralMode(NeutralMode.Coast);
-			leftGripper.setNeutralMode(NeutralMode.Coast);
+			gripper.setNeutralMode(NeutralMode.Coast);
 		}
 	}
 

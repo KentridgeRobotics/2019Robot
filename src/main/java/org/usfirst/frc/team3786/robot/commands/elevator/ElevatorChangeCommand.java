@@ -116,7 +116,7 @@ public class ElevatorChangeCommand extends Command {
 	@Override
 	protected void end() {
 		ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
-		ElevatorSubsystem.getInstance().setElevatorPos(desiredRotations);
+		//ElevatorSubsystem.getInstance().setElevatorPos(desiredRotations);
 		System.err.println("[!] Elevator Change Completed");
 		System.err.println("[!] Final Elevator Position: "+ElevatorSubsystem.getInstance().getRotation());
 		Robot.elevatorRunCommand.start();

@@ -34,8 +34,7 @@ public class Mappings {
 	public final static int buttLifter = 4;
 
 	public final static int grabberMotor = 10;
-	public final static int leftGripper = 1;
-	public final static int rightGripper = 2;
+	public final static int gripper = 2;
 	public final static int tilt = 5;
 
 	public final static int leftElevator = 6;
