@@ -45,7 +45,7 @@ public class TargetLine extends Command {
                 double y = v.getY1() - v.getY0();
                 double angle = 90.0;
                 if (x != 0)
-                    angle = Math.toDegrees(Math.atan(y / x));
+                    angle = -Math.toDegrees(Math.atan(y / x));
                 double length = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
                 if (length > testLength) {
                     testLength = length;
@@ -55,10 +55,8 @@ public class TargetLine extends Command {
         }
         if (testLength >= 25) {
             lineAngle = testAngle;
-            System.out.println("Line Angle: " + testAngle + " Line Length: " + testLength);
             isLine = true;
         } else {
-            System.out.println("No Line");
             lineAngle = 0;
             isLine = false;
         }
