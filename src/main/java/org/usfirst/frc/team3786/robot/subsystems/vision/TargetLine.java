@@ -55,8 +55,10 @@ public class TargetLine extends Command {
         }
         if (testLength >= 25) {
             lineAngle = testAngle;
+            System.out.println("Line Angle: " + testAngle + " Line Length: " + testLength);
             isLine = true;
         } else {
+            System.out.println("No Line");
             lineAngle = 0;
             isLine = false;
         }
