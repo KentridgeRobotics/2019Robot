@@ -27,6 +27,7 @@ public class NeoDriveCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		isGyroCalibrated = true;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -42,11 +43,11 @@ public class NeoDriveCommand extends Command {
 		double throttle = OI.getRobotThrottle();
 		double turn = OI.getRobotTurn();
 		double targetHeading = 0.0;
-		boolean useTargetHeading = false;
+		boolean useTargetHeading = true;
 		// driver wants to go straight, haven't started using currentHeading yet.
-		if (turn == 0 && throttle != 0 && isGyroCalibrated) {
+		if ((Math.abs(turn) > 0.05) && isGyroCalibrated) {
 			targetHeading = Gyroscope.getInstance().getHeadingContinuous();
-			useTargetHeading = true;
+			useTargetHeading = false;
 		}
 		// going straight with gyro
 		if (useTargetHeading) {

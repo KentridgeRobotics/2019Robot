@@ -46,10 +46,12 @@ public class DriveToWallCommand extends Command {
       if (MaxSonar.getInstance().getDistanceCM() > targetDist) { // is the sensor farther than desired?
         NeoDriveSubsystem.getInstance().gyroStraight(speed, targetHeading);
         System.err.println("Distance to wall:" + MaxSonar.getInstance().getDistanceCM());
-      } else {
+      }
+      else {
         isDone = true;
       }
-    } else { // we're going backwards
+    }
+    else { // we're going backwards
       if (MaxSonar.getInstance().getDistanceCM() < targetDist) { // is the sensor closer than desired?
         if (speed > 0) { // this is just to see if someone puts a negative number for speed when we're
                          // going backwards. A failsafe of sorts
@@ -57,7 +59,8 @@ public class DriveToWallCommand extends Command {
         }
         NeoDriveSubsystem.getInstance().gyroStraight(speed, targetHeading);
         System.err.println("Distance to wall:" + MaxSonar.getInstance().getDistanceCM());
-      } else {
+      }
+      else {
         isDone = true;
       }
     }
