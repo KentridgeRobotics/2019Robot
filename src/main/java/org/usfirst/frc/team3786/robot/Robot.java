@@ -23,7 +23,6 @@ import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
 import org.usfirst.frc.team3786.robot.utils.HCSR04;
 import org.usfirst.frc.team3786.robot.utils.LED;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -46,7 +45,7 @@ public class Robot extends TimedRobot {
 
 	public static final RobotMode mode = RobotMode.TANK;
 
-	public Gyroscope gyro = new Gyroscope();
+	public Gyroscope gyro = Gyroscope.getInstance();
 
 	private int driverStationNumber = 0;
 
