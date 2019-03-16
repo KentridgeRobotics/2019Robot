@@ -13,6 +13,9 @@ public class TargetLine extends Command {
     private static TargetLine instance;
     private Pixy2 pixy;
 
+    private double lineAngle = 0.0;
+    private boolean isLine = false;
+
     public static TargetLine getInstance() {
         if (instance == null)
             instance = new TargetLine();
@@ -34,16 +37,37 @@ public class TargetLine extends Command {
     protected void execute() {
         pixy.getLine().getMainFeatures();
         Vector[] vectors = pixy.getLine().getVectors();
+        double testAngle = 0.0;
+        double testLength = 0.0;
         if (vectors != null) {
             for (Vector v : vectors) {
                 double x = v.getX1() - v.getX0();
                 double y = v.getY1() - v.getY0();
                 double angle = 90.0;
                 if (y != 0)
-                    angle = Math.toDegrees(Math.atan(x / y));
-                System.out.println("Vector " + v.getIndex() + ": " + angle);
+                    angle = -Math.toDegrees(Math.atan(x / y));
+                double length = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+                if (length > testLength) {
+                    testLength = length;
+                    testAngle = angle;
+                }
             }
         }
+        if (testLength >= 25) {
+            lineAngle = testAngle;
+            isLine = true;
+        } else {
+            lineAngle = 0;
+            isLine = false;
+        }
+    }
+
+    public double getLineAngle() {
+        return lineAngle;
+    }
+
+    public boolean isLine() {
+        return isLine;
     }
 
     @Override
