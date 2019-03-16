@@ -44,8 +44,8 @@ public class TargetLine extends Command {
                 double x = v.getX1() - v.getX0();
                 double y = v.getY1() - v.getY0();
                 double angle = 90.0;
-                if (y != 0)
-                    angle = -Math.toDegrees(Math.atan(x / y));
+                if (x != 0)
+                    angle = Math.toDegrees(Math.atan(y / x));
                 double length = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
                 if (length > testLength) {
                     testLength = length;
