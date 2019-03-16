@@ -14,6 +14,7 @@ public class Cameras {
         initDrive();
         pixy1 = new PixyCamera(new SPILink());
         pixy2 = new PixyCamera(new SPILink(), 1);
+        initLine();
     }
 
     public static PixyCamera getPixyCamera1() {
@@ -22,6 +23,11 @@ public class Cameras {
 
     public static PixyCamera getPixyCamera2() {
         return pixy2;
+    }
+
+    public static void initLine() {
+        TargetLine.getInstance().setRunWhenDisabled(true);
+        TargetLine.getInstance().start();
     }
 
     public static void initDrive() {
