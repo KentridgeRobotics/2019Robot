@@ -32,8 +32,10 @@ public class TargetLine extends Command {
     protected void execute() {
         pixy.getLine().getMainFeatures();
         Vector[] vectors = pixy.getLine().getVectors();
-        for (Vector v : vectors) {
-            v.print();
+        if (vectors != null) {
+            for (Vector v : vectors) {
+                v.print();
+            }
         }
     }
 
