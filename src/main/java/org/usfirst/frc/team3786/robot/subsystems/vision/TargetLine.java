@@ -11,7 +11,7 @@ import io.github.pseudoresonance.pixy2api.Pixy2Line.Vector;
 public class TargetLine extends Command {
 
     private static TargetLine instance;
-    private Pixy2 pixy = Cameras.getPixyCamera1().getPixy();
+    private Pixy2 pixy;
 
     public static TargetLine getInstance() {
         if (instance == null)
@@ -24,6 +24,7 @@ public class TargetLine extends Command {
 
     @Override
     protected void initialize() {
+        Cameras.getPixyCamera1().getPixy();
         pixy.getLine().setMode(Pixy2Line.LINE_MODE_WHITE_LINE);
     }
 
