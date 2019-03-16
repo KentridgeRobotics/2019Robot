@@ -26,6 +26,8 @@ public class TargetLine extends Command {
     protected void initialize() {
         pixy = Cameras.getPixyCamera1().getPixy();
         pixy.getLine().setMode(Pixy2Line.LINE_MODE_WHITE_LINE);
+        pixy.setLamp((byte) 1, (byte) 1);
+        pixy.setLED(255, 255, 255);
     }
 
     @Override
@@ -34,7 +36,12 @@ public class TargetLine extends Command {
         Vector[] vectors = pixy.getLine().getVectors();
         if (vectors != null) {
             for (Vector v : vectors) {
-                v.print();
+                double x = v.getX1() - v.getX0();
+                double y = v.getY1() - v.getY0();
+                double angle = 90.0;
+                if (x != 0)
+                    angle = Math.toDegrees(Math.atan(y / x));
+                System.out.println("Vector " + v.getIndex() + ": " + angle);
             }
         }
     }
