@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3786.robot.commands.grabber;
 
-import org.usfirst.frc.team3786.robot.subsystems.GrabberSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.GrabberGripperSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,12 +9,13 @@ public class GripperOutCommand extends Command {
 	public GripperOutCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
+		requires(GrabberGripperSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		GrabberSubsystem.getInstance().setGripperSpeed(0.75); // tune later
+		GrabberGripperSubsystem.getInstance().setGripperSpeed(0.75); // tune later
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -31,6 +32,6 @@ public class GripperOutCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		GrabberSubsystem.getInstance().setGripperSpeed(0);
+		GrabberGripperSubsystem.getInstance().setGripperSpeed(0);
 	}
 }

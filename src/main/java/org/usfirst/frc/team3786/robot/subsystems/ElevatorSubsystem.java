@@ -43,13 +43,13 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 
 	public ElevatorSubsystem() {
-		rightElevator = new CANSparkMax(Mappings.rightElevator, MotorType.kBrushless);
+		rightElevator = new CANSparkMax(Mappings.rightElevatorMotor, MotorType.kBrushless);
 		rightElevator.setIdleMode(IdleMode.kBrake);
 		rightElevator.setSmartCurrentLimit(30);
 		rightElevator.setOpenLoopRampRate(0.2);
 		rightElevator.getEncoder().setPosition(0.0);
 
-		leftElevator = new CANSparkMax(Mappings.leftElevator, MotorType.kBrushless);
+		leftElevator = new CANSparkMax(Mappings.leftElevatorMotor, MotorType.kBrushless);
 		leftElevator.setIdleMode(IdleMode.kBrake);
 		leftElevator.setSmartCurrentLimit(30);
 		leftElevator.setOpenLoopRampRate(0.2);

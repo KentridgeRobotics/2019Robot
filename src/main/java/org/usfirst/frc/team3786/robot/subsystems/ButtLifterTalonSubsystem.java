@@ -32,8 +32,8 @@ public class ButtLifterTalonSubsystem extends Subsystem {
   }
 
   public ButtLifterTalonSubsystem() {
-    lifter = new WPI_TalonSRX(Mappings.buttLifter);
-    rollers = new WPI_TalonSRX(Mappings.rollers);
+    lifter = new WPI_TalonSRX(Mappings.buttLifterMotor);
+    rollers = new WPI_TalonSRX(Mappings.rollersMotor);
     lifter.setNeutralMode(NeutralMode.Brake);
     lifter.config_kP(0, 0.125);
   }
