@@ -14,33 +14,33 @@ import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ButtLifterRunCommand extends Command {
-  public ButtLifterRunCommand() {
-    // Use requires() here to declare subsystem dependencies
-    requires(ButtLifterTalonSubsystem.getInstance());
-  }
+	public ButtLifterRunCommand() {
+		// Use requires() here to declare subsystem dependencies
+		requires(ButtLifterTalonSubsystem.getInstance());
+	}
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-  }
+	// Called just before this Command runs the first time
+	@Override
+	protected void initialize() {
+	}
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(OI.getButtLifterPower());
-    Dashboard.getInstance().putNumber(false, "Buttlifter Pos",
-        ButtLifterTalonSubsystem.getInstance().getRealLifterPosition());
-  }
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute() {
+		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(OI.getButtLifterPower());
+		Dashboard.getInstance().putNumber(false, "Buttlifter Pos",
+				ButtLifterTalonSubsystem.getInstance().getRealLifterPosition());
+	}
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished() {
+		return false;
+	}
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-    ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(0.0);
-  }
+	// Called once after isFinished returns true
+	@Override
+	protected void end() {
+		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(0.0);
+	}
 }

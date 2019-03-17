@@ -58,8 +58,10 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotInit() {
-		new UltrasonicSensor(UltrasonicSensor.Side.LEFT, new SharpIRSensor(Mappings.irSensorLeft), new HCSR04(Mappings.ultrasonicLeft.getKey(), Mappings.ultrasonicLeft.getValue()));
-		new UltrasonicSensor(UltrasonicSensor.Side.RIGHT, new SharpIRSensor(Mappings.irSensorRight), new HCSR04(Mappings.ultrasonicRight.getKey(), Mappings.ultrasonicRight.getValue()));
+		new UltrasonicSensor(UltrasonicSensor.Side.LEFT, new SharpIRSensor(Mappings.irSensorLeft),
+				new HCSR04(Mappings.ultrasonicLeft.getKey(), Mappings.ultrasonicLeft.getValue()));
+		new UltrasonicSensor(UltrasonicSensor.Side.RIGHT, new SharpIRSensor(Mappings.irSensorRight),
+				new HCSR04(Mappings.ultrasonicRight.getKey(), Mappings.ultrasonicRight.getValue()));
 		if (mode == RobotMode.TANK) {
 			System.out.println("USING TANK DRIVE");
 			Mappings.setupDefaultMappings();
@@ -119,7 +121,7 @@ public class Robot extends TimedRobot {
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().start();
 		LED.setColor(visionColor);
-		//buttLifterRunCommand.start();
+		// buttLifterRunCommand.start();
 		elevatorRunCommand.start();
 	}
 

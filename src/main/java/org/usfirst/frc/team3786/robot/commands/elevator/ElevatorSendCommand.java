@@ -8,32 +8,32 @@ import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ElevatorSendCommand extends Command {
-    
-    private double targetRotations;
 
-    public ElevatorSendCommand(ElevatorSubsystem.HatchLevels target) {
-        targetRotations = target.getRotations();
-    }
+	private double targetRotations;
 
-    public ElevatorSendCommand(ElevatorSubsystem.BallLevels target) {
-        targetRotations = target.getRotations();
-    }
+	public ElevatorSendCommand(ElevatorSubsystem.HatchLevels target) {
+		targetRotations = target.getRotations();
+	}
 
-    @Override
-    protected void initialize() {
-        ElevatorSubsystem.getInstance().setLevel(targetRotations);
-    }
+	public ElevatorSendCommand(ElevatorSubsystem.BallLevels target) {
+		targetRotations = target.getRotations();
+	}
 
-    @Override
-    protected void execute() {
-    }
+	@Override
+	protected void initialize() {
+		ElevatorSubsystem.getInstance().setLevel(targetRotations);
+	}
 
-    @Override
-    protected boolean isFinished() {
-        return true;
-    }
+	@Override
+	protected void execute() {
+	}
 
-    @Override
-    protected void end() {
-    }
+	@Override
+	protected boolean isFinished() {
+		return true;
+	}
+
+	@Override
+	protected void end() {
+	}
 }

@@ -16,18 +16,18 @@ import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.HatchLevels;
 import org.usfirst.frc.team3786.robot.commands.climbdown.BackwardsWithRollersCommand;
 
 public class ClimbDownCommandGroup extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public ClimbDownCommandGroup() {
-    addSequential(new AllMotorsBrakeCommand());
-    addSequential(new ElevatorSendCommand(HatchLevels.ONE)); // tune later
-    addSequential(new DriveToWallCommand(0.8, 40.0, false)); // tune later
-    // buttlifter down
-    addSequential(new BackwardsWithRollersCommand());
-    // pull up buttlifter and raise elevator. Some variation of
-    // ClimbWhileLevelCommand.
-    addSequential(new DriveToWallCommand(0.8, 60, false)); // tune later
-    addSequential(new ElevatorSendCommand(HatchLevels.ONE));
-  }
+	/**
+	 * Add your docs here.
+	 */
+	public ClimbDownCommandGroup() {
+		addSequential(new AllMotorsBrakeCommand());
+		addSequential(new ElevatorSendCommand(HatchLevels.ONE)); // tune later
+		addSequential(new DriveToWallCommand(0.8, 40.0, false)); // tune later
+		// buttlifter down
+		addSequential(new BackwardsWithRollersCommand());
+		// pull up buttlifter and raise elevator. Some variation of
+		// ClimbWhileLevelCommand.
+		addSequential(new DriveToWallCommand(0.8, 60, false)); // tune later
+		addSequential(new ElevatorSendCommand(HatchLevels.ONE));
+	}
 }

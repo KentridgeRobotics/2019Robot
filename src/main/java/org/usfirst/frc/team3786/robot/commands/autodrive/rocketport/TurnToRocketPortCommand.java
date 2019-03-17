@@ -15,56 +15,56 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TurnToRocketPortCommand extends Command {
 
-  private TurnHolder holder;
+	private TurnHolder holder;
 
-  private double targetHeading;
-  private double initHeading;
-  private double currentHeading;
-  private double epsilon = 3.0; // tune this later
+	private double targetHeading;
+	private double initHeading;
+	private double currentHeading;
+	private double epsilon = 3.0; // tune this later
 
-  private boolean isDone;
+	private boolean isDone;
 
-  public TurnToRocketPortCommand(TurnHolder holder) {
-    // Use requires() here to declare subsystem dependencies
-    requires(NeoDriveSubsystem.getInstance());
-    this.holder = holder;
-  }
+	public TurnToRocketPortCommand(TurnHolder holder) {
+		// Use requires() here to declare subsystem dependencies
+		requires(NeoDriveSubsystem.getInstance());
+		this.holder = holder;
+	}
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    isDone = false;
-    initHeading = Gyroscope.getInstance().getHeadingContinuous();
-    targetHeading = initHeading + holder.turn;
-    System.err.println("!!!Turn to Rocket Port started!!!");
-    System.err.println("Holder.Turn is " + holder.turn);
-    Dashboard.getInstance().putNumber(false, "Target Heading", targetHeading);
-  }
+	// Called just before this Command runs the first time
+	@Override
+	protected void initialize() {
+		isDone = false;
+		initHeading = Gyroscope.getInstance().getHeadingContinuous();
+		targetHeading = initHeading + holder.turn;
+		System.err.println("!!!Turn to Rocket Port started!!!");
+		System.err.println("Holder.Turn is " + holder.turn);
+		Dashboard.getInstance().putNumber(false, "Target Heading", targetHeading);
+	}
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    currentHeading = Gyroscope.getInstance().getHeadingContinuous();
-    if (Math.abs(currentHeading - targetHeading) > epsilon) {
-      NeoDriveSubsystem.getInstance().gyroStraight(0.0, targetHeading);
-      Dashboard.getInstance().putNumber(false, "Current Heading", currentHeading);
-      System.err
-          .println("!!!Robot is Turning towards rocket!!! target=" + targetHeading + " current=" + currentHeading);
-    } else {
-      isDone = true;
-    }
-  }
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute() {
+		currentHeading = Gyroscope.getInstance().getHeadingContinuous();
+		if (Math.abs(currentHeading - targetHeading) > epsilon) {
+			NeoDriveSubsystem.getInstance().gyroStraight(0.0, targetHeading);
+			Dashboard.getInstance().putNumber(false, "Current Heading", currentHeading);
+			System.err.println(
+					"!!!Robot is Turning towards rocket!!! target=" + targetHeading + " current=" + currentHeading);
+		} else {
+			isDone = true;
+		}
+	}
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return isDone;
-  }
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished() {
+		return isDone;
+	}
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-    NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
-    System.err.println("!!!Turn To Rocket Port Completed!!!");
-  }
+	// Called once after isFinished returns true
+	@Override
+	protected void end() {
+		NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
+		System.err.println("!!!Turn To Rocket Port Completed!!!");
+	}
 }

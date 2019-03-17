@@ -59,7 +59,8 @@ public class DriveToPortCommand extends Command {
 					System.out.println("DriveToPort: Left Turn");
 				} else if (Math.abs(correction) < epsilon) {
 					System.out.println("DriveToPort: Aligned to Line");
-					if (UltrasonicSensor.getInstance(Side.LEFT).getDistanceCM() > 50 && UltrasonicSensor.getInstance(Side.RIGHT).getDistanceCM() > 50) {
+					if (UltrasonicSensor.getInstance(Side.LEFT).getDistanceCM() > 50
+							&& UltrasonicSensor.getInstance(Side.RIGHT).getDistanceCM() > 50) {
 						NeoDriveSubsystem.getInstance().arcadeDrive(0.1, 0);
 					} else {
 						NeoDriveSubsystem.getInstance().arcadeDrive(0, 0);
