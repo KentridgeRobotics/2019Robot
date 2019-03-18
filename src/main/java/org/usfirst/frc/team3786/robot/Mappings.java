@@ -30,15 +30,15 @@ public class Mappings {
 	public final static int leftSlaveMotor = 12;
 	public final static int rightSlaveMotor = 13;
 
-	public final static int rollers = 3;
-	public final static int buttLifter = 4;
+	public final static int rollersMotor = 3;
+	public final static int buttLifterMotor = 4;
 
 	public final static int grabberMotor = 10;
-	public final static int gripper = 2;
-	public final static int tilt = 5;
+	public final static int grabberGripperMotor = 2;
+	public final static int grabberTiltMotor = 5;
 
-	public final static int leftElevator = 6;
-	public final static int rightElevator = 7;
+	public final static int leftElevatorMotor = 6;
+	public final static int rightElevatorMotor = 7;
 
 	// Digital IO
 	public final static Map.Entry<Integer, Integer> ultrasonicLeft = Map.entry(0, 1);

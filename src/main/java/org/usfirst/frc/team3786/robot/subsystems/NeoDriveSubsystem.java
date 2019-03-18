@@ -64,10 +64,6 @@ public class NeoDriveSubsystem extends Subsystem {
 	}
 
 	public void arcadeDrive(double speed, double turnRate) {
-		Dashboard.getInstance().putBoolean(true, "Boost", boost);
-		Dashboard.getInstance().putBoolean(true, "Break", kkBrake);
-		Dashboard.getInstance().putNumber(false, "Driving Speed", speed);
-		Dashboard.getInstance().putNumber(false, "TurnRate", turnRate);
 		if (this.kkBrake) {
 			speed *= 0.0;
 			turnRate *= 0.0;
@@ -75,8 +71,12 @@ public class NeoDriveSubsystem extends Subsystem {
 			speed *= 0.75;
 			turnRate *= 0.75;
 		}
+		Dashboard.getInstance().putBoolean(true, "Boost", boost);
+		Dashboard.getInstance().putBoolean(true, "Break", kkBrake);
+		Dashboard.getInstance().putNumber(false, "Driving Speed", speed);
+		Dashboard.getInstance().putNumber(false, "TurnRate", turnRate);
 
-		differentialDrive.arcadeDrive(speed, turnRate);
+		differentialDrive.arcadeDrive(-speed, turnRate);
 	}
 
 	public void setkkBrake(boolean kBrake) {

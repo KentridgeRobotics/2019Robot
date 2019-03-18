@@ -15,59 +15,59 @@ import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ClimbWhileLevelCommand extends Command {
-  public ClimbWhileLevelCommand() {
-    // Use requires() here to declare subsystem dependencies
-    requires(ElevatorSubsystem.getInstance());
-    requires(ButtLifterTalonSubsystem.getInstance());
-  }
-  private double tiltTolerance = 3.0;
-  private double correctionFactor = 1.2;
-  private double frontSpeed;
-  private double rearSpeed;
+	public ClimbWhileLevelCommand() {
+		// Use requires() here to declare subsystem dependencies
+		requires(ElevatorSubsystem.getInstance());
+		requires(ButtLifterTalonSubsystem.getInstance());
+	}
 
-  private boolean isDone;
+	private double tiltTolerance = 3.0;
+	private double correctionFactor = 1.2;
+	private double frontSpeed;
+	private double rearSpeed;
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    isDone = false;
-    frontSpeed = 0.5;
-    rearSpeed = 0.5;
-  }
+	private boolean isDone;
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    double [] gravity = Gyroscope.getInstance().getGravity(); //get gyro values into an array.
-    double gravityY = gravity[1];
-    if(gravityY > tiltTolerance) //is gravityY greater than 3? Is the robot tilted more than 3 degrees forward?
-    {
-      frontSpeed/=correctionFactor; //slow the back
-      frontSpeed*=correctionFactor; //speed up the rear
-    }
-    else if(gravityY < -tiltTolerance) //is gravityY less than -3? Is the robot tilted more than 3 degrees backwards?
-    {
-      frontSpeed/=correctionFactor; //slow the front
-      rearSpeed*=correctionFactor; //speed up the rear
-    }
-    else {
-      frontSpeed = 0.5; //set front to front speed.
-      rearSpeed = 0.5; //set rear to front speed.
-    }
-    ElevatorSubsystem.getInstance().setElevatorSpeed(frontSpeed);
-    ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(rearSpeed);
-    Dashboard.getInstance().putNumber(false, "Front Climb Motor Speed", frontSpeed);
-    Dashboard.getInstance().putNumber(false, "Rear Climb Motor Speed", rearSpeed);
-  }
+	// Called just before this Command runs the first time
+	@Override
+	protected void initialize() {
+		isDone = false;
+		frontSpeed = 0.5;
+		rearSpeed = 0.5;
+	}
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return isDone;
-  }
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute() {
+		double[] gravity = Gyroscope.getInstance().getGravity(); // get gyro values into an array.
+		double gravityY = gravity[1];
+		if (gravityY > tiltTolerance) // is gravityY greater than 3? Is the robot tilted more than 3 degrees forward?
+		{
+			frontSpeed /= correctionFactor; // slow the back
+			frontSpeed *= correctionFactor; // speed up the rear
+		} else if (gravityY < -tiltTolerance) // is gravityY less than -3? Is the robot tilted more than 3 degrees
+												// backwards?
+		{
+			frontSpeed /= correctionFactor; // slow the front
+			rearSpeed *= correctionFactor; // speed up the rear
+		} else {
+			frontSpeed = 0.5; // set front to front speed.
+			rearSpeed = 0.5; // set rear to front speed.
+		}
+		ElevatorSubsystem.getInstance().setElevatorSpeed(frontSpeed);
+		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(rearSpeed);
+		Dashboard.getInstance().putNumber(false, "Front Climb Motor Speed", frontSpeed);
+		Dashboard.getInstance().putNumber(false, "Rear Climb Motor Speed", rearSpeed);
+	}
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished() {
+		return isDone;
+	}
+
+	// Called once after isFinished returns true
+	@Override
+	protected void end() {
+	}
 }
