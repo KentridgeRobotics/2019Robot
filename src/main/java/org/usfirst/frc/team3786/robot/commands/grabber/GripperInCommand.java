@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3786.robot.commands.grabber;
 
+import org.usfirst.frc.team3786.robot.Dashboard;
+import org.usfirst.frc.team3786.robot.NumConstants;
 import org.usfirst.frc.team3786.robot.subsystems.GrabberGripperSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -16,6 +18,13 @@ public class GripperInCommand extends Command {
 	@Override
 	protected void initialize() {
 		GrabberGripperSubsystem.getInstance().setGripperSpeed(-0.75); // tune later
+		if(GrabberGripperSubsystem.getInstance().getGripperAmps() > NumConstants.GRIPPER_AMP_LIMIT) {
+			GrabberGripperSubsystem.getInstance().setGripperSpeed(0.0);
+			Dashboard.getInstance().putBoolean(false, "Gripper Overcurrent?", true);
+		}
+		else {
+			Dashboard.getInstance().putBoolean(false, "Gripper Overcurrent?", false);
+		}
 	}
 
 	// Called repeatedly when this Command is scheduled to run

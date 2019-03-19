@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import org.usfirst.frc.team3786.robot.Mappings;
+import org.usfirst.frc.team3786.robot.NumConstants;
 
 public class GrabberGripperSubsystem extends Subsystem {
 
@@ -25,7 +26,7 @@ public class GrabberGripperSubsystem extends Subsystem {
 		gripper = new WPI_TalonSRX(Mappings.grabberGripperMotor);
 		gripper.setSafetyEnabled(false);
 		gripper.setNeutralMode(NeutralMode.Brake);
-		gripper.configPeakCurrentLimit(20);
+		gripper.configPeakCurrentLimit(NumConstants.GRIPPER_AMP_LIMIT);
 	}
 
 	public void initDefaultCommand() {
@@ -36,6 +37,12 @@ public class GrabberGripperSubsystem extends Subsystem {
 	public void setGripperSpeed(double speed) {
 		gripper.set(-speed);
 		Dashboard.getInstance().putNumber(true, "Grabber Gripper Speed", speed);
+	}
+
+	public double getGripperAmps() {
+		double gripperAmps = gripper.getOutputCurrent();
+		Dashboard.getInstance().putNumber(false, "Gripper Current", gripperAmps);
+		return gripperAmps;
 	}
 
 }
