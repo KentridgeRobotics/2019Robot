@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.Mappings;
-import org.usfirst.frc.team3786.robot.Robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -51,7 +50,7 @@ public class ElevatorPositionSubsystem extends Subsystem {
 	}
 
 	public ElevatorPositionSubsystem() {
-		rightElevator = new CANSparkMax(Mappings.rightElevator, MotorType.kBrushless);
+		rightElevator = new CANSparkMax(Mappings.rightElevatorMotor, MotorType.kBrushless);
 		rightElevator.setIdleMode(IdleMode.kBrake);
 		rightElevator.setSmartCurrentLimit(30);
 		rightElevator.setOpenLoopRampRate(0.2);
@@ -64,7 +63,7 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		rightElevator.getPIDController().setDFilter(kDFilter);
 		rightElevator.getPIDController().setFF(kFF);
 
-		leftElevator = new CANSparkMax(Mappings.leftElevator, MotorType.kBrushless);
+		leftElevator = new CANSparkMax(Mappings.leftElevatorMotor, MotorType.kBrushless);
 		leftElevator.setIdleMode(IdleMode.kBrake);
 		leftElevator.setSmartCurrentLimit(30);
 		leftElevator.setOpenLoopRampRate(0.2);
