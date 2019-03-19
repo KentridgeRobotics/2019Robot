@@ -18,6 +18,11 @@ public class GripperInCommand extends Command {
 	@Override
 	protected void initialize() {
 		GrabberGripperSubsystem.getInstance().setGripperSpeed(-0.75); // tune later
+	}
+
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute() {
 		if(GrabberGripperSubsystem.getInstance().getGripperAmps() > NumConstants.GRIPPER_AMP_LIMIT) {
 			GrabberGripperSubsystem.getInstance().setGripperSpeed(0.0);
 			Dashboard.getInstance().putBoolean(false, "Gripper Overcurrent?", true);
@@ -25,11 +30,6 @@ public class GripperInCommand extends Command {
 		else {
 			Dashboard.getInstance().putBoolean(false, "Gripper Overcurrent?", false);
 		}
-	}
-
-	// Called repeatedly when this Command is scheduled to run
-	@Override
-	protected void execute() {
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
