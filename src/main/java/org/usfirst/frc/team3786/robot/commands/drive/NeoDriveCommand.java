@@ -13,6 +13,10 @@ public class NeoDriveCommand extends Command {
 	public static NeoDriveCommand instance;
 
 	private boolean isGyroCalibrated = false;
+	double targetHeading = 0.0;
+	double currentHeading = 0.0;
+	double lastHeading = 0.0;
+	boolean currentlyTurning = false;
 
 	public static NeoDriveCommand getInstance() {
 		if (instance == null)
@@ -38,16 +42,35 @@ public class NeoDriveCommand extends Command {
 				isGyroCalibrated = true;
 			}
 		}
+		currentHeading = Gyroscope.getInstance().getHeadingContinuous();
 		// When the number is negative, the wheels go forwards.
-		// When the number is positive, the wheels go backwards.
+        // When the number is positive, the wheels go backwards.
+        
 		double throttle = OI.getRobotThrottle();
 		double turn = OI.getRobotTurn();
-		double targetHeading = 0.0;
 		boolean useTargetHeading = true;
 		// driver wants to go straight, haven't started using currentHeading yet.
 		if ((Math.abs(turn) > 0.05) && isGyroCalibrated) {
-			targetHeading = Gyroscope.getInstance().getHeadingContinuous();
+			//Driver wants to keep on turning
+			currentlyTurning = true;
+			targetHeading = currentHeading;
 			useTargetHeading = false;
+			System.err.println("Turn active "+targetHeading);
+		}
+		else if((Math.abs(currentHeading - targetHeading) > 1.0) && currentlyTurning) {
+			//Driver let go of turn joystick. We want to let heading settle.
+			targetHeading = currentHeading;
+			useTargetHeading = false;
+			System.err.println("Turn passive "+targetHeading);
+		}
+		else if(Math.abs(throttle)<0.1){
+			targetHeading=currentHeading;
+			useTargetHeading = false;
+		}
+		else {
+			System.err.println("Turn finished "+currentHeading+" targetHeading is "+ targetHeading);
+			currentlyTurning = false;
+			useTargetHeading = true;
 		}
 		// going straight with gyro
 		if (useTargetHeading) {
@@ -59,6 +82,7 @@ public class NeoDriveCommand extends Command {
 			NeoDriveSubsystem.getInstance().arcadeDrive(throttle, turn);
 			Dashboard.getInstance().putBoolean(false, "Straight with Gyro?", false);
 		}
+		lastHeading = currentHeading;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

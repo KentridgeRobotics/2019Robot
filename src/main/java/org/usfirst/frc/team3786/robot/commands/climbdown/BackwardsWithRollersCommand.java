@@ -9,7 +9,8 @@ package org.usfirst.frc.team3786.robot.commands.climbdown;
 
 import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
-import org.usfirst.frc.team3786.robot.utils.MaxSonar;
+import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
+import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor.Side;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -33,7 +34,7 @@ public class BackwardsWithRollersCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (MaxSonar.getInstance().getDistanceCM() < targetDist) {
+		if (UltrasonicSensor.getInstance(Side.LEFT).getDistanceCM() < targetDist | UltrasonicSensor.getInstance(Side.RIGHT).getDistanceCM() < targetDist) {
 			NeoDriveSubsystem.getInstance().arcadeDrive(-0.5, 0.0); // Powers probably need to be tuned
 			ButtLifterTalonSubsystem.getInstance().setRollerSpeed(-0.5); // not sure if 0.5 or -0.5 is forward
 		} else {
