@@ -14,6 +14,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.Mappings;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -24,6 +26,9 @@ public class ButtLifterTalonSubsystem extends Subsystem {
 
 	private WPI_TalonSRX lifter;
 	private WPI_TalonSRX rollers;
+
+	private DigitalInput buttlifterLimitswitch;
+	private Counter counter = new Counter(buttlifterLimitswitch);
 
 	public static ButtLifterTalonSubsystem getInstance() {
 		if (instance == null)
@@ -36,6 +41,7 @@ public class ButtLifterTalonSubsystem extends Subsystem {
 		rollers = new WPI_TalonSRX(Mappings.rollersMotor);
 		lifter.setNeutralMode(NeutralMode.Brake);
 		lifter.config_kP(0, 0.125);
+		buttlifterLimitswitch = new DigitalInput(Mappings.buttlifterLimitSwitch);
 	}
 
 	public void setButtLifterSpeed(double speed) {
@@ -69,6 +75,14 @@ public class ButtLifterTalonSubsystem extends Subsystem {
 			lifter.setNeutralMode(NeutralMode.Coast);
 			rollers.setNeutralMode(NeutralMode.Coast);
 		}
+	}
+
+	public boolean isSwitchSet() {
+		return counter.get() > 0;
+	}
+
+	public void initButtlifterlimitSwitch() {
+		counter.reset();
 	}
 
 	@Override

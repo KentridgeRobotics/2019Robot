@@ -31,6 +31,7 @@ public class ClimbWhileLevelCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		ButtLifterTalonSubsystem.getInstance().initButtlifterlimitSwitch();
 		isDone = false;
 		frontSpeed = 0.5;
 		rearSpeed = 0.5;
@@ -64,7 +65,7 @@ public class ClimbWhileLevelCommand extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return isDone;
+		return ButtLifterTalonSubsystem.getInstance().isSwitchSet();
 	}
 
 	// Called once after isFinished returns true
