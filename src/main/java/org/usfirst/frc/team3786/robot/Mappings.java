@@ -14,6 +14,10 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchUpCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDownCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterUpCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.RollersBackwardCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.RollersForwardCommand;
 
 import java.util.Map;
 
@@ -62,8 +66,10 @@ public class Mappings {
 		primary.buttonA.whileHeld(new NeoBrakeCommand());
 		primary.buttonB.whileHeld(boostCommand);
 		primary.buttonStickLeft.whileHeld(boostCommand);
-		// primary.buttonBumperRight.whileHeld(new RollersForwardCommand());
-		// primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand());
+		primary.buttonBumperRight.whileHeld(new RollersForwardCommand()); //uncomment for testing 
+		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); //uncomment for testing
+		primary.buttonPovUp.whileHeld(new ManualButtLifterUpCommand());
+		primary.buttonPovDown.whileHeld(new ManualButtLifterDownCommand());
 		// primary.buttonPovLeft.whenPressed(new NavRocketPortCommandGroup());
 		// primary.buttonPovDown.whenPressed(new ClimbDownCommandGroup());
 		// primary.buttonPovUp.whenPressed(new ClimbCommandGroup());

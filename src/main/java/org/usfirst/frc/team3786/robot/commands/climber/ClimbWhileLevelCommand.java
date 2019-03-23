@@ -34,6 +34,7 @@ public class ClimbWhileLevelCommand extends Command {
 		isDone = false;
 		frontSpeed = 0.5;
 		rearSpeed = 0.5;
+		execute();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -69,5 +70,8 @@ public class ClimbWhileLevelCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(0.0);
+		ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.0);
 	}
 }
