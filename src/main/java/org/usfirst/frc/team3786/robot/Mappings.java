@@ -14,6 +14,7 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchUpCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.ClimbWhileLevelCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDownCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterUpCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.RollersBackwardCommand;
@@ -69,8 +70,7 @@ public class Mappings {
 		primary.buttonStickLeft.whileHeld(boostCommand);
 		primary.buttonBumperRight.whileHeld(new RollersForwardCommand()); //uncomment for testing 
 		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); //uncomment for testing
-		primary.buttonPovUp.whileHeld(new ManualButtLifterUpCommand());
-		primary.buttonPovDown.whileHeld(new ManualButtLifterDownCommand());
+		primary.buttonPovUp.whileHeld(new ClimbWhileLevelCommand());
 		// primary.buttonPovLeft.whenPressed(new NavRocketPortCommandGroup());
 		// primary.buttonPovDown.whenPressed(new ClimbDownCommandGroup());
 		// primary.buttonPovUp.whenPressed(new ClimbCommandGroup());
