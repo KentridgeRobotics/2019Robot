@@ -31,8 +31,8 @@ public class Mappings {
 	// CAN IDs
 	public final static int left1Motor = 8;
 	public final static int right1Motor = 9;
-	public final static int leftSlaveMotor = 12;
-	public final static int rightSlaveMotor = 13;
+	public final static int leftFollowMotor = 12;
+	public final static int rightFollowMotor = 13;
 
 	public final static int rollersMotor = 3;
 	public final static int buttLifterMotor = 4;
