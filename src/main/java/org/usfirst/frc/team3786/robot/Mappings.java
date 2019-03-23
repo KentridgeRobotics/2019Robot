@@ -49,6 +49,7 @@ public class Mappings {
 	public final static Map.Entry<Integer, Integer> ultrasonicRight = Map.entry(2, 3);
 	public final static int grabberLimitSwitch = 4;
 	public final static int elevatorLimitSwitch = 5;
+	public final static int buttlifterLimitSwitch = 6;
 
 	// Analog IO
 	public final static int irSensorLeft = 0;
