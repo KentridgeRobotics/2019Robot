@@ -9,19 +9,23 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ElevatorSendCommand extends Command {
 
-	private double targetRotations;
+	private ElevatorSubsystem.HatchLevels targetHatch = null;
+	private ElevatorSubsystem.BallLevels targetBall = null;
 
 	public ElevatorSendCommand(ElevatorSubsystem.HatchLevels target) {
-		targetRotations = target.getRotations();
+		targetHatch = target;
 	}
 
 	public ElevatorSendCommand(ElevatorSubsystem.BallLevels target) {
-		targetRotations = target.getRotations();
+		targetBall = target;
 	}
 
 	@Override
 	protected void initialize() {
-		ElevatorSubsystem.getInstance().setLevel(targetRotations);
+		if (targetHatch != null)
+			ElevatorSubsystem.getInstance().setLevel(targetHatch);
+		else if (targetBall != null)
+			ElevatorSubsystem.getInstance().setLevel(targetBall);
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchUpCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.ClimbCommandGroup;
 import org.usfirst.frc.team3786.robot.commands.climber.ClimbWhileLevelCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDownCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterUpCommand;
@@ -72,7 +73,7 @@ public class Mappings {
 		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); //uncomment for testing
 		primary.buttonPovUp.whileHeld(new ClimbWhileLevelCommand());
 		// primary.buttonPovLeft.whenPressed(new NavRocketPortCommandGroup());
-		// primary.buttonPovDown.whenPressed(new ClimbDownCommandGroup());
+		primary.buttonPovDown.whenPressed(new ClimbCommandGroup());
 		// primary.buttonPovUp.whenPressed(new ClimbCommandGroup());
 
 		XboxController secondary = OI.getSecondaryController();

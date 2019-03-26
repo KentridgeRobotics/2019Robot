@@ -28,7 +28,7 @@ public class ButtLifterTalonSubsystem extends Subsystem {
 	private WPI_TalonSRX rollers;
 
 	private DigitalInput buttlifterLimitswitch;
-	private Counter counter = new Counter(buttlifterLimitswitch);
+	//private Counter counter = new Counter(buttlifterLimitswitch);
 
 	public static ButtLifterTalonSubsystem getInstance() {
 		if (instance == null)

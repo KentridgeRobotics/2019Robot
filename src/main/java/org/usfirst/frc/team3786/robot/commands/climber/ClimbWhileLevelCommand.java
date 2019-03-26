@@ -21,8 +21,8 @@ public class ClimbWhileLevelCommand extends Command {
 		requires(ButtLifterTalonSubsystem.getInstance());
 	}
 
-	private double tiltTolerance = 3.0;
-	private double correctionFactor = 1.2;
+	private double tiltTolerance = 8.0;
+	private double correctionFactor = 1.1;
 	private double frontSpeed;
 	private double rearSpeed;
 
@@ -33,8 +33,8 @@ public class ClimbWhileLevelCommand extends Command {
 	protected void initialize() {
 		ButtLifterTalonSubsystem.getInstance().initButtlifterlimitSwitch();
 		isDone = false;
-		frontSpeed = 0.5;
-		rearSpeed = 0.5;
+		frontSpeed = -0.7;
+		rearSpeed = -0.7;
 		execute();
 	}
 
@@ -53,19 +53,23 @@ public class ClimbWhileLevelCommand extends Command {
 			frontSpeed /= correctionFactor; // slow the front
 			rearSpeed *= correctionFactor; // speed up the rear
 		} else {
-			frontSpeed = 0.5; // set front to front speed.
-			rearSpeed = 0.5; // set rear to front speed.
+			frontSpeed = -0.7; // set front to front speed.
+			rearSpeed = -0.7; // set rear to front speed.
 		}
 		ElevatorSubsystem.getInstance().setElevatorSpeed(frontSpeed);
 		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(rearSpeed);
 		Dashboard.getInstance().putNumber(false, "Front Climb Motor Speed", frontSpeed);
 		Dashboard.getInstance().putNumber(false, "Rear Climb Motor Speed", rearSpeed);
+		if (ElevatorSubsystem.getInstance().getRotation() < 2.0) {
+			isDone = true;
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return ButtLifterTalonSubsystem.getInstance().isSwitchSet();
+		//return ButtLifterTalonSubsystem.getInstance().isSwitchSet();
+		return isDone;
 	}
 
 	// Called once after isFinished returns true
