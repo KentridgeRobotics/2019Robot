@@ -1,7 +1,9 @@
 
 package org.usfirst.frc.team3786.robot.subsystems;
 
+import com.revrobotics.CANDigitalInput;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -19,7 +21,7 @@ public class ElevatorSubsystem extends Subsystem {
 
 	private CANSparkMax rightElevator;
 	private CANSparkMax leftElevator;
-	private DigitalInput dIn;
+	private CANDigitalInput limitSwitch;
 
 	public static final double upMultiplier = 0.8;
 	public static final double downMultiplier = 0.55;
@@ -48,14 +50,14 @@ public class ElevatorSubsystem extends Subsystem {
 		rightElevator.setSmartCurrentLimit(30);
 		rightElevator.setOpenLoopRampRate(0.2);
 		rightElevator.getEncoder().setPosition(0.0);
+		limitSwitch = rightElevator.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
+		limitSwitch.enableLimitSwitch(true);
 
 		leftElevator = new CANSparkMax(Mappings.leftElevatorMotor, MotorType.kBrushless);
 		leftElevator.setIdleMode(IdleMode.kBrake);
 		leftElevator.setSmartCurrentLimit(30);
 		leftElevator.setOpenLoopRampRate(0.2);
-		leftElevator.getEncoder().setPosition(0.0);
-
-		dIn = new DigitalInput(Mappings.elevatorLimitSwitch);
+		leftElevator.follow(rightElevator, true);
 	}
 
 	@Override
@@ -66,11 +68,11 @@ public class ElevatorSubsystem extends Subsystem {
 		Dashboard.getInstance().putNumber(false, "Elevator Position", getRotation());
 		if (!autoDone)
 			runAuto();
-		if (!dIn.get()) {
+		if (limitSwitch.get()) {
 			rightElevator.getEncoder().setPosition(0.0);
 			leftElevator.getEncoder().setPosition(0.0);
 		}
-		if (!dIn.get() && elevatorSpeed < 0) {
+		if (limitSwitch.get() && elevatorSpeed < 0) {
 			rightElevator.set(0);
 			leftElevator.set(0);
 		} else {
