@@ -41,7 +41,7 @@ public class ButtLifterTalonSubsystem extends Subsystem {
 		rollers = new WPI_TalonSRX(Mappings.rollersMotor);
 		lifter.setNeutralMode(NeutralMode.Brake);
 		lifter.config_kP(0, 0.125);
-		buttlifterLimitswitch = new DigitalInput(Mappings.buttlifterLimitSwitch);
+		//buttlifterLimitswitch = new DigitalInput(Mappings.buttlifterLimitSwitch);
 	}
 
 	public void setButtLifterSpeed(double speed) {
@@ -78,11 +78,11 @@ public class ButtLifterTalonSubsystem extends Subsystem {
 	}
 
 	public boolean isSwitchSet() {
-		return counter.get() > 0;
+		return false; //counter.get() > 0;
 	}
 
 	public void initButtlifterlimitSwitch() {
-		counter.reset();
+		//counter.reset();
 	}
 
 	@Override
