@@ -14,6 +14,12 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchUpCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.ClimbCommandGroup;
+import org.usfirst.frc.team3786.robot.commands.climber.ClimbWhileLevelCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDownCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterUpCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.RollersBackwardCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.RollersForwardCommand;
 
 import java.util.Map;
 
@@ -27,8 +33,8 @@ public class Mappings {
 	// CAN IDs
 	public final static int left1Motor = 8;
 	public final static int right1Motor = 9;
-	public final static int leftSlaveMotor = 12;
-	public final static int rightSlaveMotor = 13;
+	public final static int leftFollowMotor = 12;
+	public final static int rightFollowMotor = 13;
 
 	public final static int rollersMotor = 3;
 	public final static int buttLifterMotor = 4;
@@ -45,6 +51,7 @@ public class Mappings {
 	public final static Map.Entry<Integer, Integer> ultrasonicRight = Map.entry(2, 3);
 	public final static int grabberLimitSwitch = 4;
 	public final static int elevatorLimitSwitch = 5;
+	public final static int buttlifterLimitSwitch = 6;
 
 	// Analog IO
 	public final static int irSensorLeft = 0;
@@ -62,10 +69,11 @@ public class Mappings {
 		primary.buttonA.whileHeld(new NeoBrakeCommand());
 		primary.buttonB.whileHeld(boostCommand);
 		primary.buttonStickLeft.whileHeld(boostCommand);
-		// primary.buttonBumperRight.whileHeld(new RollersForwardCommand());
-		// primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand());
+		primary.buttonBumperRight.whileHeld(new RollersForwardCommand()); //uncomment for testing 
+		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); //uncomment for testing
+		primary.buttonPovUp.whileHeld(new ClimbWhileLevelCommand());
 		// primary.buttonPovLeft.whenPressed(new NavRocketPortCommandGroup());
-		// primary.buttonPovDown.whenPressed(new ClimbDownCommandGroup());
+		primary.buttonPovDown.whenPressed(new ClimbCommandGroup());
 		// primary.buttonPovUp.whenPressed(new ClimbCommandGroup());
 
 		XboxController secondary = OI.getSecondaryController();

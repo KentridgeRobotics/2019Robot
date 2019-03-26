@@ -17,8 +17,8 @@ public class NeoDriveSubsystem extends Subsystem {
 
 	private CANSparkMax left;
 	private CANSparkMax right;
-	private CANSparkMax leftSlave;
-	private CANSparkMax rightSlave;
+	private CANSparkMax leftFollow;
+	private CANSparkMax rightFollow;
 
 	private DifferentialDrive differentialDrive;
 
@@ -33,20 +33,24 @@ public class NeoDriveSubsystem extends Subsystem {
 
 	public NeoDriveSubsystem() {
 		left = new CANSparkMax(Mappings.left1Motor, MotorType.kBrushless);
+		left.setIdleMode(IdleMode.kCoast);
 		right = new CANSparkMax(Mappings.right1Motor, MotorType.kBrushless);
-		leftSlave = new CANSparkMax(Mappings.leftSlaveMotor, MotorType.kBrushless);
-		rightSlave = new CANSparkMax(Mappings.rightSlaveMotor, MotorType.kBrushless);
+		right.setIdleMode(IdleMode.kCoast);
+		leftFollow = new CANSparkMax(Mappings.leftFollowMotor, MotorType.kBrushless);
+		leftFollow.setIdleMode(IdleMode.kCoast);
+		rightFollow = new CANSparkMax(Mappings.rightFollowMotor, MotorType.kBrushless);
+		rightFollow.setIdleMode(IdleMode.kCoast);
 		left.setSmartCurrentLimit(40);
 		right.setSmartCurrentLimit(40);
-		leftSlave.setSmartCurrentLimit(40);
-		rightSlave.setSmartCurrentLimit(40);
+		leftFollow.setSmartCurrentLimit(40);
+		rightFollow.setSmartCurrentLimit(40);
 		left.setOpenLoopRampRate(0.1);
 		right.setOpenLoopRampRate(0.1);
-		leftSlave.setOpenLoopRampRate(0.1);
-		rightSlave.setOpenLoopRampRate(0.1);
+		leftFollow.setOpenLoopRampRate(0.1);
+		rightFollow.setOpenLoopRampRate(0.1);
 
-		leftSlave.follow(left);
-		rightSlave.follow(right);
+		leftFollow.follow(left);
+		rightFollow.follow(right);
 
 		differentialDrive = new DifferentialDrive(left, right);
 	}
@@ -84,13 +88,13 @@ public class NeoDriveSubsystem extends Subsystem {
 		if (this.kkBrake) {
 			left.setIdleMode(IdleMode.kBrake);
 			right.setIdleMode(IdleMode.kBrake);
-			leftSlave.setIdleMode(IdleMode.kBrake);
-			rightSlave.setIdleMode(IdleMode.kBrake);
+			leftFollow.setIdleMode(IdleMode.kBrake);
+			rightFollow.setIdleMode(IdleMode.kBrake);
 		} else {
 			left.setIdleMode(IdleMode.kCoast);
 			right.setIdleMode(IdleMode.kCoast);
-			leftSlave.setIdleMode(IdleMode.kCoast);
-			rightSlave.setIdleMode(IdleMode.kCoast);
+			leftFollow.setIdleMode(IdleMode.kCoast);
+			rightFollow.setIdleMode(IdleMode.kCoast);
 		}
 	}
 
@@ -105,11 +109,11 @@ public class NeoDriveSubsystem extends Subsystem {
 	public void gyroStraight(double spd, double tgtHeading) {
 		double currHeading = Gyroscope.getInstance().getHeadingContinuous();
 		double error = tgtHeading - currHeading;
-		double correction = error / 45;
-		if (correction > 1.0) {
+		double correction = error / 30;
+		if(correction > 1.0) {
 			correction = 1.0;
 		}
-		else if (correction < -1.0) {
+		else if(correction < -1.0) {
 			correction = -1.0;
 		}
 		arcadeDrive(spd, correction);

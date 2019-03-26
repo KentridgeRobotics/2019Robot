@@ -19,8 +19,10 @@ public class ClimbCommandGroup extends CommandGroup {
 	public ClimbCommandGroup() {
 		// Add Commands here:
 		addSequential(new AllMotorsBrakeCommand());
-		addSequential(new ElevatorSendCommand(HatchLevels.THREE)); // tune later
-		addSequential(new DriveToWallCommand(40));
+		addSequential(new ElevatorSendCommand(HatchLevels.TWO)); // tune later
+		addSequential(new DriveToWallCommand(30));
+		addSequential(new ClimbWhileLevelCommand());
+		addSequential(new DriveToWallCommand(30));
 
 		// To run multiple commands at the same time,
 		// use addParallel()

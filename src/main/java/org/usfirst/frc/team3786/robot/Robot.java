@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().start();
 		LED.setColor(visionColor);
-		// buttLifterRunCommand.start();
+		buttLifterRunCommand.start();
 		elevatorRunCommand.start();
 	}
 

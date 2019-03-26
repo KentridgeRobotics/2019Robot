@@ -82,7 +82,7 @@ public class ElevatorSubsystem extends Subsystem {
 			else
 				speed *= downMultiplier;
 			if (getRotation() < 30 && speed < 0) {
-				speed = elevatorSpeed * downMultiplierLow;
+				speed = elevatorSpeed;
 			}
 			rightElevator.set(speed);
 			leftElevator.set(-speed);
