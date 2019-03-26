@@ -1,8 +1,10 @@
 
 package org.usfirst.frc.team3786.robot.subsystems;
 
+import com.revrobotics.CANDigitalInput;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -19,7 +21,7 @@ public class ElevatorPositionSubsystem extends Subsystem {
 
 	private CANSparkMax rightElevator;
 	private CANSparkMax leftElevator;
-	private DigitalInput dIn;
+	private CANDigitalInput limitSwitch;
 
 	public static final double upMultiplier = 0.8;
 	public static final double downMultiplier = 0.55;
@@ -62,14 +64,14 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		rightElevator.getPIDController().setD(kD);
 		rightElevator.getPIDController().setDFilter(kDFilter);
 		rightElevator.getPIDController().setFF(kFF);
+		limitSwitch = rightElevator.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
+		limitSwitch.enableLimitSwitch(true);
 
 		leftElevator = new CANSparkMax(Mappings.leftElevatorMotor, MotorType.kBrushless);
 		leftElevator.setIdleMode(IdleMode.kBrake);
 		leftElevator.setSmartCurrentLimit(30);
 		leftElevator.setOpenLoopRampRate(0.2);
 		leftElevator.follow(rightElevator, true);
-
-		dIn = new DigitalInput(Mappings.elevatorLimitSwitch);
 
 		SmartDashboard.putNumber("Elevator.kP", kP);
 		SmartDashboard.putNumber("Elevator.kI", kI);
@@ -125,11 +127,11 @@ public class ElevatorPositionSubsystem extends Subsystem {
 	public void safetyRun() {
 		checkNetworkTables();
 		Dashboard.getInstance().putNumber(false, "Elevator Position", getRotation());
-		if (!dIn.get()) {
+		if (limitSwitch.get()) {
 			rightElevator.getEncoder().setPosition(0.0);
 			leftElevator.getEncoder().setPosition(0.0);
 		}
-		if (!dIn.get() && elevatorSpeed < 0) {
+		if (limitSwitch.get() && elevatorSpeed < 0) {
 			rightElevator.set(0);
 			leftElevator.set(0);
 		} else {

@@ -22,12 +22,12 @@ public class ClimbDownCommandGroup extends CommandGroup {
 	public ClimbDownCommandGroup() {
 		addSequential(new AllMotorsBrakeCommand());
 		addSequential(new ElevatorSendCommand(HatchLevels.ONE)); // tune later
-		addSequential(new DriveToWallCommand(0.8, 40.0, false)); // tune later
+		addSequential(new DriveToWallCommand(40)); // tune later
 		// buttlifter down
 		addSequential(new BackwardsWithRollersCommand());
 		// pull up buttlifter and raise elevator. Some variation of
 		// ClimbWhileLevelCommand.
-		addSequential(new DriveToWallCommand(0.8, 60, false)); // tune later
+		addSequential(new DriveToWallCommand(60)); // tune later
 		addSequential(new ElevatorSendCommand(HatchLevels.ONE));
 	}
 }
