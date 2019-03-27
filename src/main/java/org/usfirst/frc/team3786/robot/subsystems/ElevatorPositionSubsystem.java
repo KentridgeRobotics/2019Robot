@@ -1,8 +1,10 @@
 
 package org.usfirst.frc.team3786.robot.subsystems;
 
+import com.revrobotics.CANDigitalInput;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -19,7 +21,7 @@ public class ElevatorPositionSubsystem extends Subsystem {
 
 	private CANSparkMax rightElevator;
 	private CANSparkMax leftElevator;
-	private DigitalInput dIn;
+	private CANDigitalInput limitSwitch;
 
 	public static final double upMultiplier = 0.8;
 	public static final double downMultiplier = 0.55;
@@ -62,14 +64,14 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		rightElevator.getPIDController().setD(kD);
 		rightElevator.getPIDController().setDFilter(kDFilter);
 		rightElevator.getPIDController().setFF(kFF);
+		limitSwitch = rightElevator.getReverseLimitSwitch(LimitSwitchPolarity.kNormallyOpen);
+		limitSwitch.enableLimitSwitch(true);
 
 		leftElevator = new CANSparkMax(Mappings.leftElevatorMotor, MotorType.kBrushless);
 		leftElevator.setIdleMode(IdleMode.kBrake);
 		leftElevator.setSmartCurrentLimit(30);
 		leftElevator.setOpenLoopRampRate(0.2);
 		leftElevator.follow(rightElevator, true);
-
-		dIn = new DigitalInput(Mappings.elevatorLimitSwitch);
 
 		SmartDashboard.putNumber("Elevator.kP", kP);
 		SmartDashboard.putNumber("Elevator.kI", kI);
@@ -125,11 +127,11 @@ public class ElevatorPositionSubsystem extends Subsystem {
 	public void safetyRun() {
 		checkNetworkTables();
 		Dashboard.getInstance().putNumber(false, "Elevator Position", getRotation());
-		if (!dIn.get()) {
+		if (limitSwitch.get()) {
 			rightElevator.getEncoder().setPosition(0.0);
 			leftElevator.getEncoder().setPosition(0.0);
 		}
-		if (!dIn.get() && elevatorSpeed < 0) {
+		if (limitSwitch.get() && elevatorSpeed < 0) {
 			rightElevator.set(0);
 			leftElevator.set(0);
 		} else {
@@ -163,23 +165,14 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		return getRotation();
 	}
 
-	public void setLevel(HatchLevels targetLevel) {
+	public void setLevel(Levels targetLevel) {
 		if (targetLevel == null)
 			return;
-		if (targetLevel == HatchLevels.ZERO)
+		if (targetLevel == Levels.ZERO)
 			SmartDashboard.putString("Elevator Level", targetLevel.toString());
-		else
+		else if (targetLevel.getType() == LevelType.HATCH)
 			SmartDashboard.putString("Elevator Level", "HATCH " + targetLevel.toString());
-		this.targetLevel = targetLevel.getRotations();
-		gotoPosition(this.targetLevel);
-	}
-
-	public void setLevel(BallLevels targetLevel) {
-		if (targetLevel == null)
-			return;
-		if (targetLevel == BallLevels.ZERO)
-			SmartDashboard.putString("Elevator Level", targetLevel.toString());
-		else
+		else if (targetLevel.getType() == LevelType.BALL)
 			SmartDashboard.putString("Elevator Level", "BALL " + targetLevel.toString());
 		this.targetLevel = targetLevel.getRotations();
 		gotoPosition(this.targetLevel);
@@ -191,11 +184,27 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		SmartDashboard.putString("Elevator Level", String.valueOf(targetLevel));
 	}
 
-	public HatchLevels getHatchLevelUp() {
+	/**
+	 * Gets the rotation value of the current level if within an acceptable range,
+	 * otherwise returns -1;
+	 * 
+	 * @return Height of current elevator level, or -1 if not at a preset height
+	 */
+	public double getCurrentLevel() {
+		double currentMotorRotations = getRotation();
+		for (Levels level : Levels.values()) {
+			if (Math.abs(currentMotorRotations - level.getRotations()) < rotationsAcceptableRange) {
+				return level.getRotations();
+			}
+		}
+		return -1;
+	}
+
+	public Levels getHatchLevelUp() {
 		double currentMotorRotations = getRotation();
 		if (!autoDone)
 			currentMotorRotations = targetLevel;
-		for (HatchLevels level : HatchLevels.values()) {
+		for (Levels level : Levels.getBallLevels()) {
 			if ((currentMotorRotations + rotationsAcceptableRange) < level.getRotations()) {
 				return level;
 			}
@@ -203,12 +212,12 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		return null;
 	}
 
-	public HatchLevels getHatchLevelDown() {
+	public Levels getHatchLevelDown() {
 		double currentMotorRotations = getRotation();
 		if (!autoDone)
 			currentMotorRotations = targetLevel;
-		for (int i = HatchLevels.values().length - 1; i >= 0; i--) {
-			HatchLevels level = HatchLevels.get(i);
+		for (int i = Levels.getBallLevels().length - 1; i >= 0; i--) {
+			Levels level = Levels.get(LevelType.HATCH, i);
 			if ((currentMotorRotations - rotationsAcceptableRange) > level.getRotations()) {
 				return level;
 			}
@@ -216,11 +225,11 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		return null;
 	}
 
-	public BallLevels getBallLevelUp() {
+	public Levels getBallLevelUp() {
 		double currentMotorRotations = getRotation();
 		if (!autoDone)
 			currentMotorRotations = targetLevel;
-		for (BallLevels level : BallLevels.values()) {
+		for (Levels level : Levels.getBallLevels()) {
 			if ((currentMotorRotations + rotationsAcceptableRange) < level.getRotations()) {
 				return level;
 			}
@@ -228,12 +237,12 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		return null;
 	}
 
-	public BallLevels getBallLevelDown() {
+	public Levels getBallLevelDown() {
 		double currentMotorRotations = getRotation();
 		if (!autoDone)
 			currentMotorRotations = targetLevel;
-		for (int i = BallLevels.values().length - 1; i >= 0; i--) {
-			BallLevels level = BallLevels.get(i);
+		for (int i = Levels.getBallLevels().length - 1; i >= 0; i--) {
+			Levels level = Levels.get(LevelType.BALL, i);
 			if ((currentMotorRotations - rotationsAcceptableRange) > level.getRotations()) {
 				return level;
 			}
@@ -242,10 +251,10 @@ public class ElevatorPositionSubsystem extends Subsystem {
 	}
 
 	public void incrementHatchLevel() {
-		HatchLevels targetLevel = getHatchLevelUp();
+		Levels targetLevel = getHatchLevelUp();
 		if (targetLevel == null)
 			return;
-		if (targetLevel == HatchLevels.ZERO)
+		if (targetLevel == Levels.ZERO)
 			SmartDashboard.putString("Elevator Level", targetLevel.toString());
 		else
 			SmartDashboard.putString("Elevator Level", "HATCH " + targetLevel.toString());
@@ -254,10 +263,10 @@ public class ElevatorPositionSubsystem extends Subsystem {
 	}
 
 	public void decrementHatchLevel() {
-		HatchLevels targetLevel = getHatchLevelDown();
+		Levels targetLevel = getHatchLevelDown();
 		if (targetLevel == null)
 			return;
-		if (targetLevel == HatchLevels.ZERO)
+		if (targetLevel == Levels.ZERO)
 			SmartDashboard.putString("Elevator Level", targetLevel.toString());
 		else
 			SmartDashboard.putString("Elevator Level", "HATCH " + targetLevel.toString());
@@ -266,10 +275,10 @@ public class ElevatorPositionSubsystem extends Subsystem {
 	}
 
 	public void incrementBallLevel() {
-		BallLevels targetLevel = getBallLevelUp();
+		Levels targetLevel = getBallLevelUp();
 		if (targetLevel == null)
 			return;
-		if (targetLevel == BallLevels.ZERO)
+		if (targetLevel == Levels.ZERO)
 			SmartDashboard.putString("Elevator Level", targetLevel.toString());
 		else
 			SmartDashboard.putString("Elevator Level", "BALL " + targetLevel.toString());
@@ -278,10 +287,10 @@ public class ElevatorPositionSubsystem extends Subsystem {
 	}
 
 	public void decrementBallLevel() {
-		BallLevels targetLevel = getBallLevelDown();
+		Levels targetLevel = getBallLevelDown();
 		if (targetLevel == null)
 			return;
-		if (targetLevel == BallLevels.ZERO)
+		if (targetLevel == Levels.ZERO)
 			SmartDashboard.putString("Elevator Level", targetLevel.toString());
 		else
 			SmartDashboard.putString("Elevator Level", "BALL " + targetLevel.toString());
@@ -293,92 +302,73 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		UP, DOWN, STOP;
 	}
 
-	public enum HatchLevels {
-		// ZERO(0.0), ONE(52.7), TWO(202.7), THREE(343.6);
-		ZERO(0, 0.0), ONE(1, 25.8), TWO(2, 182.7), THREE(3, 326.2);
-
-		private int level;
-		private double rotations;
-
-		HatchLevels(int level, double rotations) {
-			this.level = level;
-			this.rotations = rotations;
-		}
-
-		public int getLevel() {
-			return level;
-		}
-
-		public static HatchLevels get(int level) {
-			for (HatchLevels levels : values()) {
-				if (levels.getLevel() == level)
-					return levels;
-			}
-			return null;
-		}
-
-		public double getRotations() {
-			return rotations;
-		}
-
-		public HatchLevels getLevels() {
-			return values()[ordinal()];
-		}
-
-		public HatchLevels up() {
-			return values()[ordinal() + 1];
-		}
-
-		public HatchLevels down() {
-			return values()[ordinal() - 1];
-		}
-
-		public HatchLevels stop() {
-			return values()[ordinal() + 0];
-		}
+	public enum LevelType {
+		HATCH, BALL, OTHER;
 	}
 
-	public enum BallLevels {
-		ZERO(0, 0.0), ONE(1, 78.3), TWO(2, 222.9), THREE(3, 371.8);
+	public enum Levels {
+		ZERO(0, 0.0), HATCH_ONE(LevelType.HATCH, 1, 25.8), BALL_ONE(LevelType.BALL, 1, 78.3),
+		CLIMB(1, 150), HATCH_TWO(LevelType.HATCH, 2, 182.7), BALL_TWO(LevelType.BALL, 2, 222.9),
+		HATCH_THREE(LevelType.HATCH, 3, 326.2), BALL_THREE(LevelType.BALL, 3, 371.8);
 
+		private LevelType type;
 		private int level;
 		private double rotations;
 
-		BallLevels(int level, double rotations) {
+		private static Levels[] hatchLevels = new Levels[]{ZERO, HATCH_ONE, HATCH_TWO, HATCH_THREE};
+		private static Levels[] ballLevels = new Levels[]{ZERO, BALL_ONE, BALL_TWO, BALL_THREE};
+		private static Levels[] otherLevels = new Levels[]{ZERO, CLIMB};
+
+		Levels(int level, double rotations) {
+			this.type = LevelType.OTHER;
 			this.level = level;
 			this.rotations = rotations;
 		}
 
-		public int getLevel() {
-			return level;
+		Levels(LevelType type, int level, double rotations) {
+			this.type = type;
+			this.level = level;
+			this.rotations = rotations;
 		}
 
-		public static BallLevels get(int level) {
-			for (BallLevels levels : values()) {
+		public static Levels get(LevelType type, int level) {
+			for (Levels levels : values()) {
+				if (levels.getLevel() == level && levels.getType() == type)
+					return levels;
+			}
+			return null;
+		}
+
+		public static Levels get(int level) {
+			for (Levels levels : values()) {
 				if (levels.getLevel() == level)
 					return levels;
 			}
 			return null;
 		}
 
+		public int getLevel() {
+			return level;
+		}
+
+		public static Levels[] getHatchLevels() {
+			return hatchLevels;
+		}
+
+		public static Levels[] getBallLevels() {
+			return ballLevels;
+		}
+
+		public static Levels[] getOtherLevels() {
+			return otherLevels;
+		}
+
 		public double getRotations() {
 			return rotations;
 		}
 
-		public BallLevels getLevels() {
-			return values()[ordinal()];
-		}
-
-		public BallLevels up() {
-			return values()[ordinal() + 1];
-		}
-
-		public BallLevels down() {
-			return values()[ordinal() - 1];
-		}
-
-		public BallLevels stop() {
-			return values()[ordinal() + 0];
+		public LevelType getType() {
+			return type;
 		}
 	}
 }
