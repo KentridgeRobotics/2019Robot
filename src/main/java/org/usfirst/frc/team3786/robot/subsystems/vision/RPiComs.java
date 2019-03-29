@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class RPiComs {
 
@@ -15,7 +15,7 @@ public class RPiComs {
 	private static Thread thread = null;
 
 	private static String data = "";
-	private static ArrayList<Double> angles = new ArrayList<Double>();
+	private static HashMap<Double, Integer> targets = new HashMap<Double, Integer>();
 
 	public static void setup() {
 		send = new Listener(port);
@@ -27,17 +27,22 @@ public class RPiComs {
 		send.shutdown();
 	}
 
-	public static String getData() {
+	public static HashMap<Double, Integer> getTargets() {
+		return targets;
+	}
+
+	public static String getRawData() {
 		return data;
 	}
 
 	static void setData(String data) {
-		angles.clear();
+		targets.clear();
 		RPiComs.data = data;
 		if (data.equals(""))
 			return;
 		for (String s : data.split(",")) {
-			angles.add(Double.valueOf(s));
+			String[] split = s.split("_");
+			targets.put(Double.valueOf(split[0]), Integer.valueOf(split[1]));
 		}
 	}
 
