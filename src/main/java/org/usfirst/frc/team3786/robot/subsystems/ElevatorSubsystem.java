@@ -154,7 +154,7 @@ public class ElevatorSubsystem extends Subsystem {
 	public double getCurrentLevel() {
 		double currentMotorRotations = getRotation();
 		for (Levels level : Levels.values()) {
-			if (Math.abs(currentMotorRotations - level.getRotations()) < rotationsAcceptableRange) {
+			if (level != null && Math.abs(currentMotorRotations - level.getRotations()) < rotationsAcceptableRange) {
 				return level.getRotations();
 			}
 		}
@@ -166,7 +166,7 @@ public class ElevatorSubsystem extends Subsystem {
 		if (!autoDone)
 			currentMotorRotations = targetLevel;
 		for (Levels level : Levels.getHatchLevels()) {
-			if ((currentMotorRotations + rotationsAcceptableRange) < level.getRotations()) {
+			if (level != null && (currentMotorRotations + rotationsAcceptableRange) < level.getRotations()) {
 				return level;
 			}
 		}
@@ -179,7 +179,7 @@ public class ElevatorSubsystem extends Subsystem {
 			currentMotorRotations = targetLevel;
 		for (int i = Levels.getHatchLevels().length - 1; i >= 0; i--) {
 			Levels level = Levels.get(LevelType.HATCH, i);
-			if ((currentMotorRotations - rotationsAcceptableRange) > level.getRotations()) {
+			if (level != null && (currentMotorRotations - rotationsAcceptableRange) > level.getRotations()) {
 				return level;
 			}
 		}
@@ -191,7 +191,7 @@ public class ElevatorSubsystem extends Subsystem {
 		if (!autoDone)
 			currentMotorRotations = targetLevel;
 		for (Levels level : Levels.getBallLevels()) {
-			if ((currentMotorRotations + rotationsAcceptableRange) < level.getRotations()) {
+			if (level != null && (currentMotorRotations + rotationsAcceptableRange) < level.getRotations()) {
 				return level;
 			}
 		}
@@ -204,7 +204,7 @@ public class ElevatorSubsystem extends Subsystem {
 			currentMotorRotations = targetLevel;
 		for (int i = Levels.getBallLevels().length - 1; i >= 0; i--) {
 			Levels level = Levels.get(LevelType.BALL, i);
-			if ((currentMotorRotations - rotationsAcceptableRange) > level.getRotations()) {
+			if (level != null && (currentMotorRotations - rotationsAcceptableRange) > level.getRotations()) {
 				return level;
 			}
 		}

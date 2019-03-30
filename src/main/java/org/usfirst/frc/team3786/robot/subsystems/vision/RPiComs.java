@@ -15,6 +15,7 @@ public class RPiComs {
 	private static Thread thread = null;
 
 	private static String data = "";
+	
 	private static ArrayList<Double> angles = new ArrayList<Double>();
 
 	public static void setup() {
