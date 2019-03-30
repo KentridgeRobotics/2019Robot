@@ -147,7 +147,7 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		}
 	}
 
-	private void gotoPosition(double pos) {
+	public void gotoPosition(double pos) {
 		rightElevator.getPIDController().setReference(pos, ControlType.kPosition);
 	}
 
