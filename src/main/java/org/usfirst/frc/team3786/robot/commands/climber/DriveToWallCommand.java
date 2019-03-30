@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team3786.robot.commands.climber;
 
+import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorPositionSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
 import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor.Side;
@@ -25,6 +27,9 @@ public class DriveToWallCommand extends Command {
 
 	private boolean isDone = false;
 
+	private int currentButtlifterPosition;
+	private double currentElevatorPosition;
+
 	public DriveToWallCommand(int wallDistance) {
 		// Use requires() here to declare subsystem dependencies
 		requires(NeoDriveSubsystem.getInstance());
@@ -35,6 +40,10 @@ public class DriveToWallCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		currentButtlifterPosition = ButtLifterTalonSubsystem.getInstance().getRealLifterPosition();
+		currentElevatorPosition = ElevatorPositionSubsystem.getInstance().getHeight();
+		ButtLifterTalonSubsystem.getInstance().setDesiredLifterPosition(currentButtlifterPosition);
+		ElevatorPositionSubsystem.getInstance().gotoPosition(currentElevatorPosition);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -49,17 +58,28 @@ public class DriveToWallCommand extends Command {
 		}
 		if (distLeft + distEpsilon > distRight) {
 			NeoDriveSubsystem.getInstance().arcadeDrive(speed, turnSpeed);
+			ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.3);
 		} else if (distRight + distEpsilon > distLeft) {
 			NeoDriveSubsystem.getInstance().arcadeDrive(speed, -turnSpeed);
+			ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.3);
 		} else if (distRight > wallDistance && distLeft > wallDistance) {
 			NeoDriveSubsystem.getInstance().arcadeDrive(speed, 0);
+			ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.3);
 		} else if (Math.abs(wallDistance - distRight) < wallDistanceEpsilon
 				|| Math.abs(wallDistance - distLeft) < wallDistanceEpsilon) {
 			NeoDriveSubsystem.getInstance().arcadeDrive(-driveSpeed, 0);
+			ButtLifterTalonSubsystem.getInstance().setRollerSpeed(-0.3);
 		} else if (distRight < wallDistance && distLeft < wallDistance) {
 			NeoDriveSubsystem.getInstance().setMotorSpeeds(0, 0);
+			ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.0);
 			isDone = true;
 		}
+	}
+	@Override
+	protected void end() {
+		NeoDriveSubsystem.getInstance().setMotorSpeeds(0, 0);
+		ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.0);
+		System.err.println("Finished driving to wall");
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
