@@ -10,6 +10,7 @@ import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecreme
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.NeoSlowTurnCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchDownCommand;
@@ -67,11 +68,12 @@ public class Mappings {
 		primary.buttonA.whileHeld(new NeoBrakeCommand());
 		primary.buttonB.whileHeld(boostCommand);
 		primary.buttonBumperRight.whileHeld(new RollersForwardCommand()); //uncomment for testing 
+		//primary.buttonBumperRight.whileHeld(new NeoSlowTurnCommand());
 		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); //uncomment for testing
 		primary.buttonPovUp.whileHeld(new ClimbWhileLevelCommand());
-		// primary.buttonPovLeft.whenPressed(new NavRocketPortCommandGroup());
+		//primary.buttonPovLeft.whenPressed(new NavRocketPortCommandGroup());
 		primary.buttonPovDown.whenPressed(new ClimbCommandGroup());
-		// primary.buttonPovUp.whenPressed(new ClimbCommandGroup());
+		primary.buttonPovUp.whenPressed(new ClimbCommandGroup());
 
 		XboxController secondary = OI.getSecondaryController();
 		secondary.buttonB.whileHeld(new GripperOutCommand());

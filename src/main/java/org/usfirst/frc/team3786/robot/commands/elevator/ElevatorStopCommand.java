@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3786.robot.commands.elevator;
 
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
+import org.usfirst.frc.team3786.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,13 +9,12 @@ public class ElevatorStopCommand extends Command {
 	public ElevatorStopCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(ElevatorSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		ElevatorSubsystem.getInstance().setElevatorSpeed(0);
+		Robot.getElevator().setElevatorSpeed(0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

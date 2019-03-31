@@ -1,21 +1,21 @@
 package org.usfirst.frc.team3786.robot.commands.elevator;
 
+import org.usfirst.frc.team3786.robot.Robot;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ElevatorSendCommand extends Command {
 
 	private ElevatorSubsystem.Levels targetLevel = null;
-	private double targetRotations;
 
 	public ElevatorSendCommand(ElevatorSubsystem.Levels target) {
 		targetLevel = target;
-		targetRotations = target.getRotations();
 	}
 
 	@Override
 	protected void initialize() {
-		ElevatorSubsystem.getInstance().setLevel(targetLevel);
+		Robot.getElevator().setLevel(targetLevel);
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class ElevatorSendCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return targetRotations == ElevatorSubsystem.getInstance().getCurrentLevel() ? true : false;
+		return targetLevel == Robot.getElevator().getCurrentLevel() ? true : false;
 	}
 
 	@Override

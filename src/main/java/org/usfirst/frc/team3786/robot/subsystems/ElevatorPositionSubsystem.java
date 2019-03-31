@@ -10,12 +10,13 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.Mappings;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.LevelType;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem.Levels;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ElevatorPositionSubsystem extends Subsystem {
+public class ElevatorPositionSubsystem extends Subsystem implements IElevatorSubsystem {
 
 	private static ElevatorPositionSubsystem instance;
 
@@ -23,27 +24,28 @@ public class ElevatorPositionSubsystem extends Subsystem {
 	private CANSparkMax leftElevator;
 	private CANDigitalInput limitSwitch;
 
-	public static final double upMultiplier = 0.8;
-	public static final double downMultiplier = 1;
-	private static final double downMultiplierLow = 1;
+	private static final double upMultiplier = 0.8;
+	private static final double downMultiplier = 0.55;
+	private static final double downMultiplierLow = 0.25;
+	private static final double lowSpeedThreshold = 30;
 
-	public static final double upAutoMultiplier = 0.8;
-	public static final double downAutoMultiplier = 1.0;
+	private static final int rotationsAcceptableRange = 10;
 
-	public static double kP = 0.5;
+	public static double kP = 0.75;
 	public static double kI = 0;
 	public static double kIMaxAccum = 0;
 	public static double kIZone = 0;
-	public static double kD = 0;
+	public static double kD = 0.25;
 	public static double kDFilter = 0;
 	public static double kFF = 0;
-
-	private static final int rotationsAcceptableRange = 10;
 
 	private double elevatorSpeed = 0;
 
 	private boolean autoDone = true;
-	private double targetLevel;
+	private double targetLevel = 0;
+
+	private int pidCycleCount = 0;
+	private double lastPidError = 0;
 
 	public static ElevatorPositionSubsystem getInstance() {
 		if (instance == null)
@@ -72,14 +74,6 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		leftElevator.setSmartCurrentLimit(30);
 		leftElevator.setOpenLoopRampRate(0.2);
 		leftElevator.follow(rightElevator, true);
-
-		SmartDashboard.putNumber("Elevator.kP", kP);
-		SmartDashboard.putNumber("Elevator.kI", kI);
-		SmartDashboard.putNumber("Elevator.kIMaxAccum", kIMaxAccum);
-		SmartDashboard.putNumber("Elevator.kIZone", kIZone);
-		SmartDashboard.putNumber("Elevator.kD", kD);
-		SmartDashboard.putNumber("Elevator.kDFilter", kDFilter);
-		SmartDashboard.putNumber("Elevator.kFF", kFF);
 	}
 
 	@Override
@@ -87,51 +81,84 @@ public class ElevatorPositionSubsystem extends Subsystem {
 	}
 
 	private void checkNetworkTables() {
-		double dP = SmartDashboard.getNumber("Elevator.kP", 0.0);
+		double dP = SmartDashboard.getNumber("Elevator.kP", -1);
 		double dI = SmartDashboard.getNumber("Elevator.kI", 0.0);
 		double dIMaxAccum = SmartDashboard.getNumber("Elevator.kIMaxAccum", 0.0);
 		double dIZone = SmartDashboard.getNumber("Elevator.kIZone", 0.0);
 		double dD = SmartDashboard.getNumber("Elevator.kD", 0.0);
 		double dDFilter = SmartDashboard.getNumber("Elevator.kDFilter", 0.0);
 		double dFF = SmartDashboard.getNumber("Elevator.kFF", 0.0);
+		if (kP == -1) {
+			SmartDashboard.putNumber("Elevator.kP", kP);
+			SmartDashboard.putNumber("Elevator.kI", kI);
+			SmartDashboard.putNumber("Elevator.kIMaxAccum", kIMaxAccum);
+			SmartDashboard.putNumber("Elevator.kIZone", kIZone);
+			SmartDashboard.putNumber("Elevator.kD", kD);
+			SmartDashboard.putNumber("Elevator.kDFilter", kDFilter);
+			SmartDashboard.putNumber("Elevator.kFF", kFF);
+			kP = 0.0;
+		}
 		if (dP != kP) {
 			kP = dP;
 			rightElevator.getPIDController().setP(kP);
+			System.out.println("P: " + kP);
 		}
 		if (dI != kI) {
 			kI = dI;
 			rightElevator.getPIDController().setI(kI);
+			System.out.println("I: " + kI);
 		}
 		if (dIMaxAccum != kIMaxAccum) {
 			kIMaxAccum = dIMaxAccum;
 			rightElevator.getPIDController().setIMaxAccum(kIMaxAccum, 0);
+			System.out.println("IMaxAccum: " + kIMaxAccum);
 		}
 		if (dIZone != kIZone) {
 			kIZone = dIZone;
 			rightElevator.getPIDController().setIZone(kIZone);
+			System.out.println("IZone: " + kIZone);
 		}
 		if (dD != kD) {
 			kD = dD;
 			rightElevator.getPIDController().setD(kD);
+			System.out.println("D: " + kD);
 		}
 		if (dDFilter != kDFilter) {
 			kDFilter = dDFilter;
 			rightElevator.getPIDController().setDFilter(kDFilter);
+			System.out.println("DFilter: " + kDFilter);
 		}
 		if (dFF != kFF) {
 			kFF = dFF;
 			rightElevator.getPIDController().setFF(kFF);
+			System.out.println("FF: " + kFF);
 		}
 	}
 
 	public void safetyRun() {
 		checkNetworkTables();
 		Dashboard.getInstance().putNumber(false, "Elevator Position", getRotation());
+		double error = targetLevel - getRotation();
+		SmartDashboard.putNumber("Elevator.error", error);
+		if (!autoDone) {
+			if (Math.abs(error - lastPidError) < 0.05) {
+				pidCycleCount++;
+				if (pidCycleCount >= 10) {
+					autoDone = true;
+				}
+			} else {
+				pidCycleCount = 0;
+				lastPidError = error;
+			}
+		}
 		if (limitSwitch.get()) {
 			rightElevator.getEncoder().setPosition(0.0);
 			leftElevator.getEncoder().setPosition(0.0);
 		}
-		if (limitSwitch.get() && elevatorSpeed < 0) {
+		if (limitSwitch.get() && rightElevator.get() < 0) {
+			rightElevator.set(0);
+			leftElevator.set(0);
+		} else if (getRotation() >= 390 && rightElevator.get() > 0) {
 			rightElevator.set(0);
 			leftElevator.set(0);
 		} else {
@@ -140,14 +167,23 @@ public class ElevatorPositionSubsystem extends Subsystem {
 				speed *= upMultiplier;
 			else
 				speed *= downMultiplier;
-			if (getRotation() < 30 && speed < 0) {
-				speed = elevatorSpeed * downMultiplierLow;
+			if (getRotation() < lowSpeedThreshold && speed < -downMultiplierLow) {
+				speed = -downMultiplierLow;
+			}
+			if (getRotation() > (390 - lowSpeedThreshold) && speed > downMultiplierLow) {
+				speed = downMultiplierLow;
+			}
+			if (autoDone) {
+				rightElevator.set(speed);
+				leftElevator.set(-speed);
 			}
 			Dashboard.getInstance().putNumber(false, "Elevator Speed", speed);
 		}
 	}
 
 	public void gotoPosition(double pos) {
+		targetLevel = pos;
+		Dashboard.getInstance().putNumber(false, "Elevator PID Position", pos);
 		rightElevator.getPIDController().setReference(pos, ControlType.kPosition);
 	}
 
@@ -168,12 +204,7 @@ public class ElevatorPositionSubsystem extends Subsystem {
 	public void setLevel(Levels targetLevel) {
 		if (targetLevel == null)
 			return;
-		if (targetLevel == Levels.ZERO)
-			SmartDashboard.putString("Elevator Level", targetLevel.toString());
-		else if (targetLevel.getType() == LevelType.HATCH)
-			SmartDashboard.putString("Elevator Level", "HATCH " + targetLevel.toString());
-		else if (targetLevel.getType() == LevelType.BALL)
-			SmartDashboard.putString("Elevator Level", "BALL " + targetLevel.toString());
+		SmartDashboard.putString("Elevator Level", targetLevel.toString());
 		this.targetLevel = targetLevel.getRotations();
 		gotoPosition(this.targetLevel);
 	}
@@ -184,27 +215,21 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		SmartDashboard.putString("Elevator Level", String.valueOf(targetLevel));
 	}
 
-	/**
-	 * Gets the rotation value of the current level if within an acceptable range,
-	 * otherwise returns -1;
-	 * 
-	 * @return Height of current elevator level, or -1 if not at a preset height
-	 */
-	public double getCurrentLevel() {
+	public Levels getCurrentLevel() {
 		double currentMotorRotations = getRotation();
 		for (Levels level : Levels.values()) {
 			if (Math.abs(currentMotorRotations - level.getRotations()) < rotationsAcceptableRange) {
-				return level.getRotations();
+				return level;
 			}
 		}
-		return -1;
+		return null;
 	}
 
 	public Levels getHatchLevelUp() {
 		double currentMotorRotations = getRotation();
 		if (!autoDone)
 			currentMotorRotations = targetLevel;
-		for (Levels level : Levels.getBallLevels()) {
+		for (Levels level : Levels.getHatchLevels()) {
 			if ((currentMotorRotations + rotationsAcceptableRange) < level.getRotations()) {
 				return level;
 			}
@@ -216,7 +241,7 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		double currentMotorRotations = getRotation();
 		if (!autoDone)
 			currentMotorRotations = targetLevel;
-		for (int i = Levels.getBallLevels().length - 1; i >= 0; i--) {
+		for (int i = Levels.getHatchLevels().length - 1; i >= 0; i--) {
 			Levels level = Levels.get(LevelType.HATCH, i);
 			if ((currentMotorRotations - rotationsAcceptableRange) > level.getRotations()) {
 				return level;
@@ -259,6 +284,7 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		else
 			SmartDashboard.putString("Elevator Level", "HATCH " + targetLevel.toString());
 		this.targetLevel = targetLevel.getRotations();
+		autoDone = false;
 		gotoPosition(this.targetLevel);
 	}
 
@@ -271,6 +297,7 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		else
 			SmartDashboard.putString("Elevator Level", "HATCH " + targetLevel.toString());
 		this.targetLevel = targetLevel.getRotations();
+		autoDone = false;
 		gotoPosition(this.targetLevel);
 	}
 
@@ -283,6 +310,7 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		else
 			SmartDashboard.putString("Elevator Level", "BALL " + targetLevel.toString());
 		this.targetLevel = targetLevel.getRotations();
+		autoDone = false;
 		gotoPosition(this.targetLevel);
 	}
 
@@ -295,80 +323,7 @@ public class ElevatorPositionSubsystem extends Subsystem {
 		else
 			SmartDashboard.putString("Elevator Level", "BALL " + targetLevel.toString());
 		this.targetLevel = targetLevel.getRotations();
+		autoDone = false;
 		gotoPosition(this.targetLevel);
-	}
-
-	public enum VerticalDirection {
-		UP, DOWN, STOP;
-	}
-
-	public enum LevelType {
-		HATCH, BALL, OTHER;
-	}
-
-	public enum Levels {
-		ZERO(0, 0.0), HATCH_ONE(LevelType.HATCH, 1, 80.09), BALL_ONE(LevelType.BALL, 1, 126.95),
-		CLIMB(1, 150), HATCH_TWO(LevelType.HATCH, 2, 226.58), BALL_TWO(LevelType.BALL, 2, 222.9),
-		HATCH_THREE(LevelType.HATCH, 3, 376.57), BALL_THREE(LevelType.BALL, 3, 371.8);
-
-		private LevelType type;
-		private int level;
-		private double rotations;
-
-		private static Levels[] hatchLevels = new Levels[]{ZERO, HATCH_ONE, HATCH_TWO, HATCH_THREE};
-		private static Levels[] ballLevels = new Levels[]{ZERO, BALL_ONE, BALL_TWO, BALL_THREE};
-		private static Levels[] otherLevels = new Levels[]{ZERO, CLIMB};
-
-		Levels(int level, double rotations) {
-			this.type = LevelType.OTHER;
-			this.level = level;
-			this.rotations = rotations;
-		}
-
-		Levels(LevelType type, int level, double rotations) {
-			this.type = type;
-			this.level = level;
-			this.rotations = rotations;
-		}
-
-		public static Levels get(LevelType type, int level) {
-			for (Levels levels : values()) {
-				if (levels.getLevel() == level && levels.getType() == type)
-					return levels;
-			}
-			return null;
-		}
-
-		public static Levels get(int level) {
-			for (Levels levels : values()) {
-				if (levels.getLevel() == level)
-					return levels;
-			}
-			return null;
-		}
-
-		public int getLevel() {
-			return level;
-		}
-
-		public static Levels[] getHatchLevels() {
-			return hatchLevels;
-		}
-
-		public static Levels[] getBallLevels() {
-			return ballLevels;
-		}
-
-		public static Levels[] getOtherLevels() {
-			return otherLevels;
-		}
-
-		public double getRotations() {
-			return rotations;
-		}
-
-		public LevelType getType() {
-			return type;
-		}
 	}
 }

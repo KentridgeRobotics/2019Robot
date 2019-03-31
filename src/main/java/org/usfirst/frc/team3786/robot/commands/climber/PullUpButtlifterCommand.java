@@ -20,7 +20,6 @@ public class PullUpButtlifterCommand extends Command {
 
 	public PullUpButtlifterCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(ButtLifterTalonSubsystem.getInstance());
 		// might require buttlifter
 	}
 

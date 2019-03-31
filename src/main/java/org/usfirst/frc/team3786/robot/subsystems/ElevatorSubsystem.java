@@ -14,7 +14,7 @@ import org.usfirst.frc.team3786.robot.Robot;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ElevatorSubsystem extends Subsystem {
+public class ElevatorSubsystem extends Subsystem implements IElevatorSubsystem {
 
 	private static ElevatorSubsystem instance;
 
@@ -78,6 +78,9 @@ public class ElevatorSubsystem extends Subsystem {
 		if (limitSwitch.get() && elevatorSpeed < 0) {
 			rightElevator.set(0);
 			leftElevator.set(0);
+		} else if (getRotation() >= 390 && elevatorSpeed > 0) {
+			rightElevator.set(0);
+			leftElevator.set(0);
 		} else {
 			double speed = elevatorSpeed;
 			if (speed > 0)
@@ -86,6 +89,9 @@ public class ElevatorSubsystem extends Subsystem {
 				speed *= downMultiplier;
 			if (getRotation() < lowSpeedThreshold && speed < -downMultiplierLow) {
 				speed = -downMultiplierLow;
+			}
+			if (getRotation() > (390 - lowSpeedThreshold) && speed > downMultiplierLow) {
+				speed = downMultiplierLow;
 			}
 			rightElevator.set(speed);
 			leftElevator.set(-speed);
@@ -144,20 +150,14 @@ public class ElevatorSubsystem extends Subsystem {
 		}
 	}
 
-	/**
-	 * Gets the rotation value of the current level if within an acceptable range,
-	 * otherwise returns -1;
-	 * 
-	 * @return Height of current elevator level, or -1 if not at a preset height
-	 */
-	public double getCurrentLevel() {
+	public Levels getCurrentLevel() {
 		double currentMotorRotations = getRotation();
 		for (Levels level : Levels.values()) {
 			if (level != null && Math.abs(currentMotorRotations - level.getRotations()) < rotationsAcceptableRange) {
-				return level.getRotations();
+				return level;
 			}
 		}
-		return -1;
+		return null;
 	}
 
 	public Levels getHatchLevelUp() {
@@ -294,7 +294,7 @@ public class ElevatorSubsystem extends Subsystem {
 	public enum Levels {
 		ZERO(0, 0.0), HATCH_ONE(LevelType.HATCH, 1, 80), BALL_INTAKE(LevelType.BALL, 1, 17.7), BALL_ONE(LevelType.BALL, 2, 133.6),
 		CLIMB(1, 150), HATCH_TWO(LevelType.HATCH, 2, 234.1), BALL_CARGO_BAY(LevelType.BALL, 3, 212.5), BALL_TWO(LevelType.BALL, 4, 271.9),
-		HATCH_THREE(LevelType.HATCH, 3, 383.4), BALL_THREE(LevelType.BALL, 5, 400);
+		HATCH_THREE(LevelType.HATCH, 3, 383.4), BALL_THREE(LevelType.BALL, 5, 390);
 
 		private LevelType type;
 		private int level;
@@ -317,10 +317,10 @@ public class ElevatorSubsystem extends Subsystem {
 		}
 
 		public static Levels get(LevelType type, int level) {
+			if (level == 0)
+				return ZERO;
 			for (Levels levels : values()) {
 				if (levels.getLevel() == level && levels.getType() == type)
-					return levels;
-				else if (levels.getLevel() == level && level == 0)
 					return levels;
 			}
 			return null;

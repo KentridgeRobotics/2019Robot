@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RollersForwardCommand extends Command {
 	public RollersForwardCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(ButtLifterTalonSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time

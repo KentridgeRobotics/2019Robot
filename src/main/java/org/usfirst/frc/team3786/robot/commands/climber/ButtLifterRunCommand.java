@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ButtLifterRunCommand extends Command {
 	public ButtLifterRunCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(ButtLifterTalonSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -27,7 +26,7 @@ public class ButtLifterRunCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		//ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(OI.getButtLifterPower());
+		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(OI.getButtLifterPower());
 		Dashboard.getInstance().putNumber(false, "Buttlifter Pos",
 				ButtLifterTalonSubsystem.getInstance().getRealLifterPosition());
 	}

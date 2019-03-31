@@ -14,7 +14,9 @@ import java.awt.Color;
 
 import org.usfirst.frc.team3786.robot.commands.climber.ButtLifterRunCommand;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorPositionSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.IElevatorSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.subsystems.vision.RPiComs;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
@@ -45,6 +47,8 @@ public class Robot extends TimedRobot {
 
 	public static final RobotMode mode = RobotMode.TANK;
 
+	public static final IElevatorSubsystem elevator = ElevatorPositionSubsystem.getInstance();
+
 	public Gyroscope gyro = Gyroscope.getInstance();
 
 	private int driverStationNumber = 0;
@@ -53,7 +57,7 @@ public class Robot extends TimedRobot {
 	private static final Color idleColor = new Color(0, 0, 0);
 	private static byte brightness = (byte) 255;
 
-	//public static final ButtLifterRunCommand buttLifterRunCommand = new ButtLifterRunCommand();
+	public static final ButtLifterRunCommand buttLifterRunCommand = new ButtLifterRunCommand();
 	public static final ElevatorRunCommand elevatorRunCommand = new ElevatorRunCommand();
 
 	@Override
@@ -100,7 +104,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Distance.HCSR04R", hcsDist1);
 		SmartDashboard.putNumber("Distance.SharpIR.0", sharpIRDist0);
 		SmartDashboard.putNumber("Distance.SharpIR.1", sharpIRDist1);
-		ElevatorSubsystem.getInstance().safetyRun();
+		elevator.safetyRun();
 	}
 
 	/**
@@ -121,7 +125,7 @@ public class Robot extends TimedRobot {
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().start();
 		LED.setColor(visionColor);
-		//buttLifterRunCommand.start();
+		buttLifterRunCommand.start();
 		elevatorRunCommand.start();
 	}
 
@@ -159,7 +163,7 @@ public class Robot extends TimedRobot {
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
 		LED.setColor(visionColor);
-		//buttLifterRunCommand.cancel();
+		buttLifterRunCommand.cancel();
 		elevatorRunCommand.cancel();
 	}
 
@@ -173,6 +177,10 @@ public class Robot extends TimedRobot {
 
 	public enum RobotMode {
 		TANK, DEBUG;
+	}
+
+	public static IElevatorSubsystem getElevator() {
+		return elevator;
 	}
 
 	/**

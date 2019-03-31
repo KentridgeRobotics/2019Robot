@@ -24,6 +24,7 @@ public class NeoDriveSubsystem extends Subsystem {
 
 	private boolean boost = false;
 	private boolean kkBrake = false;
+	private boolean slowTurn = false;
 
 	public static NeoDriveSubsystem getInstance() {
 		if (instance == null)
@@ -72,8 +73,14 @@ public class NeoDriveSubsystem extends Subsystem {
 			speed *= 0.0;
 			turnRate *= 0.0;
 		} else if (!this.boost) {
-			speed *= 0.6;
-			turnRate *= 0.8;
+			if (this.slowTurn) {
+				speed *= 0.3;
+				turnRate *= 0.3;
+			}
+			else {
+				speed *= 0.6;
+				turnRate *= 0.8;
+			}
 		}
 		Dashboard.getInstance().putBoolean(true, "Boost", boost);
 		Dashboard.getInstance().putBoolean(true, "Break", kkBrake);
@@ -104,6 +111,14 @@ public class NeoDriveSubsystem extends Subsystem {
 
 	public boolean getBoost() {
 		return this.boost;
+	}
+
+	public void setSlowTurn(boolean slowTurn) {
+		this.slowTurn = slowTurn;
+	}
+
+	public boolean getSlowTurn() {
+		return this.slowTurn;
 	}
 
 	public void gyroStraight(double spd, double tgtHeading) {

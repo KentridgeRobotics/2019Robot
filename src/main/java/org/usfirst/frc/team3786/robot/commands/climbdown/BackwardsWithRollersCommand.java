@@ -21,7 +21,6 @@ public class BackwardsWithRollersCommand extends Command {
 
 	public BackwardsWithRollersCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(ButtLifterTalonSubsystem.getInstance()); // Test Chassis has Talons.
 		requires(NeoDriveSubsystem.getInstance());
 	}
 
