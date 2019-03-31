@@ -24,8 +24,8 @@ public class ElevatorPositionSubsystem extends Subsystem {
 	private CANDigitalInput limitSwitch;
 
 	public static final double upMultiplier = 0.8;
-	public static final double downMultiplier = 0.55;
-	private static final double downMultiplierLow = 0.25;
+	public static final double downMultiplier = 1;
+	private static final double downMultiplierLow = 1;
 
 	public static final double upAutoMultiplier = 0.8;
 	public static final double downAutoMultiplier = 1.0;
@@ -307,9 +307,9 @@ public class ElevatorPositionSubsystem extends Subsystem {
 	}
 
 	public enum Levels {
-		ZERO(0, 0.0), HATCH_ONE(LevelType.HATCH, 1, 25.8), BALL_ONE(LevelType.BALL, 1, 78.3),
-		CLIMB(1, 150), HATCH_TWO(LevelType.HATCH, 2, 182.7), BALL_TWO(LevelType.BALL, 2, 222.9),
-		HATCH_THREE(LevelType.HATCH, 3, 326.2), BALL_THREE(LevelType.BALL, 3, 371.8);
+		ZERO(0, 0.0), HATCH_ONE(LevelType.HATCH, 1, 80.09), BALL_ONE(LevelType.BALL, 1, 126.95),
+		CLIMB(1, 150), HATCH_TWO(LevelType.HATCH, 2, 226.58), BALL_TWO(LevelType.BALL, 2, 222.9),
+		HATCH_THREE(LevelType.HATCH, 3, 376.57), BALL_THREE(LevelType.BALL, 3, 371.8);
 
 		private LevelType type;
 		private int level;

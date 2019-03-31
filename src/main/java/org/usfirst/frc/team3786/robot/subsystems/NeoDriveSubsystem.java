@@ -44,10 +44,10 @@ public class NeoDriveSubsystem extends Subsystem {
 		right.setSmartCurrentLimit(40);
 		leftFollow.setSmartCurrentLimit(40);
 		rightFollow.setSmartCurrentLimit(40);
-		left.setOpenLoopRampRate(0.1);
-		right.setOpenLoopRampRate(0.1);
-		leftFollow.setOpenLoopRampRate(0.1);
-		rightFollow.setOpenLoopRampRate(0.1);
+		left.setOpenLoopRampRate(0.4);
+		right.setOpenLoopRampRate(0.4);
+		leftFollow.setOpenLoopRampRate(0.4);
+		rightFollow.setOpenLoopRampRate(0.4);
 
 		leftFollow.follow(left);
 		rightFollow.follow(right);
@@ -72,8 +72,8 @@ public class NeoDriveSubsystem extends Subsystem {
 			speed *= 0.0;
 			turnRate *= 0.0;
 		} else if (!this.boost) {
-			speed *= 0.75;
-			turnRate *= 0.75;
+			speed *= 0.6;
+			turnRate *= 0.8;
 		}
 		Dashboard.getInstance().putBoolean(true, "Boost", boost);
 		Dashboard.getInstance().putBoolean(true, "Break", kkBrake);

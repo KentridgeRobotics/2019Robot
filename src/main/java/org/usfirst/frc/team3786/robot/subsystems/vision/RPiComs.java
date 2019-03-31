@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class RPiComs {
 
@@ -16,7 +17,7 @@ public class RPiComs {
 
 	private static String data = "";
 	
-	private static ArrayList<Double> angles = new ArrayList<Double>();
+	private static HashMap<Double, Double> targets = new HashMap<Double, Double>();
 
 	public static void setup() {
 		send = new Listener(port);
@@ -32,13 +33,18 @@ public class RPiComs {
 		return data;
 	}
 
+	public static HashMap<Double, Double> getTargets() {
+		return targets;
+	}
+
 	static void setData(String data) {
-		angles.clear();
+		targets.clear();
 		RPiComs.data = data;
 		if (data.equals(""))
 			return;
 		for (String s : data.split(",")) {
-			angles.add(Double.valueOf(s));
+			String[] split = s.split("_");
+			targets.put(Double.valueOf(split[0]), Double.valueOf(split[1]));
 		}
 	}
 

@@ -27,7 +27,7 @@ public class ButtLifterRunCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(OI.getButtLifterPower());
+		//ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(OI.getButtLifterPower());
 		Dashboard.getInstance().putNumber(false, "Buttlifter Pos",
 				ButtLifterTalonSubsystem.getInstance().getRealLifterPosition());
 	}

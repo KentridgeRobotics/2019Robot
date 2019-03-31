@@ -48,7 +48,7 @@ public class NeoDriveCommand extends Command {
         
 		double throttle = OI.getRobotThrottle();
 		double turn = OI.getRobotTurn();
-		boolean useTargetHeading = true;
+		boolean useTargetHeading = false;
 		// driver wants to go straight, haven't started using currentHeading yet.
 		if ((Math.abs(turn) > 0.05) && isGyroCalibrated) {
 			//Driver wants to keep on turning

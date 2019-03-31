@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
 	private static final Color idleColor = new Color(0, 0, 0);
 	private static byte brightness = (byte) 255;
 
-	public static final ButtLifterRunCommand buttLifterRunCommand = new ButtLifterRunCommand();
+	//public static final ButtLifterRunCommand buttLifterRunCommand = new ButtLifterRunCommand();
 	public static final ElevatorRunCommand elevatorRunCommand = new ElevatorRunCommand();
 
 	@Override
@@ -96,8 +96,8 @@ public class Robot extends TimedRobot {
 		double hcsDist1 = HCSR04.getInstance(1).getDistanceCM();
 		double sharpIRDist0 = SharpIRSensor.getInstance(0).getDistanceCM();
 		double sharpIRDist1 = SharpIRSensor.getInstance(1).getDistanceCM();
-		SmartDashboard.putNumber("Distance.HCSR04.0", hcsDist0);
-		SmartDashboard.putNumber("Distance.HCSR04.1", hcsDist1);
+		SmartDashboard.putNumber("Distance.HCSR04L", hcsDist0);
+		SmartDashboard.putNumber("Distance.HCSR04R", hcsDist1);
 		SmartDashboard.putNumber("Distance.SharpIR.0", sharpIRDist0);
 		SmartDashboard.putNumber("Distance.SharpIR.1", sharpIRDist1);
 		ElevatorSubsystem.getInstance().safetyRun();
@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().start();
 		LED.setColor(visionColor);
-		buttLifterRunCommand.start();
+		//buttLifterRunCommand.start();
 		elevatorRunCommand.start();
 	}
 
@@ -159,7 +159,7 @@ public class Robot extends TimedRobot {
 		else if (mode == RobotMode.DEBUG)
 			DebugMotorController.getInstance().cancel();
 		LED.setColor(visionColor);
-		buttLifterRunCommand.cancel();
+		//buttLifterRunCommand.cancel();
 		elevatorRunCommand.cancel();
 	}
 

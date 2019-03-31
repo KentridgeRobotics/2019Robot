@@ -26,7 +26,7 @@ public class GrabberTiltSubsystem extends Subsystem {
 		tilt.setSafetyEnabled(false);
 		tilt.configPeakCurrentLimit(40);
 		tilt.configContinuousCurrentLimit(30);
-		tilt.setNeutralMode(NeutralMode.Brake);
+		tilt.setNeutralMode(NeutralMode.Coast);
 	}
 
 	public void initDefaultCommand() {
