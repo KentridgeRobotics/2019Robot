@@ -17,7 +17,6 @@ public class AllMotorsBrakeCommand extends Command {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(NeoDriveSubsystem.getInstance());
-		requires(ButtLifterTalonSubsystem.getInstance()); // Practice Chassis has Talons
 	}
 
 	// Called just before this Command runs the first time

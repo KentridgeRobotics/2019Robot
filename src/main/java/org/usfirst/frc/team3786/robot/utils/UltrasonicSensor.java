@@ -6,6 +6,9 @@ public class UltrasonicSensor implements DistanceSensorInterface {
 
 	private static HashMap<Side, UltrasonicSensor> instances = new HashMap<Side, UltrasonicSensor>();
 
+	private static boolean useIR = false;
+	private static boolean useUS = true;
+
 	private DistanceSensorInterface ir;
 	private DistanceSensorInterface ultrasonic;
 
@@ -22,31 +25,55 @@ public class UltrasonicSensor implements DistanceSensorInterface {
 	}
 
 	public double getDistanceCM() {
-		if (ir.getDistanceCM() < ultrasonic.getDistanceCM())
-			return ir.getDistanceCM();
-		else
+		if (useUS && useIR) {
+			if (ir.getDistanceCM() < ultrasonic.getDistanceCM())
+				return ir.getDistanceCM();
+			else
+				return ultrasonic.getDistanceCM();
+		} else if (useUS)
 			return ultrasonic.getDistanceCM();
+		else if (useIR)
+			return ir.getDistanceCM();
+		return -1;
 	}
 
 	public double getDistanceMM() {
-		if (ir.getDistanceMM() < ultrasonic.getDistanceMM())
-			return ir.getDistanceMM();
-		else
+		if (useUS && useIR) {
+			if (ir.getDistanceMM() < ultrasonic.getDistanceMM())
+				return ir.getDistanceMM();
+			else
+				return ultrasonic.getDistanceMM();
+		} else if (useUS)
 			return ultrasonic.getDistanceMM();
+		else if (useIR)
+			return ir.getDistanceMM();
+		return -1;
 	}
 
 	public double getDistanceIN() {
-		if (ir.getDistanceIN() < ultrasonic.getDistanceIN())
-			return ir.getDistanceIN();
-		else
+		if (useUS && useIR) {
+			if (ir.getDistanceIN() < ultrasonic.getDistanceIN())
+				return ir.getDistanceIN();
+			else
+				return ultrasonic.getDistanceIN();
+		} else if (useUS)
 			return ultrasonic.getDistanceIN();
+		else if (useIR)
+			return ir.getDistanceIN();
+		return -1;
 	}
 
 	public double getDistanceFT() {
-		if (ir.getDistanceFT() < ultrasonic.getDistanceFT())
-			return ir.getDistanceFT();
-		else
+		if (useUS && useIR) {
+			if (ir.getDistanceFT() < ultrasonic.getDistanceFT())
+				return ir.getDistanceFT();
+			else
+				return ultrasonic.getDistanceFT();
+		} else if (useUS)
 			return ultrasonic.getDistanceFT();
+		else if (useIR)
+			return ir.getDistanceFT();
+		return -1;
 	}
 
 	public enum Side {

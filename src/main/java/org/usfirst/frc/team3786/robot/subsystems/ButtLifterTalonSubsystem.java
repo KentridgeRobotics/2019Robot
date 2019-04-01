@@ -15,7 +15,6 @@ import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.Mappings;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**

@@ -15,7 +15,8 @@ public class RPiComs {
 	private static Thread thread = null;
 
 	private static String data = "";
-	private static HashMap<Double, Integer> targets = new HashMap<Double, Integer>();
+	
+	private static HashMap<Double, Double> targets = new HashMap<Double, Double>();
 
 	public static void setup() {
 		send = new Listener(port);
@@ -35,6 +36,10 @@ public class RPiComs {
 		return data;
 	}
 
+	public static HashMap<Double, Double> getTargets() {
+		return targets;
+	}
+
 	static void setData(String data) {
 		targets.clear();
 		RPiComs.data = data;
@@ -42,7 +47,7 @@ public class RPiComs {
 			return;
 		for (String s : data.split(",")) {
 			String[] split = s.split("_");
-			targets.put(Double.valueOf(split[0]), Integer.valueOf(split[1]));
+			targets.put(Double.valueOf(split[0]), Double.valueOf(split[1]));
 		}
 	}
 

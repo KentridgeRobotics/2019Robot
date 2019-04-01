@@ -14,7 +14,9 @@ import java.awt.Color;
 
 import org.usfirst.frc.team3786.robot.commands.climber.ButtLifterRunCommand;
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorPositionSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.IElevatorSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.subsystems.vision.RPiComs;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
@@ -44,6 +46,8 @@ public class Robot extends TimedRobot {
 	public static Robot instance;
 
 	public static final RobotMode mode = RobotMode.TANK;
+
+	public static final IElevatorSubsystem elevator = ElevatorPositionSubsystem.getInstance();
 
 	public Gyroscope gyro = Gyroscope.getInstance();
 
@@ -96,11 +100,11 @@ public class Robot extends TimedRobot {
 		double hcsDist1 = HCSR04.getInstance(1).getDistanceCM();
 		double sharpIRDist0 = SharpIRSensor.getInstance(0).getDistanceCM();
 		double sharpIRDist1 = SharpIRSensor.getInstance(1).getDistanceCM();
-		SmartDashboard.putNumber("Distance.HCSR04.0", hcsDist0);
-		SmartDashboard.putNumber("Distance.HCSR04.1", hcsDist1);
+		SmartDashboard.putNumber("Distance.HCSR04L", hcsDist0);
+		SmartDashboard.putNumber("Distance.HCSR04R", hcsDist1);
 		SmartDashboard.putNumber("Distance.SharpIR.0", sharpIRDist0);
 		SmartDashboard.putNumber("Distance.SharpIR.1", sharpIRDist1);
-		ElevatorSubsystem.getInstance().safetyRun();
+		elevator.safetyRun();
 	}
 
 	/**
@@ -173,6 +177,10 @@ public class Robot extends TimedRobot {
 
 	public enum RobotMode {
 		TANK, DEBUG;
+	}
+
+	public static IElevatorSubsystem getElevator() {
+		return elevator;
 	}
 
 	/**

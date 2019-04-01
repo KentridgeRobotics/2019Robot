@@ -20,7 +20,7 @@ public class TiltUpCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		GrabberTiltSubsystem.getInstance().setTiltSpeed(0.4); // tune later
+		GrabberTiltSubsystem.getInstance().setTiltSpeed(0.6); // tune later
 	}
 
 	// Called repeatedly when this Command is scheduled to run

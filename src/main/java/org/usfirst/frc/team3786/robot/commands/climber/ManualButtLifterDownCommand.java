@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ManualButtLifterDownCommand extends Command {
 	public ManualButtLifterDownCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(ButtLifterTalonSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time

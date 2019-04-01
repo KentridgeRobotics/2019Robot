@@ -21,7 +21,6 @@ public class DriveWithRollersCommand extends Command {
 
 	public DriveWithRollersCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(ButtLifterTalonSubsystem.getInstance()); // Test Chassis has Talons.
 		requires(NeoDriveSubsystem.getInstance());
 	}
 

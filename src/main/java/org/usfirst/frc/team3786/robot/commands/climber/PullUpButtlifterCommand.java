@@ -20,7 +20,6 @@ public class PullUpButtlifterCommand extends Command {
 
 	public PullUpButtlifterCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(ButtLifterTalonSubsystem.getInstance());
 		// might require buttlifter
 	}
 
@@ -61,6 +60,7 @@ public class PullUpButtlifterCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(0.0);
 		System.err.println("PullUpButtlifterCommand finished");
 	}
 }

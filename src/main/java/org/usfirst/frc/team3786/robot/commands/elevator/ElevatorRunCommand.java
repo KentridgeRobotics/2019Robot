@@ -2,7 +2,7 @@ package org.usfirst.frc.team3786.robot.commands.elevator;
 
 import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.OI;
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
+import org.usfirst.frc.team3786.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,7 +11,6 @@ public class ElevatorRunCommand extends Command {
 	public ElevatorRunCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(ElevatorSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -22,8 +21,8 @@ public class ElevatorRunCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		ElevatorSubsystem.getInstance().setElevatorSpeed(OI.getElevatorPower());
-		Dashboard.getInstance().putNumber(false, "Elevator Pos", ElevatorSubsystem.getInstance().getRotation());
+		Robot.getElevator().setElevatorSpeed(OI.getElevatorPower());
+		Dashboard.getInstance().putNumber(false, "Elevator Pos", Robot.getElevator().getRotation());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -35,6 +34,6 @@ public class ElevatorRunCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+		Robot.getElevator().setElevatorSpeed(0.0);
 	}
 }

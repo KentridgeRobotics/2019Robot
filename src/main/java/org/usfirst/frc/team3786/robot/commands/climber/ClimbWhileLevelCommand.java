@@ -8,6 +8,7 @@
 package org.usfirst.frc.team3786.robot.commands.climber;
 
 import org.usfirst.frc.team3786.robot.Dashboard;
+import org.usfirst.frc.team3786.robot.Robot;
 import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
@@ -17,8 +18,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClimbWhileLevelCommand extends Command {
 	public ClimbWhileLevelCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(ElevatorSubsystem.getInstance());
-		requires(ButtLifterTalonSubsystem.getInstance());
 	}
 
 	private double tiltTolerance = 8.0;
@@ -56,11 +55,11 @@ public class ClimbWhileLevelCommand extends Command {
 			frontSpeed = -0.7; // set front to front speed.
 			rearSpeed = -0.7; // set rear to front speed.
 		}
-		ElevatorSubsystem.getInstance().setElevatorSpeed(frontSpeed);
+		Robot.getElevator().setElevatorSpeed(frontSpeed);
 		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(rearSpeed);
 		Dashboard.getInstance().putNumber(false, "Front Climb Motor Speed", frontSpeed);
 		Dashboard.getInstance().putNumber(false, "Rear Climb Motor Speed", rearSpeed);
-		if (ElevatorSubsystem.getInstance().getRotation() < 2.0) {
+		if (Robot.getElevator().getRotation() < 2.0) {
 			isDone = true;
 		}
 	}
@@ -75,7 +74,7 @@ public class ClimbWhileLevelCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
+		Robot.getElevator().setElevatorSpeed(0.0);
 		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(0.0);
 		ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.0);
 	}
