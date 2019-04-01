@@ -11,6 +11,7 @@ import org.usfirst.frc.team3786.robot.commands.drive.NeoDriveCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorRunCommand;
 
 import org.usfirst.frc.team3786.robot.commands.climber.ButtLifterRunCommand;
+import org.usfirst.frc.team3786.robot.subsystems.ButtLifterSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.subsystems.vision.RPiComs;
@@ -71,6 +72,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Distance.HCSR04R", hcsDist1);
 		SmartDashboard.putNumber("Distance.SharpIR.0", sharpIRDist0);
 		SmartDashboard.putNumber("Distance.SharpIR.1", sharpIRDist1);
+		ButtLifterSubsystem.getInstance().runIteration();
 		ElevatorSubsystem.getInstance().runIteration();
 	}
 
