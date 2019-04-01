@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3786.robot;
 
-import org.usfirst.frc.team3786.robot.commands.grabber.GrabberCloseCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GripperInCommand;
+import org.usfirst.frc.team3786.robot.commands.grabber.GrabberCloseCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GrabberOpenCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.GripperOutCommand;
 import org.usfirst.frc.team3786.robot.commands.grabber.TiltDownCommand;
@@ -10,15 +10,12 @@ import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecreme
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeCommand;
-import org.usfirst.frc.team3786.robot.commands.drive.NeoSlowTurnCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchUpCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.ClimbCommandGroup;
 import org.usfirst.frc.team3786.robot.commands.climber.ClimbWhileLevelCommand;
-import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterDownCommand;
-import org.usfirst.frc.team3786.robot.commands.climber.ManualButtLifterUpCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.RollersBackwardCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.RollersForwardCommand;
 
@@ -50,7 +47,6 @@ public class Mappings {
 	// Digital IO
 	public final static Map.Entry<Integer, Integer> ultrasonicLeft = Map.entry(0, 1);
 	public final static Map.Entry<Integer, Integer> ultrasonicRight = Map.entry(2, 3);
-	public final static int buttlifterLimitSwitch = 6;
 
 	// Analog IO
 	public final static int irSensorLeft = 0;
@@ -67,11 +63,11 @@ public class Mappings {
 		NeoBoostCommand boostCommand = new NeoBoostCommand();
 		primary.buttonA.whileHeld(new NeoBrakeCommand());
 		primary.buttonB.whileHeld(boostCommand);
-		primary.buttonBumperRight.whileHeld(new RollersForwardCommand()); //uncomment for testing 
-		//primary.buttonBumperRight.whileHeld(new NeoSlowTurnCommand());
-		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand()); //uncomment for testing
+		primary.buttonBumperRight.whileHeld(new RollersForwardCommand());
+		// primary.buttonBumperRight.whileHeld(new NeoSlowTurnCommand());
+		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand());
 		primary.buttonPovUp.whileHeld(new ClimbWhileLevelCommand());
-		//primary.buttonPovLeft.whenPressed(new NavRocketPortCommandGroup());
+		// primary.buttonPovLeft.whenPressed(new DriveToPortCommand());
 		primary.buttonPovDown.whenPressed(new ClimbCommandGroup());
 		primary.buttonPovUp.whenPressed(new ClimbCommandGroup());
 

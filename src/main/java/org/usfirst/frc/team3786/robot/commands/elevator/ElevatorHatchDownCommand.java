@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3786.robot.commands.elevator;
 
-import org.usfirst.frc.team3786.robot.Robot;
+import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -14,7 +14,7 @@ public class ElevatorHatchDownCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		Robot.getElevator().decrementHatchLevel();
+		ElevatorSubsystem.getInstance().decrementHatchLevel();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
