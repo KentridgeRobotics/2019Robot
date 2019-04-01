@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -29,7 +28,11 @@ public class RPiComs {
 		send.shutdown();
 	}
 
-	public static String getData() {
+	public static HashMap<Double, Integer> getTargets() {
+		return targets;
+	}
+
+	public static String getRawData() {
 		return data;
 	}
 
