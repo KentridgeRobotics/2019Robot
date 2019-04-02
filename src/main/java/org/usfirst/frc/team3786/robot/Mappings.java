@@ -10,12 +10,11 @@ import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerDecreme
 import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorControllerIncrement;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBoostCommand;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoBrakeCommand;
+import org.usfirst.frc.team3786.robot.commands.drive.NeoSlowTurnCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorBallUpCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchDownCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchUpCommand;
-import org.usfirst.frc.team3786.robot.commands.climber.ClimbCommandGroup;
-import org.usfirst.frc.team3786.robot.commands.climber.ClimbWhileLevelCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.RollersBackwardCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.RollersForwardCommand;
 
@@ -60,16 +59,11 @@ public class Mappings {
 	public static void setupDefaultMappings() {
 
 		XboxController primary = OI.getPrimaryController();
-		NeoBoostCommand boostCommand = new NeoBoostCommand();
-		primary.buttonA.whileHeld(new NeoBrakeCommand());
-		primary.buttonB.whileHeld(boostCommand);
-		primary.buttonBumperRight.whileHeld(new RollersForwardCommand());
-		// primary.buttonBumperRight.whileHeld(new NeoSlowTurnCommand());
-		primary.buttonBumperLeft.whileHeld(new RollersBackwardCommand());
-		primary.buttonPovUp.whileHeld(new ClimbWhileLevelCommand());
-		// primary.buttonPovLeft.whenPressed(new DriveToPortCommand());
-		primary.buttonPovDown.whenPressed(new ClimbCommandGroup());
-		primary.buttonPovUp.whenPressed(new ClimbCommandGroup());
+		primary.buttonBumperRight.whileHeld(new NeoBoostCommand());
+		primary.buttonBumperLeft.whileHeld(new NeoSlowTurnCommand());
+		primary.buttonB.whileHeld(new RollersForwardCommand());
+		primary.buttonA.whileHeld(new RollersBackwardCommand());
+		primary.buttonX.whileHeld(new NeoBrakeCommand());
 
 		XboxController secondary = OI.getSecondaryController();
 		secondary.buttonB.whileHeld(new GripperOutCommand());
