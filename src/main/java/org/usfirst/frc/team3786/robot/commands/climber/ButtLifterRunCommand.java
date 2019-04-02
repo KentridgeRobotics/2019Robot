@@ -7,9 +7,8 @@
 
 package org.usfirst.frc.team3786.robot.commands.climber;
 
-import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.OI;
-import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.ButtLifterSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -26,9 +25,7 @@ public class ButtLifterRunCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(OI.getButtLifterPower());
-		Dashboard.getInstance().putNumber(false, "Buttlifter Pos",
-				ButtLifterTalonSubsystem.getInstance().getRealLifterPosition());
+		ButtLifterSubsystem.getInstance().setSpeed(OI.getButtLifterPower());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -40,6 +37,6 @@ public class ButtLifterRunCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(0.0);
+		ButtLifterSubsystem.getInstance().setSpeed(0.0);
 	}
 }

@@ -8,59 +8,40 @@
 package org.usfirst.frc.team3786.robot.commands.climber;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
+
+import org.usfirst.frc.team3786.robot.subsystems.ButtLifterSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.ButtLifterSubsystem.Levels;
 
 public class PullUpButtlifterCommand extends Command {
+	
+	private final Levels targetLevel;
 
-	private int realPos; // current position of butt lifter
-	private int restPos; // rest position or neutral position
-	private int epsilon = 120;
-
-	private boolean isDone;
-
-	public PullUpButtlifterCommand() {
+	public PullUpButtlifterCommand(Levels level) {
 		// Use requires() here to declare subsystem dependencies
 		// might require buttlifter
+		targetLevel = level;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		isDone = false;
-		restPos = -200;
-
-		ButtLifterTalonSubsystem.getInstance().setDesiredLifterPosition(restPos);
-		System.err.println("PullUpButtlifterCommand Initialized");
+		ButtLifterSubsystem.getInstance().setLevel(targetLevel);
 
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		realPos = ButtLifterTalonSubsystem.getInstance().getRealLifterPosition();
-		if (ButtLifterTalonSubsystem.getInstance().lifterGetMotorOutputPercent() < 5.0) {
-			System.err.println("Buttlifter Position: " + realPos);
-			System.err.println("Buttlifter output percent: "
-					+ ButtLifterTalonSubsystem.getInstance().lifterGetMotorOutputPercent());
-			isDone = true;
-		} else {
-			System.err.println("Buttlifter Position: " + realPos);
-			System.err.println("Buttlifter output percent: "
-					+ ButtLifterTalonSubsystem.getInstance().lifterGetMotorOutputPercent());
-			isDone = false;
-		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return isDone;
+		return ButtLifterSubsystem.getInstance().isAutoDone();
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		ButtLifterTalonSubsystem.getInstance().setButtLifterSpeed(0.0);
-		System.err.println("PullUpButtlifterCommand finished");
 	}
 }

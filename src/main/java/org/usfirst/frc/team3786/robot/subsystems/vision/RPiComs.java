@@ -28,10 +28,6 @@ public class RPiComs {
 		send.shutdown();
 	}
 
-	public static HashMap<Double, Integer> getTargets() {
-		return targets;
-	}
-
 	public static String getRawData() {
 		return data;
 	}

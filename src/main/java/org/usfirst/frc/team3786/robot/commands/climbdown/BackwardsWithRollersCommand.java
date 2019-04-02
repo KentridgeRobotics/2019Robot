@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team3786.robot.commands.climbdown;
 
-import org.usfirst.frc.team3786.robot.subsystems.ButtLifterTalonSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.ButtLifterRollersSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
 import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor.Side;
@@ -22,6 +22,7 @@ public class BackwardsWithRollersCommand extends Command {
 	public BackwardsWithRollersCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(NeoDriveSubsystem.getInstance());
+		requires(ButtLifterRollersSubsystem.getInstance());
 	}
 
 	// Called just before this Command runs the first time
@@ -35,7 +36,7 @@ public class BackwardsWithRollersCommand extends Command {
 	protected void execute() {
 		if (UltrasonicSensor.getInstance(Side.LEFT).getDistanceCM() < targetDist | UltrasonicSensor.getInstance(Side.RIGHT).getDistanceCM() < targetDist) {
 			NeoDriveSubsystem.getInstance().arcadeDrive(-0.5, 0.0); // Powers probably need to be tuned
-			ButtLifterTalonSubsystem.getInstance().setRollerSpeed(-0.5); // not sure if 0.5 or -0.5 is forward
+			ButtLifterRollersSubsystem.getInstance().setSpeed(-0.5); // not sure if 0.5 or -0.5 is forward
 		} else {
 			isDone = true;
 		}
@@ -51,6 +52,6 @@ public class BackwardsWithRollersCommand extends Command {
 	@Override
 	protected void end() {
 		NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
-		ButtLifterTalonSubsystem.getInstance().setRollerSpeed(0.0);
+		ButtLifterRollersSubsystem.getInstance().setSpeed(0.0);
 	}
 }

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3786.robot.commands.elevator;
 
-import org.usfirst.frc.team3786.robot.Robot;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -15,7 +14,7 @@ public class ElevatorSendCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.getElevator().setLevel(targetLevel);
+		ElevatorSubsystem.getInstance().setLevel(targetLevel);
 	}
 
 	@Override
@@ -24,7 +23,7 @@ public class ElevatorSendCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return targetLevel == Robot.getElevator().getCurrentLevel() ? true : false;
+		return ElevatorSubsystem.getInstance().isAutoDone();
 	}
 
 	@Override

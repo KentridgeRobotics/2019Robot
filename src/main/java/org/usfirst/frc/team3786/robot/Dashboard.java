@@ -11,6 +11,7 @@ public class Dashboard {
 		return true;
 	}
 
+	@SuppressWarnings("unused")
 	private boolean showDiagnostics = false;
 
 	public void init(boolean showDiagonistics) {

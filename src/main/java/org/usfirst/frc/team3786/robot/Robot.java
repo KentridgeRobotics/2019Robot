@@ -10,21 +10,15 @@ package org.usfirst.frc.team3786.robot;
 import org.usfirst.frc.team3786.robot.commands.drive.NeoDriveCommand;
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorRunCommand;
 
-import java.awt.Color;
-
 import org.usfirst.frc.team3786.robot.commands.climber.ButtLifterRunCommand;
-import org.usfirst.frc.team3786.robot.commands.debug.DebugMotorController;
-import org.usfirst.frc.team3786.robot.subsystems.ElevatorPositionSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.ButtLifterSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
-import org.usfirst.frc.team3786.robot.subsystems.IElevatorSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.vision.Cameras;
 import org.usfirst.frc.team3786.robot.subsystems.vision.RPiComs;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.SharpIRSensor;
 import org.usfirst.frc.team3786.robot.utils.UltrasonicSensor;
 import org.usfirst.frc.team3786.robot.utils.HCSR04;
-import org.usfirst.frc.team3786.robot.utils.LED;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -45,17 +39,9 @@ public class Robot extends TimedRobot {
 	 */
 	public static Robot instance;
 
-	public static final RobotMode mode = RobotMode.TANK;
-
-	public static final IElevatorSubsystem elevator = ElevatorPositionSubsystem.getInstance();
-
 	public Gyroscope gyro = Gyroscope.getInstance();
 
 	private int driverStationNumber = 0;
-
-	private static final Color visionColor = new Color(0, 255, 0);
-	private static final Color idleColor = new Color(0, 0, 0);
-	private static byte brightness = (byte) 255;
 
 	public static final ButtLifterRunCommand buttLifterRunCommand = new ButtLifterRunCommand();
 	public static final ElevatorRunCommand elevatorRunCommand = new ElevatorRunCommand();
@@ -66,19 +52,10 @@ public class Robot extends TimedRobot {
 				new HCSR04(Mappings.ultrasonicLeft.getKey(), Mappings.ultrasonicLeft.getValue()));
 		new UltrasonicSensor(UltrasonicSensor.Side.RIGHT, new SharpIRSensor(Mappings.irSensorRight),
 				new HCSR04(Mappings.ultrasonicRight.getKey(), Mappings.ultrasonicRight.getValue()));
-		if (mode == RobotMode.TANK) {
-			System.out.println("USING TANK DRIVE");
-			Mappings.setupDefaultMappings();
-		} else if (mode == RobotMode.DEBUG) {
-			System.out.println("USING DEBUG DRIVE");
-			Mappings.setupTestMappings();
-		}
+		Mappings.setupDefaultMappings();
 		driverStationNumber = DriverStation.getInstance().getLocation();
 		Cameras.setup();
 		gyro = Gyroscope.getInstance();
-		LED.setup();
-		LED.setColor(idleColor);
-		SmartDashboard.putNumber("LED.BRIGHTNESS", 255);
 		HCSR04.init();
 		RPiComs.setup();
 	}
@@ -87,15 +64,6 @@ public class Robot extends TimedRobot {
 	public void robotPeriodic() {
 		Scheduler.getInstance().run();
 		gyro.run();
-		byte bright = (byte) SmartDashboard.getNumber("LED.BRIGHTNESS", -1);
-		if (bright == -1) {
-			SmartDashboard.putNumber("LED.BRIGHTNESS", 255);
-			bright = (byte) 255;
-		}
-		if (brightness != bright) {
-			brightness = bright;
-			LED.setBrightness(bright);
-		}
 		double hcsDist0 = HCSR04.getInstance(0).getDistanceCM();
 		double hcsDist1 = HCSR04.getInstance(1).getDistanceCM();
 		double sharpIRDist0 = SharpIRSensor.getInstance(0).getDistanceCM();
@@ -104,7 +72,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Distance.HCSR04R", hcsDist1);
 		SmartDashboard.putNumber("Distance.SharpIR.0", sharpIRDist0);
 		SmartDashboard.putNumber("Distance.SharpIR.1", sharpIRDist1);
-		elevator.safetyRun();
+		ButtLifterSubsystem.getInstance().runIteration();
+		ElevatorSubsystem.getInstance().runIteration();
 	}
 
 	/**
@@ -112,7 +81,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		LED.setColor(idleColor);
 	}
 
 	@Override
@@ -120,11 +88,7 @@ public class Robot extends TimedRobot {
 	}
 
 	public void initDrive() {
-		if (mode == RobotMode.TANK)
-			NeoDriveCommand.getInstance().start();
-		else if (mode == RobotMode.DEBUG)
-			DebugMotorController.getInstance().start();
-		LED.setColor(visionColor);
+		NeoDriveCommand.getInstance().start();
 		buttLifterRunCommand.start();
 		elevatorRunCommand.start();
 	}
@@ -158,11 +122,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testInit() {
-		if (mode == RobotMode.TANK)
-			NeoDriveCommand.getInstance().cancel();
-		else if (mode == RobotMode.DEBUG)
-			DebugMotorController.getInstance().cancel();
-		LED.setColor(visionColor);
+		NeoDriveCommand.getInstance().cancel();
 		buttLifterRunCommand.cancel();
 		elevatorRunCommand.cancel();
 	}
@@ -173,14 +133,6 @@ public class Robot extends TimedRobot {
 
 	public int getDriveStationNumber() {
 		return driverStationNumber;
-	}
-
-	public enum RobotMode {
-		TANK, DEBUG;
-	}
-
-	public static IElevatorSubsystem getElevator() {
-		return elevator;
 	}
 
 	/**
