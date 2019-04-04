@@ -74,6 +74,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Distance.SharpIR.1", sharpIRDist1);
 		ButtLifterSubsystem.getInstance().runIteration();
 		ElevatorSubsystem.getInstance().runIteration();
+		double[] gravity = Gyroscope.getInstance().getGravity();
+		SmartDashboard.putNumberArray("Gyro Gravity", gravity);
 	}
 
 	/**

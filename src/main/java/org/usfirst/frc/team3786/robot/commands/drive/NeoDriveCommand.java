@@ -3,10 +3,11 @@ package org.usfirst.frc.team3786.robot.commands.drive;
 import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.OI;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
-import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.utils.BNO055.CalData;
+import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NeoDriveCommand extends Command {
 
@@ -31,6 +32,7 @@ public class NeoDriveCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		SmartDashboard.putString("Throttle Mode", "Normal");
 		isGyroCalibrated = true;
 	}
 

@@ -34,8 +34,8 @@ public class Cameras {
 		drive = CameraServer.getInstance().startAutomaticCapture();
 		drive.setConnectVerbose(0);
 		if (drive != null) {
-			drive.setResolution(320, 240);
-			drive.setFPS(30);
+			drive.setResolution(160, 120);
+			drive.setFPS(24);
 			drive.setWhiteBalanceManual(4500);
 			drive.setExposureAuto();
 			drive.setBrightness(50);

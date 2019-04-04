@@ -10,6 +10,7 @@ package org.usfirst.frc.team3786.robot.commands.drive;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NeoSlowTurnCommand extends Command {
   public NeoSlowTurnCommand() {
@@ -21,6 +22,7 @@ public class NeoSlowTurnCommand extends Command {
   @Override
   protected void initialize() {
     NeoDriveSubsystem.getInstance().setSlowTurn(true);
+    SmartDashboard.putString("Throttle Mode", "Slow Turn");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -38,5 +40,6 @@ public class NeoSlowTurnCommand extends Command {
   @Override
   protected void end() {
     NeoDriveSubsystem.getInstance().setSlowTurn(false);
+    SmartDashboard.putString("Throttle Mode", "Normal");
   }
 }

@@ -3,6 +3,7 @@ package org.usfirst.frc.team3786.robot.commands.drive;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NeoBoostCommand extends Command {
 
@@ -15,6 +16,7 @@ public class NeoBoostCommand extends Command {
 	@Override
 	protected void initialize() {
 		NeoDriveSubsystem.getInstance().setBoost(true);
+		SmartDashboard.putString("Throttle Mode", "Boost On");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -32,5 +34,6 @@ public class NeoBoostCommand extends Command {
 	@Override
 	protected void end() {
 		NeoDriveSubsystem.getInstance().setBoost(false);
+		SmartDashboard.putString("Throttle Mode" , "Normal");
 	}
 }

@@ -64,7 +64,7 @@ public class Mappings {
 		primary.buttonBumperLeft.whileHeld(new NeoSlowTurnCommand());
 		primary.buttonB.whileHeld(new RollersForwardCommand());
 		primary.buttonA.whileHeld(new RollersBackwardCommand());
-		primary.buttonX.whileHeld(new NeoBrakeCommand());
+		primary.buttonX.whileHeld(new NeoBrakeCommand()); 
 		primary.buttonPovUp.whileHeld(new ClimbCommandGroup());
 
 		XboxController secondary = OI.getSecondaryController();

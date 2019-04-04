@@ -20,7 +20,7 @@ public class RollersForwardCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		ButtLifterRollersSubsystem.getInstance().setSpeed(0.5);
+		ButtLifterRollersSubsystem.getInstance().setSpeed(-1.0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

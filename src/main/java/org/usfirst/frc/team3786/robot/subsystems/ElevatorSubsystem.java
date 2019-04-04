@@ -378,14 +378,14 @@ public class ElevatorSubsystem extends Subsystem {
 		// KEEP IN ORDER OF ROTATION COUNTS
 		ZERO(0.0),
 		BALL_INTAKE(LevelType.BALL, 17.7),
-		HATCH_ONE(LevelType.HATCH, 80),
-		BALL_ONE(LevelType.BALL, 133.6),
+		HATCH_ONE(LevelType.HATCH, 103),
+		BALL_ONE(LevelType.BALL, 150),
 		CLIMB(150),
 		BALL_CARGO_BAY(LevelType.BALL, 212.5),
-		HATCH_TWO(LevelType.HATCH, 234.1),
-		BALL_TWO(LevelType.BALL, 271.9),
-		HATCH_THREE(LevelType.HATCH, 383.4),
-		BALL_THREE(LevelType.BALL, 390);
+		HATCH_TWO(LevelType.HATCH, 250),
+		BALL_TWO(LevelType.BALL, 297),
+		HATCH_THREE(LevelType.HATCH, 394),
+		BALL_THREE(LevelType.BALL, 341);
 
 		private LevelType type;
 		private double rotations;
