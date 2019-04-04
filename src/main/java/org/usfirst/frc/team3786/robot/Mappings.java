@@ -17,6 +17,7 @@ import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchDownCommand
 import org.usfirst.frc.team3786.robot.commands.elevator.ElevatorHatchUpCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.RollersBackwardCommand;
 import org.usfirst.frc.team3786.robot.commands.climber.RollersForwardCommand;
+import org.usfirst.frc.team3786.robot.commands.climber.ClimbCommandGroup;
 
 import java.util.Map;
 
@@ -64,6 +65,7 @@ public class Mappings {
 		primary.buttonB.whileHeld(new RollersForwardCommand());
 		primary.buttonA.whileHeld(new RollersBackwardCommand());
 		primary.buttonX.whileHeld(new NeoBrakeCommand());
+		primary.buttonPovUp.whileHeld(new ClimbCommandGroup());
 
 		XboxController secondary = OI.getSecondaryController();
 		secondary.buttonB.whileHeld(new GripperOutCommand());

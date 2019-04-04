@@ -23,9 +23,15 @@ public class ClimbWhileLevelCommand extends Command {
 	}
 
 	private double tiltTolerance = 8.0;
-	private double correctionFactor = 1.1;
+	private double correctionFactor = 1.1; //something times the error
 	private double frontSpeed;
 	private double rearSpeed;
+
+	private double error; //force of gravity in Y divided by total force of gravity (9.8 meters second squared.)
+	private double derivative; //difference between errors between cycles. need prevError current error minus last error
+	private double lastError;
+	//next value of front motor is kp * p error
+	//next elvatorspeed = prevelevatorspeed * (1 + (kp * error)) + (KD * (error - lastError) * (prevElevator - lastPrevElevator))
 
 	private boolean isDone;
 
@@ -53,7 +59,7 @@ public class ClimbWhileLevelCommand extends Command {
 			frontSpeed /= correctionFactor; // slow the front
 			rearSpeed *= correctionFactor; // speed up the rear
 		} else {
-			frontSpeed = -0.7; // set front to front speed.
+			frontSpeed = -0.7; // set front to front speed. 1 + error fraction
 			rearSpeed = -0.7; // set rear to front speed.
 		}
 		ElevatorSubsystem.getInstance().setElevatorSpeed(frontSpeed);

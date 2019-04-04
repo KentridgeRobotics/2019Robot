@@ -74,12 +74,12 @@ public class NeoDriveSubsystem extends Subsystem {
 			turnRate *= 0.0;
 		} else if (!this.boost) {
 			if (this.slowTurn) {
-				speed *= 0.3;
+				speed *= 0.4;
 				turnRate *= 0.3;
 			}
 			else {
 				speed *= 0.6;
-				turnRate *= 0.8;
+				turnRate *= 0.7;
 			}
 		}
 		Dashboard.getInstance().putBoolean(true, "Boost", boost);
