@@ -4,6 +4,7 @@ import org.usfirst.frc.team3786.robot.OI;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ElevatorRunCommand extends Command {
 
@@ -21,6 +22,8 @@ public class ElevatorRunCommand extends Command {
 	@Override
 	protected void execute() {
 		ElevatorSubsystem.getInstance().setElevatorSpeed(OI.getElevatorPower());
+		SmartDashboard.putNumber("Left Elevator Throttle", ElevatorSubsystem.getInstance().getLeftElevatorSpeed());
+		SmartDashboard.putNumber("Right Elevator Speed", ElevatorSubsystem.getInstance().getRightElevatorSpeed());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

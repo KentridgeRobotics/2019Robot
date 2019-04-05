@@ -35,7 +35,7 @@ public class Cameras {
 		drive.setConnectVerbose(0);
 		if (drive != null) {
 			drive.setResolution(160, 120);
-			drive.setFPS(24);
+			drive.setFPS(30);
 			drive.setWhiteBalanceManual(4500);
 			drive.setExposureAuto();
 			drive.setBrightness(50);

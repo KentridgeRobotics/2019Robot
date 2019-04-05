@@ -164,6 +164,15 @@ public class ButtLifterSubsystem extends Subsystem {
 	public void setSpeed(double speed) {
 		lifterSpeed = speed;
 	}
+
+	public double getSpeed() {
+		return lifter.get();
+	}
+
+	public double getAmps() {
+		SmartDashboard.putNumber("Buttlifter Amps", lifter.getOutputCurrent());
+		return lifter.getOutputCurrent();
+	}
 	
 	/**
 	 * Gets whether or not autonomous PID control is finished

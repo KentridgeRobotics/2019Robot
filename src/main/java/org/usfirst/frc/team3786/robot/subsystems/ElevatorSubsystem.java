@@ -224,6 +224,14 @@ public class ElevatorSubsystem extends Subsystem {
 	public void setElevatorSpeed(double speed) {
 		elevatorSpeed = speed;
 	}
+	
+	public double getLeftElevatorSpeed() {
+		return leftElevator.get();
+	}
+
+	public double getRightElevatorSpeed() {
+		return rightElevator.get();
+	}
 
 	/**
 	 * Gets current elevator position in rotations
@@ -377,13 +385,13 @@ public class ElevatorSubsystem extends Subsystem {
 	public enum Levels {
 		// KEEP IN ORDER OF ROTATION COUNTS
 		ZERO(0.0),
-		BALL_INTAKE(LevelType.BALL, 17.7),
-		HATCH_ONE(LevelType.HATCH, 103),
-		BALL_ONE(LevelType.BALL, 150),
+		BALL_INTAKE(LevelType.BALL, 28.3),
+		HATCH_ONE(LevelType.HATCH, 98),
+		BALL_ONE(LevelType.BALL, 138.55),
 		CLIMB(150),
-		BALL_CARGO_BAY(LevelType.BALL, 212.5),
+		BALL_CARGO_BAY(LevelType.BALL, 185.5),
 		HATCH_TWO(LevelType.HATCH, 250),
-		BALL_TWO(LevelType.BALL, 297),
+		BALL_TWO(LevelType.BALL, 283.7),
 		HATCH_THREE(LevelType.HATCH, 394),
 		BALL_THREE(LevelType.BALL, 341);
 

@@ -11,6 +11,7 @@ import org.usfirst.frc.team3786.robot.OI;
 import org.usfirst.frc.team3786.robot.subsystems.ButtLifterSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ButtLifterRunCommand extends Command {
 	public ButtLifterRunCommand() {
@@ -26,6 +27,8 @@ public class ButtLifterRunCommand extends Command {
 	@Override
 	protected void execute() {
 		ButtLifterSubsystem.getInstance().setSpeed(OI.getButtLifterPower());
+		SmartDashboard.putNumber("Buttlifter Speed", ButtLifterSubsystem.getInstance().getSpeed());
+		SmartDashboard.putNumber("Buttlifter Amps", ButtLifterSubsystem.getInstance().getAmps());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
