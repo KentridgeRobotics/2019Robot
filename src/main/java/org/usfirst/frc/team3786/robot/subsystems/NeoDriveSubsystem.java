@@ -4,9 +4,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import org.usfirst.frc.team3786.robot.Mappings;
-import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 import org.usfirst.frc.team3786.robot.Dashboard;
+import org.usfirst.frc.team3786.robot.Mappings;
+import org.usfirst.frc.team3786.robot.NumConstants;
+import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -45,10 +46,10 @@ public class NeoDriveSubsystem extends Subsystem {
 		right.setSmartCurrentLimit(40);
 		leftFollow.setSmartCurrentLimit(40);
 		rightFollow.setSmartCurrentLimit(40);
-		left.setOpenLoopRampRate(0.4);
-		right.setOpenLoopRampRate(0.4);
-		leftFollow.setOpenLoopRampRate(0.4);
-		rightFollow.setOpenLoopRampRate(0.4);
+		left.setOpenLoopRampRate(NumConstants.DEFAULT_DRIVE_RAMP_RATE);
+		right.setOpenLoopRampRate(NumConstants.DEFAULT_DRIVE_RAMP_RATE);
+		leftFollow.setOpenLoopRampRate(NumConstants.DEFAULT_DRIVE_RAMP_RATE);
+		rightFollow.setOpenLoopRampRate(NumConstants.DEFAULT_DRIVE_RAMP_RATE);
 
 		leftFollow.follow(left);
 		rightFollow.follow(right);
@@ -61,6 +62,13 @@ public class NeoDriveSubsystem extends Subsystem {
 		right.set(-rightSpeed);
 		Dashboard.getInstance().putNumber(false, "Left Motor Speed", leftSpeed);
 		Dashboard.getInstance().putNumber(false, "Right Motor Speed", rightSpeed);
+	}
+
+	public void changeRampRate(double rate) {
+		right.setOpenLoopRampRate(rate);
+		rightFollow.setOpenLoopRampRate(rate);
+		left.setOpenLoopRampRate(rate);
+		leftFollow.setOpenLoopRampRate(rate);
 	}
 
 	public void initDefaultCommand() {

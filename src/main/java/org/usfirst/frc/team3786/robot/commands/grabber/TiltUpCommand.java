@@ -10,6 +10,7 @@ package org.usfirst.frc.team3786.robot.commands.grabber;
 import org.usfirst.frc.team3786.robot.subsystems.GrabberTiltSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TiltUpCommand extends Command {
 	public TiltUpCommand() {
@@ -20,7 +21,8 @@ public class TiltUpCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		GrabberTiltSubsystem.getInstance().setTiltSpeed(0.6); // tune later
+		GrabberTiltSubsystem.getInstance().setTiltSpeed(-0.6); // tune later
+		SmartDashboard.putString("Tilt Direction", "UP");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -37,6 +39,7 @@ public class TiltUpCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		GrabberTiltSubsystem.getInstance().setTiltSpeed(0.0);
+		GrabberTiltSubsystem.getInstance().setTiltSpeed(-0.3);
+		SmartDashboard.putString("Tilt Direction", "UP");
 	}
 }

@@ -385,7 +385,7 @@ public class ElevatorSubsystem extends Subsystem {
 	public enum Levels {
 		// KEEP IN ORDER OF ROTATION COUNTS
 		ZERO(0.0),
-		BALL_INTAKE(LevelType.BALL, 28.3),
+		BALL_INTAKE(LevelType.BALL, 24),
 		HATCH_ONE(LevelType.HATCH, 98),
 		BALL_ONE(LevelType.BALL, 138.55),
 		CLIMB(150),
@@ -400,8 +400,7 @@ public class ElevatorSubsystem extends Subsystem {
 
 		// KEEP IN ORDER OF ROTATION COUNTS
 		private static Levels[] hatchLevels = new Levels[] { ZERO, HATCH_ONE, HATCH_TWO, HATCH_THREE };
-		private static Levels[] ballLevels = new Levels[] { ZERO, BALL_INTAKE, BALL_ONE, BALL_CARGO_BAY, BALL_TWO,
-				BALL_THREE };
+		private static Levels[] ballLevels = new Levels[] { ZERO, BALL_INTAKE, BALL_ONE, BALL_CARGO_BAY, BALL_TWO, BALL_THREE };
 		private static Levels[] otherLevels = new Levels[] { ZERO, CLIMB };
 
 		Levels(double rotations) {

@@ -55,6 +55,8 @@ public class ButtLifterSubsystem extends Subsystem {
 		lifter.setNeutralMode(NeutralMode.Brake);
 		lifter.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
 		lifter.configClearPositionOnLimitR(true, 10);
+		lifter.configContinuousCurrentLimit(30);
+		lifter.configPeakCurrentLimit(40);
 	}
 
 	/**

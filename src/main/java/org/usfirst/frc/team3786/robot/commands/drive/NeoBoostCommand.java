@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3786.robot.commands.drive;
 
+import org.usfirst.frc.team3786.robot.NumConstants;
 import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -16,6 +17,7 @@ public class NeoBoostCommand extends Command {
 	@Override
 	protected void initialize() {
 		NeoDriveSubsystem.getInstance().setBoost(true);
+		NeoDriveSubsystem.getInstance().changeRampRate(NumConstants.DRIVE_BOOST_RAMP_RATE);
 		SmartDashboard.putString("Throttle Mode", "Boost On");
 	}
 
@@ -34,6 +36,7 @@ public class NeoBoostCommand extends Command {
 	@Override
 	protected void end() {
 		NeoDriveSubsystem.getInstance().setBoost(false);
+		NeoDriveSubsystem.getInstance().changeRampRate(NumConstants.DEFAULT_DRIVE_RAMP_RATE);
 		SmartDashboard.putString("Throttle Mode" , "Normal");
 	}
 }
