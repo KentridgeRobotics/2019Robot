@@ -11,6 +11,7 @@ import org.usfirst.frc.team3786.robot.Dashboard;
 import org.usfirst.frc.team3786.robot.subsystems.ButtLifterRollersSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.ButtLifterSubsystem;
 import org.usfirst.frc.team3786.robot.subsystems.ElevatorSubsystem;
+import org.usfirst.frc.team3786.robot.subsystems.NeoDriveSubsystem;
 import org.usfirst.frc.team3786.robot.utils.Gyroscope;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -20,27 +21,29 @@ public class ClimbWhileLevelCommand extends Command {
 		// Use requires() here to declare subsystem dependencies
 		requires(ElevatorSubsystem.getInstance());
 		requires(ButtLifterSubsystem.getInstance());
+		requires(NeoDriveSubsystem.getInstance());
 	}
 
-	private double tiltTolerance = 8.0;
-	private double correctionFactor = 1.1; //something times the error
+	//private double tiltTolerance = 8.0;
+	//private double correctionFactor = 1.1; //something times the error
 	private double frontSpeed;
 	private double rearSpeed;
 
 	private double error; //force of gravity in Y divided by total force of gravity (9.8 meters second squared.)
-	private double derivative; //difference between errors between cycles. need prevError current error minus last error
-	private double lastError;
+	//private double derivative; //difference between errors between cycles. need prevError current error minus last error
+	//private double lastError;
 	//next value of front motor is kp * p error
 	//next elvatorspeed = prevelevatorspeed * (1 + (kp * error)) + (KD * (error - lastError) * (prevElevator - lastPrevElevator))
+	private double kp = 0.7;
 
-	private boolean isDone;
+	private boolean doDriveForward;
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		isDone = false;
+		doDriveForward = false;
 		frontSpeed = -0.7;
-		rearSpeed = -0.7;
+		rearSpeed = -0.35;
 		execute();
 	}
 
@@ -49,7 +52,7 @@ public class ClimbWhileLevelCommand extends Command {
 	protected void execute() {
 		double[] gravity = Gyroscope.getInstance().getGravity(); // get gyro values into an array.
 		double gravityY = gravity[1];
-		if (gravityY > tiltTolerance) // is gravityY greater than 3? Is the robot tilted more than 3 degrees forward?
+		/*if (gravityY > tiltTolerance) // is gravityY greater than 3? Is the robot tilted more than 3 degrees forward?
 		{
 			frontSpeed /= correctionFactor; // slow the back
 			frontSpeed *= correctionFactor; // speed up the rear
@@ -61,13 +64,22 @@ public class ClimbWhileLevelCommand extends Command {
 		} else {
 			frontSpeed = -0.7; // set front to front speed. 1 + error fraction
 			rearSpeed = -0.7; // set rear to front speed.
+		}*/
+		//next value of front motor is kp * p error
+	//next elvatorspeed = prevelevatorspeed * (1 + (kp * error)) + (KD * (error - lastError) * (prevElevator - lastPrevElevator))
+			error = gravityY / -9.81;
+			frontSpeed = frontSpeed * (1 + (kp * error));
+			rearSpeed = rearSpeed * (1 + (kp * -error));
+			ElevatorSubsystem.getInstance().setElevatorSpeed(frontSpeed);
+			ButtLifterSubsystem.getInstance().setSpeed(rearSpeed);
+			Dashboard.getInstance().putNumber(false, "Front Climb Motor Speed", frontSpeed);
+			Dashboard.getInstance().putNumber(false, "Rear Climb Motor Speed", rearSpeed);	
+		if (ElevatorSubsystem.getInstance().getRotation() < 1.0) {
+			doDriveForward = true;
 		}
-		ElevatorSubsystem.getInstance().setElevatorSpeed(frontSpeed);
-		ButtLifterSubsystem.getInstance().setSpeed(rearSpeed);
-		Dashboard.getInstance().putNumber(false, "Front Climb Motor Speed", frontSpeed);
-		Dashboard.getInstance().putNumber(false, "Rear Climb Motor Speed", rearSpeed);
-		if (ElevatorSubsystem.getInstance().getRotation() < 2.0) {
-			isDone = true;
+		if (doDriveForward) {
+			NeoDriveSubsystem.getInstance().arcadeDrive(0.8, 0.0);
+			ButtLifterRollersSubsystem.getInstance().setSpeed(0.8);
 		}
 	}
 
@@ -75,7 +87,7 @@ public class ClimbWhileLevelCommand extends Command {
 	@Override
 	protected boolean isFinished() {
 		//return ButtLifterTalonSubsystem.getInstance().isSwitchSet();
-		return isDone;
+		return false;
 	}
 
 	// Called once after isFinished returns true
@@ -84,5 +96,6 @@ public class ClimbWhileLevelCommand extends Command {
 		ElevatorSubsystem.getInstance().setElevatorSpeed(0.0);
 		ButtLifterSubsystem.getInstance().setSpeed(0.0);
 		ButtLifterRollersSubsystem.getInstance().setSpeed(0.0);
+		NeoDriveSubsystem.getInstance().arcadeDrive(0.0, 0.0);
 	}
 }
