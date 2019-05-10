@@ -27,7 +27,6 @@ public class ClimbLevelPIDCommand extends Command {
   private double rearSpeed;
   
 	//private double derivative; //difference between errors between cycles. need prevError current error minus last error
-	//private double lastError;
 	//next value of front motor is kp * p error
 	//next elvatorspeed = prevelevatorspeed * (1 + (kp * error)) + (KD * (error - lastError) * (prevElevator - lastPrevElevator))
 
@@ -35,9 +34,11 @@ public class ClimbLevelPIDCommand extends Command {
   private double kI = 0.0;
   private double kD = 0.0;
 
-  private double error; //force of gravity in Y divided by total force of gravity (9.8 meters second squared.)
+  private double error = 0.0;
+  private double lastError = 0.0;
   private double integral = 0.0;
-  private double correction; //(P*error) + (I*kI) + (D*kD)
+  private double derivative = 0.0;
+  private double correction;
 
   private boolean doDriveForward;
 
@@ -53,18 +54,17 @@ public class ClimbLevelPIDCommand extends Command {
   protected void execute() {
     double[] gravity = Gyroscope.getInstance().getGravity();
     double gravityY = gravity[1];
-    error = gravityY / -9.81; //probably need to read gyro to find ideal value
-    //error = target - gravityY maybe? target is probably 0.0
+    error = 0 - gravityY;
     integral += error;
-    correction = (kP * error) + (kI * integral);
-    frontSpeed = frontSpeed * (1 + (kP * error)); //these might be corrections already
-    //frontSpeed += correction; or frontSpeed -= correction; depends on motor direction
-    rearSpeed = rearSpeed * (1 + (kP * -error)); //these might be corrections already
-    //rearSpeed += correction; or rearSpeed -= correction; depends on motor direction
+    derivative = error - lastError;
+    correction = (kP * error) + (kI * integral) + (kD * derivative);
+    frontSpeed = frontSpeed * (1 + correction);
+    rearSpeed = rearSpeed * (1 + correction);
     ElevatorSubsystem.getInstance().setElevatorSpeed(frontSpeed);
 		ButtLifterSubsystem.getInstance().setSpeed(rearSpeed);
 		Dashboard.getInstance().putNumber(false, "Front Climb Motor Speed", frontSpeed);
     Dashboard.getInstance().putNumber(false, "Rear Climb Motor Speed", rearSpeed);	
+    lastError = error;
     //next value of front motor is kp * p error
     //next elvatorspeed = prevelevatorspeed * (1 + (kp * error)) + (KD * (error - lastError) * (prevElevator - lastPrevElevator));
 		if (ElevatorSubsystem.getInstance().getRotation() < 1.0) {
