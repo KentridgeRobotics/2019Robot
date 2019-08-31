@@ -36,6 +36,8 @@ deploy {
 
 // Set this to true to enable desktop support.
 def includeDesktopSupport = false
+sourceCompatibility = 11.0
+targetCompatibility = 11.0
 
 // Maven central needed for JUnit
 repositories {
