@@ -57,7 +57,7 @@ public class NeoDriveSubsystem extends Subsystem {
 		differentialDrive = new DifferentialDrive(left, right);
 	}
 
-	public void setMotorSpeeds(double leftSpeed, double rightSpeed) {
+	public void setMotorSpeeds(double leftSpeed, double rightSpeed) { //used for autonomous
 		left.set(leftSpeed);
 		right.set(-rightSpeed);
 		Dashboard.getInstance().putNumber(false, "Left Motor Speed", leftSpeed);
@@ -72,8 +72,6 @@ public class NeoDriveSubsystem extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
 	}
 
 	public void arcadeDrive(double speed, double turnRate) {
@@ -96,6 +94,23 @@ public class NeoDriveSubsystem extends Subsystem {
 		Dashboard.getInstance().putNumber(false, "TurnRate", turnRate);
 
 		differentialDrive.arcadeDrive(-speed, turnRate);
+	}
+
+	public void tankDrive(double leftPower, double rightPower) {
+		if (this.kkBrake) {
+			leftPower *= 0.0;
+			rightPower *= 0.0;
+		} else if (!this.boost) {
+			if (this.slowTurn) {
+				leftPower *= 0.3;
+				rightPower *= 0.3;
+			}
+			else {
+				leftPower *= 0.6;
+				rightPower *= 0.6; //throttle 0.6, turn, 0.7
+			}
+		}
+		tankDrive(leftPower, rightPower);
 	}
 
 	public void setkkBrake(boolean kBrake) {

@@ -45,10 +45,14 @@ public class NeoDriveCommand extends Command {
 			}
 		}
 		currentHeading = Gyroscope.getInstance().getHeadingContinuous();
+
+		double robotThrottle = OI.getRobotThrottle();
+		double robotTurn = OI.getRobotTurn();
+		NeoDriveSubsystem.getInstance().arcadeDrive(robotThrottle, robotTurn);
 		// When the number is negative, the wheels go forwards.
         // When the number is positive, the wheels go backwards.
         
-		double throttle = OI.getRobotThrottle();
+		/*double throttle = OI.getRobotThrottle();
 		double turn = OI.getRobotTurn();
 		boolean useTargetHeading = false;
 		// driver wants to go straight, haven't started using currentHeading yet.
@@ -84,7 +88,7 @@ public class NeoDriveCommand extends Command {
 			NeoDriveSubsystem.getInstance().arcadeDrive(throttle, turn);
 			Dashboard.getInstance().putBoolean(false, "Straight with Gyro?", false);
 		}
-		lastHeading = currentHeading;
+		lastHeading = currentHeading;*/
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

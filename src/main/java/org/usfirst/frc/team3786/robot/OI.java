@@ -23,7 +23,7 @@ public class OI {
 		return getPrimaryController().getRightStickX();
 	}
 
-	public static double getRobotThrottle() {
+	public static double getRobotThrottle() { //can be used for tank drive too
 		return getPrimaryController().getLeftStickY();
 	}
 
@@ -33,6 +33,10 @@ public class OI {
 
 	public static double getElevatorPower() {
 		return getSecondaryController().getRightTrigger() - getSecondaryController().getLeftTrigger();
+	}
+
+	public static double getRightStickY() {
+		return getPrimaryController().getRightStickY();
 	}
 
 }
