@@ -29,6 +29,7 @@ public class ButtLifterRollersSubsystem extends Subsystem {
 	public ButtLifterRollersSubsystem() {
 		rollers = new WPI_TalonSRX(Mappings.rollersMotor);
 		rollers.setNeutralMode(NeutralMode.Brake);
+		rollers.configOpenloopRamp(0.2);
 	}
 
 	/**
